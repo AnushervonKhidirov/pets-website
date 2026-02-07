@@ -9,26 +9,34 @@
 
 .header_inner {
     display: grid;
-    grid-template-areas: 'logo nav auth_btn';
-    grid-template-columns: max-content 1fr max-content;
     align-items: center;
-    gap: 1rem;
+    gap: 0 1rem;
 }
 
 .logo {
     grid-area: logo;
 }
 
+.menu_wrapper {
+    grid-area: menu_wrapper;
+}
+
+.menu_inner {
+    display: grid;
+    grid-template-areas: 'nav' 'auth_btn';
+    gap: 1rem;
+}
+
 .nav_bar {
     display: grid;
-    grid-auto-flow: column;
     grid-area: nav;
-    justify-content: end;
 }
 
 .nav_link {
     padding: 0.5em 1em;
-    transition: color 0.5s;
+    transition:
+        color 0.5s,
+        background-color 0.5s;
 
     &:hover {
         color: var(--cyan_green-dark);
@@ -41,4 +49,75 @@
 
 .auth_btn {
     grid-area: auth_btn;
+}
+
+.menu_icon {
+    grid-area: menu_icon;
+    font-size: 1.5rem;
+}
+
+@media screen and (min-width: 801px) {
+    .header_inner {
+        grid-template-areas: 'logo nav auth_btn';
+        grid-template-columns: max-content 1fr max-content;
+    }
+
+    .menu_wrapper,
+    .menu_inner {
+        display: contents;
+    }
+
+    .nav_bar {
+        grid-auto-flow: column;
+        justify-content: end;
+        align-items: center;
+    }
+
+    .auth_btn {
+        border-radius: 5em;
+    }
+
+    .menu_icon {
+        display: none;
+    }
+}
+
+@media screen and (max-width: 800px) {
+    .header_inner {
+        grid-template-areas:
+            'logo . menu_icon'
+            'menu_wrapper menu_wrapper menu_wrapper';
+        grid-template-columns: max-content 1fr max-content;
+    }
+
+    .menu_wrapper {
+        height: 0;
+        overflow: hidden;
+        transition: height 0.5s;
+
+        &.opened {
+            height: var(--height);
+        }
+    }
+
+    .nav_bar {
+        grid-auto-flow: row;
+        gap: 0.5em;
+        margin-top: 1rem;
+    }
+
+    .nav_link {
+        border-radius: 0.5em;
+        padding-inline: 0.5em;
+
+        &.active {
+            background-color: rgba(212, 133, 74, 0.1);
+        }
+    }
+
+    .auth_btn {
+        font-size: 1.25rem !important;
+        margin-bottom: 0.5rem;
+        padding-block: 0.75em;
+    }
 }
