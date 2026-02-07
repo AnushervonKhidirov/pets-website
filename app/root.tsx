@@ -1,38 +1,17 @@
+import type { FC, PropsWithChildren } from 'react';
 import type { Route } from './+types/root';
-import type { ReactNode } from 'react';
 
-import {
-    isRouteErrorResponse,
-    Links,
-    Meta,
-    Outlet,
-    Scripts,
-    ScrollRestoration,
-} from 'react-router';
+import { isRouteErrorResponse, Meta, Outlet, Scripts, ScrollRestoration } from 'react-router';
 
 import './app.css';
 
-export const links: Route.LinksFunction = () => [
-    { rel: 'preconnect', href: 'https://fonts.googleapis.com' },
-    {
-        rel: 'preconnect',
-        href: 'https://fonts.gstatic.com',
-        crossOrigin: 'anonymous',
-    },
-    {
-        rel: 'stylesheet',
-        href: 'https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap',
-    },
-];
-
-export function Layout({ children }: { readonly children: ReactNode }) {
+export const Layout: FC<PropsWithChildren> = ({ children }) => {
     return (
         <html lang="en">
             <head>
                 <meta charSet="utf-8" />
                 <meta name="viewport" content="width=device-width, initial-scale=1" />
                 <Meta />
-                <Links />
             </head>
             <body>
                 {children}
@@ -41,13 +20,13 @@ export function Layout({ children }: { readonly children: ReactNode }) {
             </body>
         </html>
     );
-}
+};
 
-export default function App() {
+const App = () => {
     return <Outlet />;
-}
+};
 
-export function ErrorBoundary({ error }: Route.ErrorBoundaryProps) {
+export const ErrorBoundary: FC<Route.ErrorBoundaryProps> = ({ error }) => {
     let message = 'Oops!';
     let details = 'An unexpected error occurred.';
     let stack: string | undefined;
@@ -74,4 +53,6 @@ export function ErrorBoundary({ error }: Route.ErrorBoundaryProps) {
             )}
         </main>
     );
-}
+};
+
+export default App;
