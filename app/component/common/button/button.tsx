@@ -14,7 +14,6 @@ type ButtonSpecificProps = {
     size?: 'small' | 'medium' | 'large';
     icon?: ReactNode;
     loading?: boolean;
-    fullRounded?: boolean;
     onClick?: (e: MouseEvent) => void;
 };
 
@@ -24,7 +23,6 @@ const Button: FC<ButtonProps> = ({
     size = 'medium',
     icon,
     loading,
-    fullRounded,
     className,
     children,
     onClick,
@@ -43,7 +41,6 @@ const Button: FC<ButtonProps> = ({
                 classes[type],
                 classes[color + '-color'],
                 classes[size],
-                { [classes.full_rounded]: fullRounded },
                 className,
             )}
             onClick={onClickHandler}

@@ -55,10 +55,6 @@
         --color: var(--color-0);
         border: 0.1em solid var(--color);
     }
-
-    &.full_rounded {
-        border-radius: 10em;
-    }
 }
 
 .icon {
