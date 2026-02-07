@@ -1,0 +1,22 @@
+.logo {
+    display: grid;
+    grid-template-areas: 'image name';
+    grid-template-columns: max-content max-content;
+    align-items: center;
+    gap: 0.5em;
+
+    img {
+        width: 4em;
+        height: 4em;
+        grid-area: image;
+    }
+
+    .name {
+        grid-area: name;
+        font-weight: 500;
+
+        span {
+            color: var(--orange-dark);
+        }
+    }
+}
