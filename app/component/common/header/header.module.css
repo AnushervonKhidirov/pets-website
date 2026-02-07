@@ -1,0 +1,44 @@
+.header {
+    position: sticky;
+    top: 0;
+    background-color: var(--light-08);
+    border-bottom: 1px solid var(--cyan_green);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+}
+
+.header_inner {
+    display: grid;
+    grid-template-areas: 'logo nav auth_btn';
+    grid-template-columns: max-content 1fr max-content;
+    align-items: center;
+    gap: 1rem;
+}
+
+.logo {
+    grid-area: logo;
+}
+
+.nav_bar {
+    display: grid;
+    grid-auto-flow: column;
+    grid-area: nav;
+    justify-content: end;
+}
+
+.nav_link {
+    padding: 0.5em 1em;
+    transition: color 0.5s;
+
+    &:hover {
+        color: var(--cyan_green-dark);
+    }
+
+    &.active {
+        color: var(--orange-dark);
+    }
+}
+
+.auth_btn {
+    grid-area: auth_btn;
+}
