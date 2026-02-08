@@ -2,7 +2,7 @@
     position: sticky;
     top: 0;
     background-color: var(--light-08);
-    border-bottom: 1px solid var(--cyan_green);
+    border-bottom: 1px solid var(--cyan_green-light);
     backdrop-filter: blur(8px);
     -webkit-backdrop-filter: blur(8px);
 }
