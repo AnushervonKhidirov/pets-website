@@ -18,6 +18,7 @@
         "paths": {
             "~commons/*": ["./app/component/common/*"],
             "~icons/*": ["./app/component/icons/*"],
+            "~section/*": ["./app/component/section/*"],
             "~component/*": ["./app/component/*"],
             "~constant/*": ["./app/constant/*"],
             "~type/*": ["./app/type/*"],
