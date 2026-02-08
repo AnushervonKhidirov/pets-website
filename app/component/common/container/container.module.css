@@ -1,5 +1,14 @@
+.container {
+    &.section {
+        padding-block: 3rem;
+    }
+
+    &.colored {
+        background-color: var(--light);
+    }
+}
+
 .container_inner {
-    --padding: 1em;
     max-width: 1200px;
     margin: auto;
     padding: 0.5rem 1rem;
