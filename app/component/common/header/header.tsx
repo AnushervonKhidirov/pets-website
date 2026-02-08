@@ -8,7 +8,7 @@ import { Route } from '~/constant/route';
 import Container from '~commons/container/container';
 import Logo from '~commons/logo/logo';
 import Button from '~commons/button/button';
-import { Paw } from '~icons/paw';
+import { Paw } from '~icons/icons';
 
 import classNames from 'classnames';
 import classes from './header.module.css';
@@ -71,7 +71,7 @@ const Header = () => {
                             </NavLink>
                         </nav>
 
-                        <Button className={classes.auth_btn} icon={<Paw />}>
+                        <Button className={classes.auth_btn} icon={<Paw />} href={Route.SignIn}>
                             Войти
                         </Button>
                     </div>
