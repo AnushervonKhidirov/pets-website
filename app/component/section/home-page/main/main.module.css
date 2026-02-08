@@ -16,8 +16,6 @@
 }
 
 .headline {
-    font-weight: 700;
-
     .colored {
         color: var(--cyan_green-dark);
     }
@@ -30,6 +28,7 @@
 .buttons {
     display: grid;
     gap: 1.5rem;
+    gap: 1rem;
 }
 
 .details {
@@ -76,10 +75,6 @@
         height: 200px;
     }
 
-    .headline {
-        font-size: 3.25rem;
-    }
-
     .copy {
         max-width: 36em;
         font-size: 1.25rem;
@@ -87,6 +82,7 @@
 
     .buttons {
         grid-auto-flow: column;
+        gap: 1.5rem;
     }
 
     .card {
@@ -95,17 +91,7 @@
 }
 
 @media screen and (min-width: 426px) and (max-width: 768px) {
-    .headline {
-        font-size: 2.5rem;
-    }
-
     .copy {
         font-size: 1.2rem;
-    }
-}
-
-@media screen and (max-width: 425px) {
-    .headline {
-        font-size: 2rem;
     }
 }
