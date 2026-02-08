@@ -13,10 +13,11 @@
 
     .name {
         grid-area: name;
+        color: var(--color-grey-800);
         font-weight: 500;
 
         span {
-            color: var(--orange-dark);
+            color: var(--color-terracotta-500);
         }
     }
 }

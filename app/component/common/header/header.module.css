@@ -2,7 +2,7 @@
     position: sticky;
     top: 0;
     background-color: var(--light-08);
-    border-bottom: 1px solid var(--cyan_green-light);
+    border-bottom: 1px solid var(--color-cyan-green-200);
     backdrop-filter: blur(8px);
     -webkit-backdrop-filter: blur(8px);
 }
@@ -33,18 +33,18 @@
 }
 
 .nav_link {
-    color: var(--grey-dark);
+    color: var(--color-grey-800);
     padding: 0.5em 1em;
     transition:
         color 0.5s,
         background-color 0.5s;
 
     &:hover {
-        color: var(--cyan_green-dark);
+        color: var(--color-cyan-green-500);
     }
 
     &.active {
-        color: var(--orange-dark);
+        color: var(--color-terracotta-500);
     }
 }
 

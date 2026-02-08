@@ -41,20 +41,20 @@
     }
 
     &.primary-color {
-        --color-0: var(--cyan_green-dark);
+        --color-0: var(--color-cyan-green-500);
         --color-1: var(--light);
 
         &:hover {
-            --color-0: var(--cyan_green);
+            --color-0: var(--color-cyan-green-400);
         }
     }
 
     &.secondary-color {
-        --color-0: var(--orange-dark);
+        --color-0: var(--color-terracotta-500);
         --color-1: var(--light);
 
         &:hover {
-            --color-0: var(--orange);
+            --color-0: var(--color-terracotta-400);
         }
     }
 
