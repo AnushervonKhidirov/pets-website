@@ -3,7 +3,9 @@ import type { Route } from './+types/root';
 
 import { isRouteErrorResponse, Meta, Outlet, Scripts, ScrollRestoration } from 'react-router';
 
-import './app.css';
+import './styles/fonts.css';
+import './styles/colors.css';
+import './styles/root.css';
 
 export const Layout: FC<PropsWithChildren> = ({ children }) => {
     return (

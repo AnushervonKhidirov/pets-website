@@ -1,0 +1,40 @@
+:root {
+    --color-cyan-green-50: #f3f7f6;
+    --color-cyan-green-100: #e3edea;
+    --color-cyan-green-200: #cbddd8;
+    --color-cyan-green-300: #afcbc3;
+    --color-cyan-green-400: #96bbb1;
+    --color-cyan-green-500: #7ba99d;
+    --color-cyan-green-600: #5d8e81;
+    --color-cyan-green-700: #44695f;
+    --color-cyan-green-800: #2e4741;
+    --color-cyan-green-900: #16221f;
+    --color-cyan-green-950: #0c1311;
+
+    --color-terracotta-50: #faf1ea;
+    --color-terracotta-100: #f5e0d1;
+    --color-terracotta-200: #ebc2a3;
+    --color-terracotta-300: #e1a375;
+    --color-terracotta-400: #d7874b;
+    --color-terracotta-500: #bf6a2a;
+    --color-terracotta-600: #9b5622;
+    --color-terracotta-700: #713f19;
+    --color-terracotta-800: #4b2a11;
+    --color-terracotta-900: #261508;
+    --color-terracotta-950: #150c05;
+
+    --color-grey-50: #f2f2f2;
+    --color-grey-100: #e6e6e6;
+    --color-grey-200: #c9c9c9;
+    --color-grey-300: #b0b0b0;
+    --color-grey-400: #969696;
+    --color-grey-500: #7c7c7c;
+    --color-grey-600: #636363;
+    --color-grey-700: #4a4a4a;
+    --color-grey-800: #303030;
+    --color-grey-900: #1a1a1a;
+    --color-grey-950: #0d0d0d;
+
+    --light: #fdf8f3;
+    --light-08: rgba(253, 248, 243, 0.8);
+}

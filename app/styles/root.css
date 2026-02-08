@@ -1,0 +1,119 @@
+* {
+    color: inherit;
+    font-family: inherit;
+    text-decoration: none;
+    outline: none;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    -webkit-tap-highlight-color: transparent;
+}
+
+body {
+    display: grid;
+    min-height: 100vh;
+    grid-template-areas: 'header' 'main' 'footer';
+    grid-template-rows: max-content 1fr max-content;
+    color: var(--color-grey-500);
+    font-family: Ubuntu, sans-serif;
+    line-height: 1.5;
+    cursor: default;
+}
+
+header {
+    grid-area: header;
+    z-index: 9;
+}
+
+main {
+    grid-area: main;
+}
+
+footer {
+    grid-area: footer;
+    z-index: 9;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    color: var(--color-grey-800);
+    line-height: 1;
+}
+
+button {
+    background-color: transparent;
+    border: none;
+}
+
+@media screen and (min-width: 1025px) {
+}
+
+@media screen and (min-width: 769px) and (max-width: 1024px) {
+}
+
+@media screen and (min-width: 769px) {
+    h1 {
+        font-size: 3.25rem;
+    }
+    h2 {
+        font-size: 2.85rem;
+    }
+    h3 {
+        font-size: 2.45rem;
+    }
+    h4 {
+        font-size: 2.05rem;
+    }
+    h5 {
+        font-size: 1.65rem;
+    }
+    h6 {
+        font-size: 1.25rem;
+    }
+}
+
+@media screen and (min-width: 426px) and (max-width: 768px) {
+    h1 {
+        font-size: 2.5rem;
+    }
+    h2 {
+        font-size: 2.23rem;
+    }
+    h3 {
+        font-size: 1.96rem;
+    }
+    h4 {
+        font-size: 1.69rem;
+    }
+    h5 {
+        font-size: 1.42rem;
+    }
+    h6 {
+        font-size: 1.15rem;
+    }
+}
+
+@media screen and (max-width: 425px) {
+    h1 {
+        font-size: 2rem;
+    }
+    h2 {
+        font-size: 1.82rem;
+    }
+    h3 {
+        font-size: 1.64rem;
+    }
+    h4 {
+        font-size: 1.46rem;
+    }
+    h5 {
+        font-size: 1.28rem;
+    }
+    h6 {
+        font-size: 1.1rem;
+    }
+}
