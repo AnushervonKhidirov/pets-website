@@ -1,5 +1,6 @@
 import Container from '~commons/container/container';
 import Button from '~commons/button/button';
+import Card from '~commons/card/card';
 
 import { Route } from '~constant/route';
 import { Paw, Search, Users } from '~icons/icons';
@@ -9,7 +10,7 @@ import classes from './main.module.css';
 
 const MainSection = () => {
     return (
-        <Container className={classes.section} innerClassName={classes.inner_section}>
+        <Container innerClassName={classes.inner_section} section colored>
             <div className={classes.logo}>
                 <img src={logo} alt="logo" />
             </div>
@@ -35,29 +36,29 @@ const MainSection = () => {
             </div>
 
             <div className={classes.details}>
-                <div className={classes.card}>
+                <Card className={classes.card} shadow>
                     <div className={classes.icon}>
                         <Paw />
                     </div>
                     <div className={classes.value}>500+</div>
                     <div className={classes.about}>Питомцев</div>
-                </div>
+                </Card>
 
-                <div className={classes.card}>
+                <Card className={classes.card} shadow>
                     <div className={classes.icon}>
                         <Search />
                     </div>
                     <div className={classes.value}>50+</div>
                     <div className={classes.about}>Найдено</div>
-                </div>
+                </Card>
 
-                <div className={classes.card}>
+                <Card className={classes.card} shadow>
                     <div className={classes.icon}>
                         <Users />
                     </div>
                     <div className={classes.value}>475+</div>
                     <div className={classes.about}>Пользователей</div>
-                </div>
+                </Card>
             </div>
         </Container>
     );
