@@ -91,12 +91,13 @@ body {
     grid-template-rows: max-content 1fr max-content;
     color: var(--grey);
     font-family: Ubuntu, sans-serif;
-    line-height: 1.75em;
+    line-height: 1.5;
     cursor: default;
 }
 
 header {
     grid-area: header;
+    z-index: 9;
 }
 
 main {
@@ -105,6 +106,7 @@ main {
 
 footer {
     grid-area: footer;
+    z-index: 9;
 }
 
 h1,
