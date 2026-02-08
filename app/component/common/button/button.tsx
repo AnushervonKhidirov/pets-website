@@ -1,6 +1,8 @@
 import type { FC, MouseEvent, PropsWithChildren, ReactNode } from 'react';
 import type { WithClassName } from '~type/common.type';
+import type { To } from 'react-router';
 
+import { Link } from 'react-router';
 import { LoadingOutlined } from '@ant-design/icons';
 
 import classNames from 'classnames';
@@ -14,6 +16,7 @@ type ButtonSpecificProps = {
     size?: 'small' | 'medium' | 'large';
     icon?: ReactNode;
     loading?: boolean;
+    href?: To;
     onClick?: (e: MouseEvent) => void;
 };
 
@@ -23,19 +26,22 @@ const Button: FC<ButtonProps> = ({
     size = 'medium',
     icon,
     loading,
+    href,
     className,
     children,
     onClick,
 }) => {
+    const ButtonTag = href ? Link : 'button';
+    const showIcon = icon || loading;
+
     function onClickHandler(e: MouseEvent) {
         e.preventDefault();
         if (typeof onClick === 'function') onClick(e);
     }
 
-    const showIcon = icon || loading;
-
     return (
-        <button
+        <ButtonTag
+            to={href ?? ''}
             className={classNames(
                 classes.button,
                 classes[type],
@@ -53,7 +59,7 @@ const Button: FC<ButtonProps> = ({
             )}
 
             <div className={classes.text}>{children}</div>
-        </button>
+        </ButtonTag>
     );
 };
 

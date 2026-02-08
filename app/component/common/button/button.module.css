@@ -16,6 +16,10 @@
     padding: 0.5em 1em;
     box-sizing: border-box;
     cursor: pointer;
+    transition:
+        color 0.5s,
+        border-color 0.5s,
+        background-color 0.5s;
 
     &:has(.icon) {
         grid-template-areas: 'icon text';
@@ -38,11 +42,19 @@
     &.primary-color {
         --color-0: var(--cyan_green-dark);
         --color-1: var(--light);
+
+        &:hover {
+            --color-0: var(--cyan_green);
+        }
     }
 
     &.secondary-color {
         --color-0: var(--orange-dark);
         --color-1: var(--light);
+
+        &:hover {
+            --color-0: var(--orange);
+        }
     }
 
     &.primary {
@@ -53,7 +65,7 @@
     &.outlined {
         --bg-color: transparent;
         --color: var(--color-0);
-        border: 0.1em solid var(--color);
+        border: 0.125em solid var(--color);
     }
 }
 
