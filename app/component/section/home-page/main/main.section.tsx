@@ -40,7 +40,7 @@ const MainSection = () => {
                     <div className={classes.icon}>
                         <Paw />
                     </div>
-                    <div className={classes.value}>500+</div>
+                    <h5 className={classes.value}>500+</h5>
                     <div className={classes.about}>Питомцев</div>
                 </Card>
 
@@ -48,7 +48,7 @@ const MainSection = () => {
                     <div className={classes.icon}>
                         <Search />
                     </div>
-                    <div className={classes.value}>50+</div>
+                    <h5 className={classes.value}>50+</h5>
                     <div className={classes.about}>Найдено</div>
                 </Card>
 
@@ -56,7 +56,7 @@ const MainSection = () => {
                     <div className={classes.icon}>
                         <Users />
                     </div>
-                    <div className={classes.value}>475+</div>
+                    <h5 className={classes.value}>475+</h5>
                     <div className={classes.about}>Пользователей</div>
                 </Card>
             </div>

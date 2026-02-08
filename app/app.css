@@ -89,7 +89,7 @@ body {
     min-height: 100vh;
     grid-template-areas: 'header' 'main' 'footer';
     grid-template-rows: max-content 1fr max-content;
-    color: var(--grey-dark);
+    color: var(--grey);
     font-family: Ubuntu, sans-serif;
     line-height: 1.75em;
     cursor: default;
@@ -113,6 +113,7 @@ h3,
 h4,
 h5,
 h6 {
+    color: var(--grey-dark);
     line-height: 1;
 }
 
