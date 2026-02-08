@@ -35,7 +35,6 @@ const Button: FC<ButtonProps> = ({
     const showIcon = icon || loading;
 
     function onClickHandler(e: MouseEvent) {
-        e.preventDefault();
         if (typeof onClick === 'function') onClick(e);
     }
 
