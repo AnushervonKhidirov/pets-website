@@ -1,0 +1,25 @@
+.card {
+    --main_shadow: 0 0 rgba(0, 0, 0, 0), 0 0 rgba(0, 0, 0, 0);
+    --inner_shadow: inset 0 0 rgba(0, 0, 0, 0);
+
+    display: grid;
+    background-color: rgb(255, 255, 255, 0.5);
+    border-radius: 1rem;
+    padding: 1.5rem;
+    box-shadow: var(--inner_shadow), var(--main_shadow);
+
+    transition: all 0.5s;
+}
+
+.card.colored {
+    background-color: var(--light);
+}
+
+.card.shadow {
+    --main_shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+}
+
+.card.hoverable:hover {
+    --inner_shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.05);
+    --main_shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+}
