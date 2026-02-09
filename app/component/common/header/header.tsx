@@ -5,27 +5,41 @@ import { NavLink } from 'react-router';
 import { MenuOutlined, CloseOutlined } from '@ant-design/icons';
 import { Route } from '~/constant/route';
 
+import { Button } from 'antd';
 import Container from '~commons/container/container';
+import AuthButton from '~component/auth/auth-button';
 import Logo from '~commons/logo/logo';
-import Button from '~commons/button/button';
-import AuthModal from '~component/auth/auth-modal/auth-modal';
 import { PawIcon } from '~icons/icons';
 
 import classNames from 'classnames';
 import classes from './header.module.css';
 
+const navLinkList = [
+    {
+        to: Route.Home,
+        name: 'Главная',
+    },
+    {
+        to: Route.Lost,
+        name: 'Потеряшки',
+    },
+    {
+        to: Route.VetClinic,
+        name: 'Клиники',
+    },
+    {
+        to: Route.ContactUs,
+        name: 'Связаться с нами',
+    },
+];
+
 const Header = () => {
     const menuRef = useRef<HTMLDivElement>(null);
     const menuInnerRef = useRef<HTMLDivElement>(null);
     const [menuOpened, setMenuOpened] = useState(false);
-    const [authModalOpened, setAuthModalOpened] = useState(false);
 
     function menuHandler() {
         setMenuOpened(prevState => !prevState);
-    }
-
-    function openAuthModal() {
-        setAuthModalOpened(true);
     }
 
     useEffect(() => {
@@ -47,51 +61,34 @@ const Header = () => {
                 >
                     <div ref={menuInnerRef} className={classes.menu_inner}>
                         <nav className={classes.nav_bar}>
-                            <NavLink
-                                onClick={() => setMenuOpened(false)}
-                                to={Route.Home}
-                                className={getClassName}
-                            >
-                                Главная
-                            </NavLink>
-                            <NavLink
-                                onClick={() => setMenuOpened(false)}
-                                to={Route.Lost}
-                                className={getClassName}
-                            >
-                                Потеряшки
-                            </NavLink>
-                            <NavLink
-                                onClick={() => setMenuOpened(false)}
-                                to={Route.VetClinic}
-                                className={getClassName}
-                            >
-                                Клиники
-                            </NavLink>
-                            <NavLink
-                                onClick={() => setMenuOpened(false)}
-                                to={Route.ContactUs}
-                                className={getClassName}
-                            >
-                                Связаться с нами
-                            </NavLink>
+                            {navLinkList.map(({ name, to }) => (
+                                <NavLink
+                                    key={to + name}
+                                    to={to}
+                                    onClick={() => setMenuOpened(false)}
+                                    className={getClassName}
+                                >
+                                    {name}
+                                </NavLink>
+                            ))}
                         </nav>
 
-                        <Button className={classes.auth_btn} icon={<PawIcon />} onClick={openAuthModal}>
-                            Войти
-                        </Button>
+                        <AuthButton
+                            className={classes.auth_btn}
+                            icon={<PawIcon />}
+                            variant="solid"
+                            color="cyan"
+                        />
                     </div>
                 </div>
 
-                <button className={classes.menu_icon} onClick={menuHandler}>
-                    {menuOpened ? <CloseOutlined /> : <MenuOutlined />}
-                </button>
-
-                <AuthModal
-                    open={authModalOpened}
-                    setOpened={setAuthModalOpened}
-                    contentType="sign_in"
-                />
+                <Button
+                    color="cyan"
+                    variant="filled"
+                    className={classes.menu_icon}
+                    onClick={menuHandler}
+                    icon={menuOpened ? <CloseOutlined /> : <MenuOutlined />}
+                ></Button>
             </Container>
         </header>
     );
