@@ -21,7 +21,10 @@
             "~section/*": ["./app/component/section/*"],
             "~component/*": ["./app/component/*"],
             "~constant/*": ["./app/constant/*"],
-            "~type/*": ["./app/type/*"],
+            "~service/*": ["./app/core/service/*"],
+            "~helper/*": ["./app/core/helper/*"],
+            "~api/*": ["./app/core/api/*"],
+            "~type/*": ["./app/core/type/*"],
             "~/*": ["./app/*"]
         },
         "esModuleInterop": true,
