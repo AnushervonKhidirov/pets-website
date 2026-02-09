@@ -27,17 +27,25 @@ const AuthModal: FC<AuthModalProps> = ({ open, setOpen, contentType }) => {
         if (!isOpen) setContent(contentType);
     }
 
+    function closeModal() {
+        setOpen(false);
+    }
+
     return (
         <Modal
             afterOpenChange={afterOpenHandler}
             title={title[content]}
             open={open}
-            onCancel={() => setOpen(false)}
+            onCancel={closeModal}
             centered
             footer={<AuthFooter content={content} setContent={setContent} />}
             style={{ maxWidth: 400 }}
         >
-            {content === 'sign_in' ? <SignInForm /> : <SignUpForm />}
+            {content === 'sign_in' ? (
+                <SignInForm onSuccess={closeModal} />
+            ) : (
+                <SignUpForm onSuccess={closeModal} />
+            )}
 
             <div style={OAuthWrapperStyle}>
                 <Button block color="red" variant="solid" icon={<GoogleOutlined />}>
