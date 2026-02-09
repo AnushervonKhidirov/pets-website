@@ -25,12 +25,14 @@ export const SignInForm = () => {
 };
 
 export const SignUpForm = () => {
+    const [form] = Form.useForm();
+
     async function submit(data: SignUpDto) {
         console.log(data);
     }
 
     return (
-        <Form onFinish={submit}>
+        <Form onFinish={submit} form={form}>
             <Form.Item name="email" rules={[{ required: true, message: 'Введите почту' }]}>
                 <Input size="large" placeholder="Почта" type="email" />
             </Form.Item>
@@ -41,7 +43,19 @@ export const SignUpForm = () => {
 
             <Form.Item
                 name="password_repeat"
-                rules={[{ required: true, message: 'Введите пароль' }]}
+                rules={[
+                    {
+                        required: true,
+                        message: 'Введите пароль',
+                    },
+                    {
+                        validator: (_, value) => {
+                            const password = form.getFieldValue('password');
+                            if (password !== value) throw new Error('Repeat password error');
+                        },
+                        message: 'Пароли должны совпадать',
+                    },
+                ]}
             >
                 <Input.Password size="large" placeholder="Повторите пароль" />
             </Form.Item>
