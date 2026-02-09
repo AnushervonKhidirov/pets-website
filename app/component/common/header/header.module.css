@@ -54,7 +54,7 @@
 
 .menu_icon {
     grid-area: menu_icon;
-    font-size: 1.5rem;
+    font-size: 1.25rem;
 }
 
 @media screen and (min-width: 801px) {
@@ -117,8 +117,9 @@
     }
 
     .auth_btn {
-        font-size: 1.25rem !important;
+        font-size: 1.25rem;
         margin-bottom: 0.5rem;
         padding-block: 0.75em;
+        height: auto;
     }
 }
