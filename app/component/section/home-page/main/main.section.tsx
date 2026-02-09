@@ -1,4 +1,5 @@
 import { Link } from 'react-router';
+import CountUp from 'react-countup';
 import { Typography, Button } from 'antd';
 
 import Container from '~commons/container/container';
@@ -16,17 +17,17 @@ const { Title, Text } = Typography;
 const detailList = [
     {
         Icon: PawIcon,
-        value: '500+',
+        value: 1200,
         about: 'Питомцев',
     },
     {
         Icon: SearchIcon,
-        value: '50+',
+        value: 680,
         about: 'Найдено',
     },
     {
         Icon: UsersIcon,
-        value: '475+',
+        value: 1032,
         about: 'Пользователей',
     },
 ];
@@ -65,7 +66,7 @@ const MainSection = () => {
                     <MyCard className={classes.card} key={about}>
                         <Icon className={classes.icon} />
                         <Title level={3} className={classes.value}>
-                            {value}
+                            <CountUp end={value} separator="," enableScrollSpy scrollSpyOnce />
                         </Title>
                         <Text type="secondary" className={classes.about}>
                             {about}
