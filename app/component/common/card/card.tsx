@@ -1,30 +1,22 @@
-import type { FC, PropsWithChildren } from 'react';
-import type { WithClassName } from '~type/common.type';
+import type { FC } from 'react';
+import type { CardProps as AntCardProps } from 'antd';
+
+import { Card as AndCard } from 'antd';
 
 import classNames from 'classnames';
 import classes from './card.module.css';
 
-type CardProps = PropsWithChildren<
-    WithClassName & {
-        shadow?: boolean;
-        hoverable?: boolean;
-        colored?: boolean;
-    }
->;
+type CardProps = AntCardProps & { colored?: boolean };
 
-const Card: FC<CardProps> = ({ shadow, hoverable, colored, className, children }) => {
+const Card: FC<CardProps> = ({ colored = false, ...props }) => {
     return (
-        <div
-            className={classNames(
-                classes.card,
-                { [classes.shadow]: shadow },
-                { [classes.hoverable]: hoverable },
-                { [classes.colored]: colored },
-                className,
-            )}
+        <AndCard
+            variant="borderless"
+            {...props}
+            className={classNames(classes.card, { [classes.colored]: colored }, props.className)}
         >
-            {children}
-        </div>
+            {props.children}
+        </AndCard>
     );
 };
 

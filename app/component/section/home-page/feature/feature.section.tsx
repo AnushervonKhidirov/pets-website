@@ -1,3 +1,4 @@
+import { Typography } from 'antd';
 import Container from '~commons/container/container';
 import Grid from '~commons/grid/grid';
 import Card from '~commons/card/card';
@@ -5,39 +6,44 @@ import { ShieldIcon, SearchIcon, HeartIcon } from '~icons/icons';
 
 import classes from './feature.module.css';
 
+const { Title, Text } = Typography;
+
+const featureList = [
+    {
+        Icon: ShieldIcon,
+        title: 'Регистрация питомца',
+        about: 'Создайте цифровой паспорт для вашего любимца. Храните данные о чипе, прививках и особых приметах в одном месте.',
+    },
+    {
+        Icon: SearchIcon,
+        title: 'Поиск потерянных',
+        about: 'Мгновенно публикуйте объявления о пропаже. Наше сообщество поможет вернуть друга домой как можно скорее.',
+    },
+    {
+        Icon: HeartIcon,
+        title: 'Сообщество',
+        about: 'Объединяем людей, неравнодушных к животным. Делитесь опытом, находите друзей и помогайте другим.',
+    },
+];
+
 const FeatureSection = () => {
     return (
         <Container innerClassName={classes.inner_section} section>
-            <h6 className={classes.sup_headline}>Возможности</h6>
-            <h3>Всё для безопасности вашего друга</h3>
+            <Text className={classes.sup_headline}>Возможности</Text>
+            <Title level={3}>Всё для безопасности вашего друга</Title>
 
             <Grid className={classes.list}>
-                <Card className={classes.card} shadow colored>
-                    <ShieldIcon className={classes.icon} />
-                    <h6 className={classes.title}>Регистрация питомца</h6>
-                    <div className={classes.about}>
-                        Создайте цифровой паспорт для вашего любимца. Храните данные о чипе,
-                        прививках и особых приметах в одном месте.
-                    </div>
-                </Card>
-
-                <Card className={classes.card} shadow colored>
-                    <SearchIcon className={classes.icon} />
-                    <h6 className={classes.title}>Поиск потерянных</h6>
-                    <div className={classes.about}>
-                        Мгновенно публикуйте объявления о пропаже. Наше сообщество поможет вернуть
-                        друга домой как можно скорее.
-                    </div>
-                </Card>
-
-                <Card className={classes.card} shadow colored>
-                    <HeartIcon className={classes.icon} />
-                    <h6 className={classes.title}>Сообщество</h6>
-                    <div className={classes.about}>
-                        Объединяем людей, неравнодушных к животным. Делитесь опытом, находите друзей
-                        и помогайте другим.
-                    </div>
-                </Card>
+                {featureList.map(({ Icon, title, about }) => (
+                    <Card className={classes.card} colored key={title}>
+                        <Icon className={classes.icon} />
+                        <Text strong className={classes.title}>
+                            {title}
+                        </Text>
+                        <Text type="secondary" className={classes.about}>
+                            {about}
+                        </Text>
+                    </Card>
+                ))}
             </Grid>
         </Container>
     );

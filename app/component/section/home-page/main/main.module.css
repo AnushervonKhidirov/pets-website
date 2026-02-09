@@ -23,7 +23,6 @@
 
 .buttons {
     display: grid;
-    gap: 1.5rem;
     gap: 1rem;
 }
 
@@ -36,8 +35,9 @@
     flex-wrap: wrap;
 }
 
-.card {
-    min-width: 12em;
+.card > div {
+    display: grid;
+    min-width: 15em;
     justify-items: center;
     gap: 0.5rem;
     line-height: 1;
@@ -55,6 +55,10 @@
 }
 
 @media screen and (min-width: 769px) {
+    .headline > div {
+        font-size: 1.25em;
+    }
+
     .logo {
         width: 200px;
         height: 200px;
@@ -78,5 +82,11 @@
 @media screen and (min-width: 426px) and (max-width: 768px) {
     .copy {
         font-size: 1.2rem;
+    }
+}
+
+@media screen and (max-width: 425px) {
+    .headline > div {
+        font-size: 0.7em;
     }
 }
