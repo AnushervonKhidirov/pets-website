@@ -25,12 +25,17 @@
     width: 3rem;
     height: 3rem;
     grid-template-areas: 'inner';
+    justify-items: center;
+    align-items: center;
     border-radius: 0.75rem;
     overflow: hidden;
     box-sizing: border-box;
+    color: var(--color-cyan-green-500);
+    font-size: 2rem;
 
     &::before {
         content: '';
+        display: block;
         width: 100%;
         height: 100%;
         grid-area: inner;
@@ -40,8 +45,6 @@
 
     svg {
         grid-area: inner;
-        stroke: var(--color-cyan-green-500);
-        padding: 0.5em;
     }
 }
 

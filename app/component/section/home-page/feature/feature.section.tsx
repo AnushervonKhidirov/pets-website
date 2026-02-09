@@ -1,7 +1,7 @@
 import Container from '~commons/container/container';
 import Grid from '~commons/grid/grid';
 import Card from '~commons/card/card';
-import { Shield, Search, Heart } from '~icons/icons';
+import { ShieldIcon, SearchIcon, HeartIcon } from '~icons/icons';
 
 import classes from './feature.module.css';
 
@@ -13,9 +13,7 @@ const FeatureSection = () => {
 
             <Grid className={classes.list}>
                 <Card className={classes.card} shadow colored>
-                    <div className={classes.icon}>
-                        <Shield />
-                    </div>
+                    <ShieldIcon className={classes.icon} />
                     <h6 className={classes.title}>Регистрация питомца</h6>
                     <div className={classes.about}>
                         Создайте цифровой паспорт для вашего любимца. Храните данные о чипе,
@@ -24,9 +22,7 @@ const FeatureSection = () => {
                 </Card>
 
                 <Card className={classes.card} shadow colored>
-                    <div className={classes.icon}>
-                        <Search />
-                    </div>
+                    <SearchIcon className={classes.icon} />
                     <h6 className={classes.title}>Поиск потерянных</h6>
                     <div className={classes.about}>
                         Мгновенно публикуйте объявления о пропаже. Наше сообщество поможет вернуть
@@ -35,9 +31,7 @@ const FeatureSection = () => {
                 </Card>
 
                 <Card className={classes.card} shadow colored>
-                    <div className={classes.icon}>
-                        <Heart />
-                    </div>
+                    <HeartIcon className={classes.icon} />
                     <h6 className={classes.title}>Сообщество</h6>
                     <div className={classes.about}>
                         Объединяем людей, неравнодушных к животным. Делитесь опытом, находите друзей

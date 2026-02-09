@@ -45,14 +45,8 @@
     flex: 1;
 
     .icon {
-        width: 2rem;
-        height: 2rem;
-
-        svg {
-            width: 100%;
-            height: 100%;
-            stroke: var(--color-cyan-green-500);
-        }
+        color: var(--color-cyan-green-500);
+        font-size: 2rem;
     }
 
     .value {

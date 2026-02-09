@@ -1,15 +1,21 @@
 import type { FC } from 'react';
 import type { WithClassName } from '~type/common.type';
 
-export const Paw: FC<WithClassName> = ({ className }) => {
+import type { GetProps } from 'antd';
+
+import Icon from '@ant-design/icons';
+
+type CustomIconComponentProps = GetProps<typeof Icon>;
+
+const Paw: FC = () => {
     return (
         <svg
-            className={className}
-            xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 24 24"
             fill="none"
-            stroke="#000"
+            stroke="currentColor"
             strokeWidth="2"
+            width="1em"
+            height="1em"
         >
             <circle cx="11" cy="4" r="2"></circle>
             <circle cx="18" cy="8" r="2"></circle>
@@ -19,15 +25,16 @@ export const Paw: FC<WithClassName> = ({ className }) => {
     );
 };
 
-export const User: FC<WithClassName> = ({ className }) => {
+const User: FC<WithClassName> = ({ className }) => {
     return (
         <svg
             className={className}
-            xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 24 24"
             fill="none"
-            stroke="#000"
+            stroke="currentColor"
             strokeWidth="2"
+            width="1em"
+            height="1em"
         >
             <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"></path>
             <circle cx="12" cy="7" r="4"></circle>
@@ -35,15 +42,16 @@ export const User: FC<WithClassName> = ({ className }) => {
     );
 };
 
-export const Users: FC<WithClassName> = ({ className }) => {
+const Users: FC<WithClassName> = ({ className }) => {
     return (
         <svg
             className={className}
-            xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 24 24"
             fill="none"
-            stroke="#000"
+            stroke="currentColor"
             strokeWidth="2"
+            width="1em"
+            height="1em"
         >
             <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path>
             <path d="M16 3.128a4 4 0 0 1 0 7.744"></path>
@@ -53,15 +61,16 @@ export const Users: FC<WithClassName> = ({ className }) => {
     );
 };
 
-export const Search: FC<WithClassName> = ({ className }) => {
+const Search: FC<WithClassName> = ({ className }) => {
     return (
         <svg
             className={className}
-            xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 24 24"
             fill="none"
-            stroke="#000"
+            stroke="currentColor"
             strokeWidth="2"
+            width="1em"
+            height="1em"
         >
             <path d="m21 21-4.34-4.34"></path>
             <circle cx="11" cy="11" r="8"></circle>
@@ -69,15 +78,16 @@ export const Search: FC<WithClassName> = ({ className }) => {
     );
 };
 
-export const Tick: FC<WithClassName> = ({ className }) => {
+const Tick: FC<WithClassName> = ({ className }) => {
     return (
         <svg
             className={className}
-            xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 24 24"
             fill="none"
-            stroke="#000"
+            stroke="currentColor"
             strokeWidth="2"
+            width="1em"
+            height="1em"
         >
             <path d="M21.801 10A10 10 0 1 1 17 3.335"></path>
             <path d="m9 11 3 3L22 4"></path>
@@ -85,30 +95,32 @@ export const Tick: FC<WithClassName> = ({ className }) => {
     );
 };
 
-export const Shield: FC<WithClassName> = ({ className }) => {
+const Shield: FC<WithClassName> = ({ className }) => {
     return (
         <svg
             className={className}
-            xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 24 24"
             fill="none"
-            stroke="#000"
+            stroke="currentColor"
             strokeWidth="2"
+            width="1em"
+            height="1em"
         >
             <path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"></path>
         </svg>
     );
 };
 
-export const ShieldTick: FC<WithClassName> = ({ className }) => {
+const ShieldTick: FC<WithClassName> = ({ className }) => {
     return (
         <svg
             className={className}
-            xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 24 24"
             fill="none"
-            stroke="#000"
+            stroke="currentColor"
             strokeWidth="2"
+            width="1em"
+            height="1em"
         >
             <path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"></path>
             <path d="m9 12 2 2 4-4"></path>
@@ -116,30 +128,32 @@ export const ShieldTick: FC<WithClassName> = ({ className }) => {
     );
 };
 
-export const Heart: FC<WithClassName> = ({ className }) => {
+const Heart: FC<WithClassName> = ({ className }) => {
     return (
         <svg
             className={className}
-            xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 24 24"
             fill="none"
-            stroke="#000"
+            stroke="currentColor"
             strokeWidth="2"
+            width="1em"
+            height="1em"
         >
             <path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"></path>
         </svg>
     );
 };
 
-export const ArrowRight: FC<WithClassName> = ({ className }) => {
+const ArrowRight: FC<WithClassName> = ({ className }) => {
     return (
         <svg
             className={className}
-            xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 24 24"
             fill="none"
-            stroke="#000"
+            stroke="currentColor"
             strokeWidth="2"
+            width="1em"
+            height="1em"
         >
             <path d="M5 12h14"></path>
             <path d="m12 5 7 7-7 7"></path>
@@ -147,15 +161,16 @@ export const ArrowRight: FC<WithClassName> = ({ className }) => {
     );
 };
 
-export const ArrowLeft: FC<WithClassName> = ({ className }) => {
+const ArrowLeft: FC<WithClassName> = ({ className }) => {
     return (
         <svg
             className={className}
-            xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 24 24"
             fill="none"
-            stroke="#000"
+            stroke="currentColor"
             strokeWidth="2"
+            width="1em"
+            height="1em"
         >
             <path d="m12 19-7-7 7-7"></path>
             <path d="M19 12H5"></path>
@@ -163,30 +178,32 @@ export const ArrowLeft: FC<WithClassName> = ({ className }) => {
     );
 };
 
-export const Phone: FC<WithClassName> = ({ className }) => {
+const Phone: FC<WithClassName> = ({ className }) => {
     return (
         <svg
             className={className}
-            xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 24 24"
             fill="none"
-            stroke="#000"
+            stroke="currentColor"
             strokeWidth="2"
+            width="1em"
+            height="1em"
         >
             <path d="M13.832 16.568a1 1 0 0 0 1.213-.303l.355-.465A2 2 0 0 1 17 15h3a2 2 0 0 1 2 2v3a2 2 0 0 1-2 2A18 18 0 0 1 2 4a2 2 0 0 1 2-2h3a2 2 0 0 1 2 2v3a2 2 0 0 1-.8 1.6l-.468.351a1 1 0 0 0-.292 1.233 14 14 0 0 0 6.392 6.384"></path>
         </svg>
     );
 };
 
-export const Location: FC<WithClassName> = ({ className }) => {
+const Location: FC<WithClassName> = ({ className }) => {
     return (
         <svg
             className={className}
-            xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 24 24"
             fill="none"
-            stroke="#000"
+            stroke="currentColor"
             strokeWidth="2"
+            width="1em"
+            height="1em"
         >
             <path d="M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0"></path>
             <circle cx="12" cy="10" r="3"></circle>
@@ -194,15 +211,16 @@ export const Location: FC<WithClassName> = ({ className }) => {
     );
 };
 
-export const Calendar: FC<WithClassName> = ({ className }) => {
+const Calendar: FC<WithClassName> = ({ className }) => {
     return (
         <svg
             className={className}
-            xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 24 24"
             fill="none"
-            stroke="#000"
+            stroke="currentColor"
             strokeWidth="2"
+            width="1em"
+            height="1em"
         >
             <path d="M8 2v4"></path>
             <path d="M16 2v4"></path>
@@ -212,15 +230,16 @@ export const Calendar: FC<WithClassName> = ({ className }) => {
     );
 };
 
-export const Clock: FC<WithClassName> = ({ className }) => {
+const Clock: FC<WithClassName> = ({ className }) => {
     return (
         <svg
             className={className}
-            xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 24 24"
             fill="none"
-            stroke="#000"
+            stroke="currentColor"
             strokeWidth="2"
+            width="1em"
+            height="1em"
         >
             <circle cx="12" cy="12" r="10"></circle>
             <polyline points="12 6 12 12 16 14"></polyline>
@@ -228,30 +247,32 @@ export const Clock: FC<WithClassName> = ({ className }) => {
     );
 };
 
-export const Filter: FC<WithClassName> = ({ className }) => {
+const Filter: FC<WithClassName> = ({ className }) => {
     return (
         <svg
             className={className}
-            xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 24 24"
             fill="none"
-            stroke="#000"
+            stroke="currentColor"
             strokeWidth="2"
+            width="1em"
+            height="1em"
         >
             <path d="M10 20a1 1 0 0 0 .553.895l2 1A1 1 0 0 0 14 21v-7a2 2 0 0 1 .517-1.341L21.74 4.67A1 1 0 0 0 21 3H3a1 1 0 0 0-.742 1.67l7.225 7.989A2 2 0 0 1 10 14z"></path>
         </svg>
     );
 };
 
-export const Hash: FC<WithClassName> = ({ className }) => {
+const Hash: FC<WithClassName> = ({ className }) => {
     return (
         <svg
             className={className}
-            xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 24 24"
             fill="none"
-            stroke="#000"
+            stroke="currentColor"
             strokeWidth="2"
+            width="1em"
+            height="1em"
         >
             <line x1="4" x2="20" y1="9" y2="9"></line>
             <line x1="4" x2="20" y1="15" y2="15"></line>
@@ -261,15 +282,16 @@ export const Hash: FC<WithClassName> = ({ className }) => {
     );
 };
 
-export const Share: FC<WithClassName> = ({ className }) => {
+const Share: FC<WithClassName> = ({ className }) => {
     return (
         <svg
             className={className}
-            xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 24 24"
             fill="none"
-            stroke="#000"
+            stroke="currentColor"
             strokeWidth="2"
+            width="1em"
+            height="1em"
         >
             <circle cx="18" cy="5" r="3"></circle>
             <circle cx="6" cy="12" r="3"></circle>
@@ -280,15 +302,16 @@ export const Share: FC<WithClassName> = ({ className }) => {
     );
 };
 
-export const Upload: FC<WithClassName> = ({ className }) => {
+const Upload: FC<WithClassName> = ({ className }) => {
     return (
         <svg
             className={className}
-            xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 24 24"
             fill="none"
-            stroke="#000"
+            stroke="currentColor"
             strokeWidth="2"
+            width="1em"
+            height="1em"
         >
             <path d="M12 3v12"></path>
             <path d="m17 8-5-5-5 5"></path>
@@ -296,3 +319,58 @@ export const Upload: FC<WithClassName> = ({ className }) => {
         </svg>
     );
 };
+
+export const PawIcon: React.FC<Partial<CustomIconComponentProps>> = props => (
+    <Icon component={Paw} {...props} />
+);
+export const UserIcon: React.FC<Partial<CustomIconComponentProps>> = props => (
+    <Icon component={User} {...props} />
+);
+export const UsersIcon: React.FC<Partial<CustomIconComponentProps>> = props => (
+    <Icon component={Users} {...props} />
+);
+export const SearchIcon: React.FC<Partial<CustomIconComponentProps>> = props => (
+    <Icon component={Search} {...props} />
+);
+export const TickIcon: React.FC<Partial<CustomIconComponentProps>> = props => (
+    <Icon component={Tick} {...props} />
+);
+export const ShieldIcon: React.FC<Partial<CustomIconComponentProps>> = props => (
+    <Icon component={Shield} {...props} />
+);
+export const ShieldTickIcon: React.FC<Partial<CustomIconComponentProps>> = props => (
+    <Icon component={ShieldTick} {...props} />
+);
+export const HeartIcon: React.FC<Partial<CustomIconComponentProps>> = props => (
+    <Icon component={Heart} {...props} />
+);
+export const ArrowRightIcon: React.FC<Partial<CustomIconComponentProps>> = props => (
+    <Icon component={ArrowRight} {...props} />
+);
+export const ArrowLeftIcon: React.FC<Partial<CustomIconComponentProps>> = props => (
+    <Icon component={ArrowLeft} {...props} />
+);
+export const PhoneIcon: React.FC<Partial<CustomIconComponentProps>> = props => (
+    <Icon component={Phone} {...props} />
+);
+export const LocationIcon: React.FC<Partial<CustomIconComponentProps>> = props => (
+    <Icon component={Location} {...props} />
+);
+export const CalendarIcon: React.FC<Partial<CustomIconComponentProps>> = props => (
+    <Icon component={Calendar} {...props} />
+);
+export const ClockIcon: React.FC<Partial<CustomIconComponentProps>> = props => (
+    <Icon component={Clock} {...props} />
+);
+export const FilterIcon: React.FC<Partial<CustomIconComponentProps>> = props => (
+    <Icon component={Filter} {...props} />
+);
+export const HashIcon: React.FC<Partial<CustomIconComponentProps>> = props => (
+    <Icon component={Hash} {...props} />
+);
+export const ShareIcon: React.FC<Partial<CustomIconComponentProps>> = props => (
+    <Icon component={Share} {...props} />
+);
+export const UploadIcon: React.FC<Partial<CustomIconComponentProps>> = props => (
+    <Icon component={Upload} {...props} />
+);

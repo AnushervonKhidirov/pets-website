@@ -8,7 +8,8 @@ import { Route } from '~/constant/route';
 import Container from '~commons/container/container';
 import Logo from '~commons/logo/logo';
 import Button from '~commons/button/button';
-import { Paw } from '~icons/icons';
+import AuthModal from '~component/auth/auth-modal/auth-modal';
+import { PawIcon } from '~icons/icons';
 
 import classNames from 'classnames';
 import classes from './header.module.css';
@@ -17,9 +18,14 @@ const Header = () => {
     const menuRef = useRef<HTMLDivElement>(null);
     const menuInnerRef = useRef<HTMLDivElement>(null);
     const [menuOpened, setMenuOpened] = useState(false);
+    const [authModalOpened, setAuthModalOpened] = useState(false);
 
     function menuHandler() {
         setMenuOpened(prevState => !prevState);
+    }
+
+    function openAuthModal() {
+        setAuthModalOpened(true);
     }
 
     useEffect(() => {
@@ -71,7 +77,7 @@ const Header = () => {
                             </NavLink>
                         </nav>
 
-                        <Button className={classes.auth_btn} icon={<Paw />} href={Route.SignIn}>
+                        <Button className={classes.auth_btn} icon={<PawIcon />} onClick={openAuthModal}>
                             Войти
                         </Button>
                     </div>
@@ -80,6 +86,12 @@ const Header = () => {
                 <button className={classes.menu_icon} onClick={menuHandler}>
                     {menuOpened ? <CloseOutlined /> : <MenuOutlined />}
                 </button>
+
+                <AuthModal
+                    open={authModalOpened}
+                    setOpened={setAuthModalOpened}
+                    contentType="sign_in"
+                />
             </Container>
         </header>
     );

@@ -1,5 +1,6 @@
 * {
     color: inherit;
+    font-size: inherit;
     font-family: inherit;
     text-decoration: none;
     outline: none;
@@ -47,6 +48,7 @@ h6 {
 button {
     background-color: transparent;
     border: none;
+    cursor: pointer;
 }
 
 @media screen and (min-width: 1025px) {

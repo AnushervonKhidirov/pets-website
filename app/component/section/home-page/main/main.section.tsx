@@ -3,7 +3,7 @@ import Button from '~commons/button/button';
 import Card from '~commons/card/card';
 
 import { Route } from '~constant/route';
-import { Paw, Search, Users } from '~icons/icons';
+import { PawIcon, SearchIcon, UsersIcon } from '~icons/icons';
 
 import logo from 'src/images/logo/logo-200x200.png';
 import classes from './main.module.css';
@@ -38,7 +38,7 @@ const MainSection = () => {
             <div className={classes.details}>
                 <Card className={classes.card} shadow>
                     <div className={classes.icon}>
-                        <Paw />
+                        <PawIcon />
                     </div>
                     <h5 className={classes.value}>500+</h5>
                     <div className={classes.about}>Питомцев</div>
@@ -46,7 +46,7 @@ const MainSection = () => {
 
                 <Card className={classes.card} shadow>
                     <div className={classes.icon}>
-                        <Search />
+                        <SearchIcon />
                     </div>
                     <h5 className={classes.value}>50+</h5>
                     <div className={classes.about}>Найдено</div>
@@ -54,7 +54,7 @@ const MainSection = () => {
 
                 <Card className={classes.card} shadow>
                     <div className={classes.icon}>
-                        <Users />
+                        <UsersIcon />
                     </div>
                     <h5 className={classes.value}>475+</h5>
                     <div className={classes.about}>Пользователей</div>
