@@ -2,6 +2,8 @@ import type { FC, PropsWithChildren } from 'react';
 import type { Route } from './+types/root';
 
 import { isRouteErrorResponse, Meta, Outlet, Scripts, ScrollRestoration } from 'react-router';
+import { ConfigProvider } from 'antd';
+import { themeConfig } from './config/ant.config';
 
 import './styles/fonts.css';
 import './styles/colors.css';
@@ -16,7 +18,7 @@ export const Layout: FC<PropsWithChildren> = ({ children }) => {
                 <Meta />
             </head>
             <body>
-                {children}
+                <ConfigProvider theme={themeConfig}>{children}</ConfigProvider>
                 <ScrollRestoration />
                 <Scripts />
             </body>
