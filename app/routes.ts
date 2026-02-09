@@ -10,11 +10,6 @@ export default [
         route(Route.ContactUs, 'routes/public/contact/contact.tsx'),
     ]),
 
-    layout('routes/auth/layout.tsx', [
-        route(Route.SignIn, 'routes/auth/sign-in/sign-in.tsx'),
-        route(Route.SignUp, 'routes/auth/sign-up/sign-up.tsx'),
-    ]),
-
     layout('routes/private/layout.tsx', [
         route(Route.Profile, 'routes/private/profile/profile.tsx'),
     ]),
