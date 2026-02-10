@@ -8,3 +8,5 @@ export enum Route {
 
     OAuthGoogle = '/auth/google',
 }
+
+export const PrivateRoutes = [Route.Profile];
