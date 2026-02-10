@@ -6,6 +6,7 @@ import { Form, Input, Button, notification } from 'antd';
 import { useState } from 'react';
 
 import authService from '~service/auth.service';
+import tokenService from '~service/token.service';
 import { alertError } from '~commons/alert-error/alert-error';
 
 type AuthFormProps = {
@@ -23,6 +24,7 @@ export const SignInForm: FC<AuthFormProps> = ({ onSuccess }) => {
         if (err) api.error(alertError(err));
 
         if (tokens) {
+            tokenService.setToken(tokens);
             if (typeof onSuccess === 'function') onSuccess();
         }
 
@@ -62,6 +64,7 @@ export const SignUpForm: FC<AuthFormProps> = ({ onSuccess }) => {
         if (err) api.error(alertError(err));
 
         if (tokens) {
+            tokenService.setToken(tokens);
             if (typeof onSuccess === 'function') onSuccess();
         }
 
