@@ -1,6 +1,6 @@
 import type { RouteConfig } from '@react-router/dev/routes';
 import { index, route, layout } from '@react-router/dev/routes';
-import { Route } from './constant/route';
+import { Route } from './core/constant/route';
 
 export default [
     layout('routes/public/layout.tsx', [
@@ -13,4 +13,6 @@ export default [
     layout('routes/private/layout.tsx', [
         route(Route.Profile, 'routes/private/profile/profile.tsx'),
     ]),
+
+    route(Route.OAuthGoogle, 'routes/oauth/oauth-google.tsx'),
 ] satisfies RouteConfig;
