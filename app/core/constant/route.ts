@@ -4,8 +4,7 @@ export enum Route {
     VetClinic = '/vet-clinic',
     ContactUs = '/contact-us',
 
-    SignIn = '/sign-in',
-    SignUp = '/sign-up',
-
     Profile = '/profile',
+
+    OAuthGoogle = '/auth/google',
 }
