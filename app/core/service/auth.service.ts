@@ -1,4 +1,4 @@
-import type { SignInDto, SignUpDto, Token } from '~type/auth.type';
+import type { SignInDto, SignUpDto, RefreshTokenDto, Token } from '~type/auth.type';
 import type { ReturnWithErrPromise } from '~type/common.type';
 
 import { apiClient } from '~api/apiClient';
@@ -8,7 +8,6 @@ class AuthService {
     async signIn(data: SignInDto): ReturnWithErrPromise<Token> {
         try {
             const response = await apiClient.post<Token>('/auth/sign-in', data);
-
             if (isHttpException(response.data)) throw new HttpException(response.data);
             return [response.data, null];
         } catch (err) {
@@ -26,22 +25,21 @@ class AuthService {
         }
     }
 
-    async signOut() {
+    async signOut(data: RefreshTokenDto): ReturnWithErrPromise {
         try {
+            const response = await apiClient.post('/auth/sign-out', data);
+            if (isHttpException(response.data)) throw new HttpException(response.data);
+            return [null, null];
         } catch (err) {
             return errorHandler(err);
         }
     }
 
-    async signOutEverywhere() {
+    async signOutEverywhere(data: RefreshTokenDto): ReturnWithErrPromise {
         try {
-        } catch (err) {
-            return errorHandler(err);
-        }
-    }
-
-    async oAuth() {
-        try {
+            const response = await apiClient.post('/auth/sign-out-everywhere', data);
+            if (isHttpException(response.data)) throw new HttpException(response.data);
+            return [null, null];
         } catch (err) {
             return errorHandler(err);
         }
