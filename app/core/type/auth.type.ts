@@ -10,7 +10,7 @@ export type SignUpDto = {
     password: string;
 };
 
-export type RefreshToken = {
+export type RefreshTokenDto = {
     refreshToken: string;
 };
 
