@@ -3,8 +3,8 @@ import type { ButtonProps } from 'antd';
 import { useState } from 'react';
 
 import { Modal, Button } from 'antd';
-import { GoogleOutlined } from '@ant-design/icons';
 import { SignInForm, SignUpForm } from './auth-form';
+import { GoogleOAuthButton } from './oauth-button';
 
 type AuthModalProps = {
     open: boolean;
@@ -48,9 +48,7 @@ const AuthModal: FC<AuthModalProps> = ({ open, setOpen, contentType }) => {
             )}
 
             <div style={OAuthWrapperStyle}>
-                <Button block color="red" variant="solid" icon={<GoogleOutlined />}>
-                    Войти с помощью Google
-                </Button>
+                <GoogleOAuthButton block />
             </div>
         </Modal>
     );
