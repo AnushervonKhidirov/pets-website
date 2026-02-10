@@ -20,9 +20,10 @@
             "~icons/*": ["./app/component/icons/*"],
             "~section/*": ["./app/component/section/*"],
             "~component/*": ["./app/component/*"],
-            "~constant/*": ["./app/constant/*"],
+            "~constant/*": ["./app/core/constant/*"],
             "~service/*": ["./app/core/service/*"],
             "~helper/*": ["./app/core/helper/*"],
+            "~hook/*": ["./app/core/hook/*"],
             "~api/*": ["./app/core/api/*"],
             "~type/*": ["./app/core/type/*"],
             "~/*": ["./app/*"]
