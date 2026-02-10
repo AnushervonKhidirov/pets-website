@@ -3,7 +3,7 @@ import type { NavLinkRenderProps } from 'react-router';
 import { useState, useRef, useEffect } from 'react';
 import { NavLink } from 'react-router';
 import { MenuOutlined, CloseOutlined } from '@ant-design/icons';
-import { Route } from '~/constant/route';
+import { Route } from '~constant/route';
 
 import { Button } from 'antd';
 import Container from '~commons/container/container';
