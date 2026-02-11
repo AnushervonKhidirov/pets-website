@@ -24,6 +24,7 @@
             "~service/*": ["./app/core/service/*"],
             "~helper/*": ["./app/core/helper/*"],
             "~hook/*": ["./app/core/hook/*"],
+            "~store/*": ["./app/core/store/*"],
             "~api/*": ["./app/core/api/*"],
             "~type/*": ["./app/core/type/*"],
             "~/*": ["./app/*"]
