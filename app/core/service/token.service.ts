@@ -1,22 +1,23 @@
 import type { Token } from '~type/auth.type';
+import { TokenName } from '~constant/token';
 
 class TokenService {
     getToken(): Token | null {
-        const accessToken = localStorage.getItem('access_token');
-        const refreshToken = localStorage.getItem('refresh_token');
+        const accessToken = localStorage.getItem(TokenName.Access);
+        const refreshToken = localStorage.getItem(TokenName.Refresh);
 
         if (!accessToken || !refreshToken) return null;
         return { accessToken, refreshToken };
     }
 
     setToken({ accessToken, refreshToken }: Token) {
-        localStorage.setItem('access_token', accessToken);
-        localStorage.setItem('refresh_token', refreshToken);
+        localStorage.setItem(TokenName.Access, accessToken);
+        localStorage.setItem(TokenName.Refresh, refreshToken);
     }
 
     removeToken() {
-        localStorage.removeItem('access_token');
-        localStorage.removeItem('refresh_token');
+        localStorage.removeItem(TokenName.Access);
+        localStorage.removeItem(TokenName.Refresh);
     }
 }
 
