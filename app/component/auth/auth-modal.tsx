@@ -34,15 +34,19 @@ const AuthModal: FC<AuthModalProps> = ({ open, setOpen, contentType }) => {
         if (!isOpen) setContent(contentType);
     }
 
-    async function closeModal() {
+    async function closeModal(shouldFetch?: boolean) {
+        if (shouldFetch) await fetchUserData();
+        setOpen(false);
+    }
+
+    async function fetchUserData() {
         const [user, err] = await userService.getMe();
+
         if (err) {
             api.error(alertError(err));
         } else {
             setUser(user);
         }
-
-        setOpen(false);
     }
 
     return (
@@ -51,15 +55,15 @@ const AuthModal: FC<AuthModalProps> = ({ open, setOpen, contentType }) => {
                 afterOpenChange={afterOpenHandler}
                 title={title[content]}
                 open={open}
-                onCancel={closeModal}
+                onCancel={() => closeModal()}
                 centered
                 footer={<AuthFooter content={content} setContent={setContent} />}
-                style={{ maxWidth: 400 }}
+                styles={{ container: { maxWidth: 400, margin: 'auto' } }}
             >
                 {content === 'sign_in' ? (
-                    <SignInForm onSuccess={closeModal} />
+                    <SignInForm onSuccess={() => closeModal(true)} />
                 ) : (
-                    <SignUpForm onSuccess={closeModal} />
+                    <SignUpForm onSuccess={() => closeModal(true)} />
                 )}
 
                 <div style={OAuthWrapperStyle}>
