@@ -36,6 +36,10 @@ export const themeConfig: ThemeConfig = {
             colorIconHover: cyan[5],
         },
 
+        Form: {
+            itemMarginBottom: 10,
+        },
+
         Button: {
             colorBgContainer: 'transparent',
 
@@ -54,6 +58,10 @@ export const themeConfig: ThemeConfig = {
         Input: {
             activeBorderColor: cyan[5],
             hoverBorderColor: cyan[4],
+        },
+
+        Descriptions: {
+            titleColor: grey[6],
         },
     },
 };
