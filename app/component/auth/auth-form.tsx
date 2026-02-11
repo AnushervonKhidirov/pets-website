@@ -10,7 +10,7 @@ import tokenService from '~service/token.service';
 import { alertError } from '~commons/alert-error/alert-error';
 
 type AuthFormProps = {
-    onSuccess?: () => void;
+    onSuccess?: () => void | Promise<void>;
 };
 
 export const SignInForm: FC<AuthFormProps> = ({ onSuccess }) => {
@@ -25,7 +25,7 @@ export const SignInForm: FC<AuthFormProps> = ({ onSuccess }) => {
 
         if (tokens) {
             tokenService.setToken(tokens);
-            if (typeof onSuccess === 'function') onSuccess();
+            if (typeof onSuccess === 'function') await onSuccess();
         }
 
         setLoading(false);
