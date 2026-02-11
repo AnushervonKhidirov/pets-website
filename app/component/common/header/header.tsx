@@ -1,7 +1,8 @@
 import type { NavLinkRenderProps } from 'react-router';
+import type { ButtonProps } from 'antd';
 
 import { useState, useRef, useEffect } from 'react';
-import { NavLink } from 'react-router';
+import { NavLink, Link } from 'react-router';
 import { MenuOutlined, CloseOutlined } from '@ant-design/icons';
 import { Route } from '~constant/route';
 
@@ -11,6 +12,7 @@ import AuthButton from '~component/auth/auth-button';
 import Logo from '~commons/logo/logo';
 import { PawIcon } from '~icons/icons';
 
+import { isLoggedIn } from '~helper/auth.helper';
 import classNames from 'classnames';
 import classes from './header.module.css';
 
@@ -37,6 +39,22 @@ const Header = () => {
     const menuRef = useRef<HTMLDivElement>(null);
     const menuInnerRef = useRef<HTMLDivElement>(null);
     const [menuOpened, setMenuOpened] = useState(false);
+
+    const headerButtonProps: ButtonProps = {
+        className: classes.auth_btn,
+        block: true,
+        icon: <PawIcon />,
+        variant: 'solid',
+        color: 'cyan',
+    };
+
+    const HeaderButton = isLoggedIn() ? (
+        <Link to={Route.Profile}>
+            <Button {...headerButtonProps}>Профиль</Button>
+        </Link>
+    ) : (
+        <AuthButton {...headerButtonProps} />
+    );
 
     function menuHandler() {
         setMenuOpened(prevState => !prevState);
@@ -73,12 +91,7 @@ const Header = () => {
                             ))}
                         </nav>
 
-                        <AuthButton
-                            className={classes.auth_btn}
-                            icon={<PawIcon />}
-                            variant="solid"
-                            color="cyan"
-                        />
+                        {HeaderButton}
                     </div>
                 </div>
 
