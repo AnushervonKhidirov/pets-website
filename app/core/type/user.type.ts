@@ -5,8 +5,12 @@ export type User = {
     phone: string | null;
     firstName: string;
     lastName: string | null;
+    contacts: Contact[];
+    address: Address | null;
+};
+
+export type UserFromResponse = Omit<User, 'contacts'> & {
     contacts: string | null;
-    address: Address[];
 };
 
 export type Address = {
@@ -14,6 +18,11 @@ export type Address = {
     address: string;
     latitude: string;
     longitude: string;
+};
+
+export type Contact = {
+    name: string;
+    value: string;
 };
 
 export enum AuthType {
