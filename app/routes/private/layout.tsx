@@ -28,7 +28,7 @@ export const Layout = () => {
     return (
         user && (
             <>
-                <Header />
+                <Header showBtn={false} />
                 <main>
                     <Outlet />
                 </main>
