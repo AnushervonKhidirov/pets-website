@@ -47,7 +47,7 @@ export default function Profile() {
             },
             {
                 key: '5',
-                label: 'Адресса',
+                label: 'Адресс',
                 children: user.address?.address ?? '—',
             },
         ] satisfies DescriptionsProps['items'];
