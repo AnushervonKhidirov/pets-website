@@ -1,5 +1,5 @@
 import type { ReturnWithErrPromise } from '~type/common.type';
-import type { User } from '~type/user.type';
+import type { User, UserFromResponse } from '~type/user.type';
 
 import { apiClient, apiClientAuth } from '~api/apiClient';
 import { errorHandler, isHttpException } from '~helper/error-handler';
@@ -7,9 +7,10 @@ import { errorHandler, isHttpException } from '~helper/error-handler';
 class UserService {
     async getMe(): ReturnWithErrPromise<User> {
         try {
-            const response = await apiClientAuth.get<User>('/user/me');
+            const response = await apiClientAuth.get<UserFromResponse>('/user/me');
             if (isHttpException(response.data)) throw response.data;
-            return [response.data, null];
+            const user = this.parseContacts(response.data);
+            return [user, null];
         } catch (err) {
             return errorHandler(err);
         }
@@ -17,9 +18,10 @@ class UserService {
 
     async getOne(id: number): ReturnWithErrPromise<User> {
         try {
-            const response = await apiClient.get<User>(`/user/${id}`);
+            const response = await apiClient.get<UserFromResponse>(`/user/${id}`);
             if (isHttpException(response.data)) throw response.data;
-            return [response.data, null];
+            const user = this.parseContacts(response.data);
+            return [user, null];
         } catch (err) {
             return errorHandler(err);
         }
@@ -27,12 +29,19 @@ class UserService {
 
     async getAll(): ReturnWithErrPromise<User[]> {
         try {
-            const response = await apiClient.get<User[]>(`/user`);
+            const response = await apiClient.get<UserFromResponse[]>(`/user`);
             if (isHttpException(response.data)) throw response.data;
-            return [response.data, null];
+            const users = response.data.map(user => this.parseContacts(user));
+            return [users, null];
         } catch (err) {
             return errorHandler(err);
         }
+    }
+
+    private parseContacts(user: UserFromResponse): User {
+        if (!user.contacts) return { ...user, contacts: [] };
+        const contacts = JSON.parse(user.contacts) as User['contacts'];
+        return { ...user, contacts };
     }
 }
 
