@@ -39,26 +39,30 @@ apiClientAuth.interceptors.request.use(async config => {
 apiClientAuth.interceptors.response.use(async response => {
     const originalRequest = response.config;
 
-    if (isHttpException(response.data) && response.data.statusCode === 401) {
+    if (!isHttpException(response.data)) return response;
+
+    if (response.data.statusCode === 401) {
         const token = tokenService.getToken();
 
         if (!token) {
             throw new HttpException({ error: 'Token not found', statusCode: 0 });
         }
 
-        const response = await apiClient.post<Token>('/auth/refresh-token', token);
+        const responseRefreshed = await apiClient.post<Token>('/auth/refresh-token', token);
 
-        if (isHttpException(response.data)) {
+        if (isHttpException(responseRefreshed.data)) {
             tokenService.removeToken();
             if (isInPrivate()) globalThis.location.replace('/');
-            throw new HttpException(response.data);
+            throw new HttpException(responseRefreshed.data);
         }
 
-        tokenService.setToken(response.data);
-        originalRequest.headers.Authorization = `Bearer ${response.data.accessToken}`;
+        tokenService.setToken(responseRefreshed.data);
+        originalRequest.headers.Authorization = `Bearer ${responseRefreshed.data.accessToken}`;
 
         return apiClient(originalRequest);
     }
 
-    return response;
+    tokenService.removeToken();
+    if (isInPrivate()) globalThis.location.replace('/');
+    throw new HttpException(response.data);
 });
