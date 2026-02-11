@@ -1,4 +1,4 @@
-type HttpExceptionProps = { error?: string; statusCode?: number; message?: string };
+type HttpExceptionProps = { error?: string; statusCode?: number; message?: string | string[] };
 
 export class HttpException {
     statusCode: number;
@@ -12,7 +12,7 @@ export class HttpException {
     }
 }
 
-export function isHttpException(err: unknown): err is HttpExceptionProps {
+export function isHttpException(err: unknown): err is HttpException {
     const isErrorObj = err && typeof err === 'object';
     const isHttpError = isErrorObj && 'statusCode' in err && 'error' in err;
 

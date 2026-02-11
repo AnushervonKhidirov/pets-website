@@ -48,7 +48,10 @@ apiClientAuth.interceptors.response.use(async response => {
             throw new HttpException({ error: 'Token not found', statusCode: 0 });
         }
 
-        const responseRefreshed = await apiClient.post<Token>('/auth/refresh-token', token);
+        const responseRefreshed = await apiClient.post<Token | HttpException>(
+            '/auth/refresh-token',
+            token,
+        );
 
         if (isHttpException(responseRefreshed.data)) {
             tokenService.removeToken();
