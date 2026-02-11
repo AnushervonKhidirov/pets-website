@@ -1,27 +1,35 @@
 import type { ReturnWithErrPromise } from '~type/common.type';
+import type { User } from '~type/user.type';
 
-import { errorHandler } from '~helper/error-handler';
+import { apiClient, apiClientAuth } from '~api/apiClient';
+import { errorHandler, isHttpException } from '~helper/error-handler';
 
 class UserService {
-    async getMe(): ReturnWithErrPromise {
+    async getMe(): ReturnWithErrPromise<User> {
         try {
-            return [null, null];
+            const response = await apiClientAuth.get<User>('/user/me');
+            if (isHttpException(response.data)) throw response.data;
+            return [response.data, null];
         } catch (err) {
             return errorHandler(err);
         }
     }
 
-    async getOne(id: number): ReturnWithErrPromise {
+    async getOne(id: number): ReturnWithErrPromise<User> {
         try {
-            return [null, null];
+            const response = await apiClient.get<User>(`/user/${id}`);
+            if (isHttpException(response.data)) throw response.data;
+            return [response.data, null];
         } catch (err) {
             return errorHandler(err);
         }
     }
 
-    async getAll(): ReturnWithErrPromise {
+    async getAll(): ReturnWithErrPromise<User[]> {
         try {
-            return [null, null];
+            const response = await apiClient.get<User[]>(`/user`);
+            if (isHttpException(response.data)) throw response.data;
+            return [response.data, null];
         } catch (err) {
             return errorHandler(err);
         }
