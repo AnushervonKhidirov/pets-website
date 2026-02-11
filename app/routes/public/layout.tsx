@@ -7,12 +7,12 @@ import Header from '~commons/header/header';
 import Footer from '~commons/footer/footer';
 
 export const Layout = () => {
-    const { user, update } = useUserStore(state => state);
+    const { user, setUser } = useUserStore(state => state);
 
     async function fetchUserData() {
         const [user, err] = await userService.getMe();
         if (err) return;
-        update(user);
+        setUser(user);
     }
 
     useAuth(() => {

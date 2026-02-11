@@ -1,30 +1,39 @@
-import { Outlet } from 'react-router';
+import { useEffect } from 'react';
+import { Outlet, useNavigate } from 'react-router';
 import { useAuth } from '~hook/use-auth';
 import useUserStore from '~store/user.store';
 import userService from '~service/user.service';
 
 import Header from '~commons/header/header';
+import { isLoggedIn } from '~helper/auth.helper';
 
 export const Layout = () => {
-    const { user, update } = useUserStore(state => state);
+    const navigate = useNavigate();
+    const { user, setUser } = useUserStore(state => state);
 
     async function fetchUserData() {
         const [user, err] = await userService.getMe();
         if (err) return;
-        update(user);
+        setUser(user);
     }
+
+    useEffect(() => {
+        if (!isLoggedIn()) navigate('/');
+    }, []);
 
     useAuth(() => {
         if (!user) fetchUserData();
     });
 
     return (
-        <>
-            <Header />
-            <main>
-                <Outlet />
-            </main>
-        </>
+        user && (
+            <>
+                <Header />
+                <main>
+                    <Outlet />
+                </main>
+            </>
+        )
     );
 };
 
