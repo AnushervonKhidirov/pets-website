@@ -36,7 +36,7 @@ const navLinkList = [
     },
 ];
 
-const Header = () => {
+const Header = ({ showBtn = true }: { showBtn?: boolean }) => {
     const menuRef = useRef<HTMLDivElement>(null);
     const menuInnerRef = useRef<HTMLDivElement>(null);
     const { user } = useUserStore(state => state);
@@ -94,7 +94,7 @@ const Header = () => {
                             ))}
                         </nav>
 
-                        {HeaderButton}
+                        {showBtn && HeaderButton}
                     </div>
                 </div>
 

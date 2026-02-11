@@ -23,8 +23,12 @@
 
 .menu_inner {
     display: grid;
-    grid-template-areas: 'nav' 'auth_btn';
+    grid-template-areas: 'nav';
     gap: 1rem;
+
+    &:has(.auth_btn) {
+        grid-template-areas: 'nav' 'auth_btn';
+    }
 }
 
 .nav_bar {
@@ -59,8 +63,13 @@
 
 @media screen and (min-width: 801px) {
     .header_inner {
-        grid-template-areas: 'logo nav auth_btn';
-        grid-template-columns: max-content 1fr max-content;
+        grid-template-areas: 'logo nav';
+        grid-template-columns: max-content 1fr;
+
+        &:has(.auth_btn) {
+            grid-template-areas: 'logo nav auth_btn';
+            grid-template-columns: max-content 1fr max-content;
+        }
     }
 
     .menu_wrapper,
