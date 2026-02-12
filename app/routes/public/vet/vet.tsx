@@ -1,9 +1,9 @@
-import type { Route } from "./+types/vet";
-
-export function meta({}: Route.MetaArgs) {
-    return [{ title: 'Vet page' }, { name: 'description', content: 'Welcome to React Router!' }];
+export function meta() {
+    return [{ title: 'Vet page' }];
 }
 
-export default function Vet() {
+const Vet = () => {
     return <div>Vet page</div>;
-}
+};
+
+export default Vet;

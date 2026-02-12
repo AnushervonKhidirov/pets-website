@@ -1,9 +1,9 @@
-import type { Route } from './+types/lost';
-
-export function meta({}: Route.MetaArgs) {
-    return [{ title: 'Lost page' }, { name: 'description', content: 'Welcome to React Router!' }];
+export function meta() {
+    return [{ title: 'Lost page' }];
 }
 
-export default function Lost() {
+const Lost = () => {
     return <div>Lost page</div>;
-}
+};
+
+export default Lost;

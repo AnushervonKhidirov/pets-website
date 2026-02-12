@@ -1,12 +1,9 @@
-import type { Route } from './+types/contact';
-
-export function meta({}: Route.MetaArgs) {
-    return [
-        { title: 'Contact page' },
-        { name: 'description', content: 'Welcome to React Router!' },
-    ];
+export function meta() {
+    return [{ title: 'Contact page' }];
 }
 
-export default function Contact() {
+const Contact = () => {
     return <div>Contact page</div>;
-}
+};
+
+export default Contact;
