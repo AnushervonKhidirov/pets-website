@@ -2,16 +2,21 @@ import type { FC } from 'react';
 import type { User } from '~type/user.type';
 import type { DescriptionsProps } from 'antd';
 
+import { useState } from 'react';
+
 import { Link } from 'react-router';
-import { Typography, Descriptions } from 'antd';
+import { Typography, Descriptions, Button } from 'antd';
 import Container from '~commons/container/container';
+import EditPersonalInfoModal from '~component/profile/edit-personal-info-modal';
 
 import { parsePhoneNumberFromString } from 'libphonenumber-js';
-import { ContactLinks } from '~constant/contact-links';
+import { ContactLinks, isContactItem } from '~constant/contact-links';
 
 const { Title, Text } = Typography;
 
 const PersonalInfoSection: FC<{ user: User }> = ({ user }) => {
+    const [open, setOpen] = useState(false);
+
     const items = [
         {
             key: '1',
@@ -44,11 +49,18 @@ const PersonalInfoSection: FC<{ user: User }> = ({ user }) => {
         user && (
             <Container section>
                 <Descriptions
-                    title={<Title level={3}>Данные пользователя</Title>}
+                    title={<Title level={3}>Персональные данные</Title>}
                     layout="vertical"
                     items={items}
                     column={{ sm: 2, md: 3 }}
+                    extra={
+                        <Button color="cyan" variant="solid" onClick={() => setOpen(true)}>
+                            Редактировать
+                        </Button>
+                    }
                 />
+
+                <EditPersonalInfoModal user={user} open={open} setOpen={setOpen} />
             </Container>
         )
     );
@@ -67,9 +79,9 @@ function getContactsNode(contacts: User['contacts']) {
     return (
         <div>
             {contacts.map(({ name, value }) => {
-                const nameLowercase = name.toLowerCase();
-
-                const link = nameLowercase in ContactLinks ? ContactLinks[nameLowercase] : null;
+                if (!isContactItem(name)) return null;
+                const nameLowercase = name.toLowerCase() as Lowercase<typeof name>;
+                const link = ContactLinks[nameLowercase];
 
                 return (
                     <div key={name + value}>
