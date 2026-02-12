@@ -147,10 +147,12 @@ const MapSelection: FC<{ address: User['address'] }> = ({ address }) => {
 
     const coordinate =
         address?.latitude && address?.longitude
-            ? [{ lat: address.latitude, lng: address?.longitude }]
+            ? { lat: address.latitude, lng: address?.longitude }
             : undefined;
 
-    const [mark, setMark] = useState<Coordinate[] | undefined>(coordinate);
+    const [mark, setMark] = useState<Coordinate[] | undefined>(
+        coordinate ? [coordinate] : undefined,
+    );
 
     function selectMark(e: MapMouseEvent) {
         const coords: Coordinate = e.detail.latLng;
@@ -178,7 +180,8 @@ const MapSelection: FC<{ address: User['address'] }> = ({ address }) => {
                 <GoogleMap
                     onClick={selectMark}
                     markers={mark}
-                    defaultZoom={12}
+                    defaultZoom={coordinate ? 18 : 12}
+                    defaultCenter={coordinate}
                     style={{
                         height: 200,
                         marginBottom: 'var(--ant-form-item-margin-bottom)',

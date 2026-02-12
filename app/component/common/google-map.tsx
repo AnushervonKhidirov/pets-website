@@ -18,11 +18,11 @@ const GoogleMap: FC<GoogleMapProps> = ({ markers = [], ...props }) => {
     return (
         <APIProvider apiKey={API_KEY} language="ru">
             <Map
-                defaultCenter={defaultPosition}
-                defaultZoom={13}
                 gestureHandling="greedy"
                 disableDefaultUI
                 {...props}
+                defaultCenter={props.defaultCenter ?? defaultPosition}
+                defaultZoom={props.defaultZoom ?? 13}
                 style={{ width: '100%', height: '100%', overflow: 'hidden', ...props.style }}
             >
                 {markers.map(({ lat, lng }) => (
