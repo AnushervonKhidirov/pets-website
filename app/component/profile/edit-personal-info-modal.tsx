@@ -190,7 +190,7 @@ const MapSelection: FC<{ address: User['address'] }> = ({ address }) => {
 
             <Row>
                 <Button block disabled={!mark} color="cyan" variant="filled" onClick={clearMark}>
-                    Удалить макрек
+                    Удалить метку
                 </Button>
             </Row>
         </div>
