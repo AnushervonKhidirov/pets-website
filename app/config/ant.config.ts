@@ -62,6 +62,7 @@ export const themeConfig: ThemeConfig = {
 
         Descriptions: {
             titleColor: grey[6],
+            itemPaddingBottom: 5,
         },
     },
 };

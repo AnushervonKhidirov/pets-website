@@ -7,6 +7,7 @@ import { useState } from 'react';
 
 import { Link } from 'react-router';
 import { Typography, Descriptions, Button } from 'antd';
+import { EditOutlined } from '@ant-design/icons';
 import Container from '~commons/container/container';
 import GoogleMap from '~commons/google-map';
 import EditPersonalInfoModal from '~component/profile/edit-personal-info-modal';
@@ -14,39 +15,46 @@ import EditPersonalInfoModal from '~component/profile/edit-personal-info-modal';
 import { parsePhoneNumberFromString } from 'libphonenumber-js';
 import { ContactLinks, isContactItem } from '~constant/contact-links';
 
+import classes from './personal-info.section.module.css';
+
 const { Title, Text } = Typography;
 
 const PersonalInfoSection: FC<{ user: User }> = ({ user }) => {
     const [open, setOpen] = useState(false);
 
-    const items = [
+    const items: DescriptionsProps['items'] = [
         {
             key: '1',
             label: 'Ф.И.О',
+            styles: { content: { paddingBottom: 15 } },
             children: [user.firstName, user.lastName].join(' ').trim(),
         },
         {
             key: '2',
             label: 'Почта',
+            styles: { content: { paddingBottom: 15 } },
             children: user.email,
         },
         {
             key: '3',
             label: 'Номер телефона',
+            styles: { content: { paddingBottom: 15 } },
             children: getPhoneNumberNode(user.phone),
         },
         {
             key: '4',
             label: 'Дополнительные контакты',
+            styles: { content: { paddingBottom: 15 } },
             children: getContactsNode(user.contacts),
         },
         {
             key: '5',
             label: 'Адрес',
             span: { sm: 2 },
+            styles: { content: { paddingBottom: 15 } },
             children: user.address?.address ?? '—',
         },
-    ] satisfies DescriptionsProps['items'];
+    ];
 
     if (user.address?.latitude && user.address?.longitude) {
         const coordinate: Coordinate = { lat: user.address.latitude, lng: user.address?.longitude };
@@ -54,11 +62,12 @@ const PersonalInfoSection: FC<{ user: User }> = ({ user }) => {
         items.push({
             key: '6',
             label: 'Карта',
+            styles: { label: { paddingBottom: 10 } },
             children: (
                 <GoogleMap
                     defaultCenter={coordinate}
                     markers={[coordinate]}
-                    style={{ height: '500px' }}
+                    style={{ height: 'auto', aspectRatio: '1/0.4', minHeight: 200 }}
                 />
             ),
         });
@@ -68,13 +77,17 @@ const PersonalInfoSection: FC<{ user: User }> = ({ user }) => {
         user && (
             <Container section>
                 <Descriptions
-                    title={<Title level={3}>Персональные данные</Title>}
+                    title={
+                        <Title level={3}>
+                            <span className={classes.headline}>Персональные данные</span>
+                        </Title>
+                    }
                     layout="vertical"
                     items={items}
                     column={{ sm: 2, md: 3 }}
                     extra={
                         <Button color="cyan" variant="solid" onClick={() => setOpen(true)}>
-                            Редактировать
+                            <EditOutlined style={{ fontSize: '1.25em' }} />
                         </Button>
                     }
                 />

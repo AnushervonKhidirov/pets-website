@@ -13,3 +13,11 @@
     margin: auto;
     padding: 0.5rem 1rem;
 }
+
+@media screen and (max-width: 425px) {
+    .container {
+        &.section {
+            padding-block: 1.5rem;
+        }
+    }
+}
