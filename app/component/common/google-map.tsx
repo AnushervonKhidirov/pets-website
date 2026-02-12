@@ -16,7 +16,7 @@ export type Coordinate = Record<'lat' | 'lng', number>;
 
 const GoogleMap: FC<GoogleMapProps> = ({ markers = [], ...props }) => {
     return (
-        <APIProvider apiKey={API_KEY}>
+        <APIProvider apiKey={API_KEY} language="ru">
             <Map
                 defaultCenter={defaultPosition}
                 defaultZoom={13}
