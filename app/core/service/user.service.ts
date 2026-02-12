@@ -1,5 +1,5 @@
 import type { ReturnWithErrPromise } from '~type/common.type';
-import type { UpdateUserDto, User, UserFromResponse } from '~type/user.type';
+import type { UpdateUserDto, User } from '~type/user.type';
 
 import { apiClient, apiClientAuth } from '~api/apiClient';
 import { errorHandler, isHttpException } from '~helper/error-handler';
@@ -7,10 +7,9 @@ import { errorHandler, isHttpException } from '~helper/error-handler';
 class UserService {
     async getMe(): ReturnWithErrPromise<User> {
         try {
-            const response = await apiClientAuth.get<UserFromResponse>('/user/me');
+            const response = await apiClientAuth.get<User>('/user/me');
             if (isHttpException(response.data)) throw response.data;
-            const user = this.parseContacts(response.data);
-            return [user, null];
+            return [response.data, null];
         } catch (err) {
             return errorHandler(err);
         }
@@ -18,10 +17,9 @@ class UserService {
 
     async getOne(id: number): ReturnWithErrPromise<User> {
         try {
-            const response = await apiClient.get<UserFromResponse>(`/user/${id}`);
+            const response = await apiClient.get<User>(`/user/${id}`);
             if (isHttpException(response.data)) throw response.data;
-            const user = this.parseContacts(response.data);
-            return [user, null];
+            return [response.data, null];
         } catch (err) {
             return errorHandler(err);
         }
@@ -29,10 +27,9 @@ class UserService {
 
     async getAll(): ReturnWithErrPromise<User[]> {
         try {
-            const response = await apiClient.get<UserFromResponse[]>(`/user`);
+            const response = await apiClient.get<User[]>(`/user`);
             if (isHttpException(response.data)) throw response.data;
-            const users = response.data.map(user => this.parseContacts(user));
-            return [users, null];
+            return [response.data, null];
         } catch (err) {
             return errorHandler(err);
         }
@@ -40,19 +37,12 @@ class UserService {
 
     async update(data: UpdateUserDto): ReturnWithErrPromise<User> {
         try {
-            const response = await apiClientAuth.patch<UserFromResponse>('/user', data);
+            const response = await apiClientAuth.patch<User>('/user', data);
             if (isHttpException(response.data)) throw response.data;
-            const user = this.parseContacts(response.data);
-            return [user, null];
+            return [response.data, null];
         } catch (err) {
             return errorHandler(err);
         }
-    }
-
-    private parseContacts(user: UserFromResponse): User {
-        if (!user.contacts) return { ...user, contacts: [] };
-        const contacts = JSON.parse(user.contacts) as User['contacts'];
-        return { ...user, contacts };
     }
 }
 
