@@ -1,5 +1,5 @@
 import type { ReturnWithErrPromise } from '~type/common.type';
-import type { User, UserFromResponse } from '~type/user.type';
+import type { UpdateUserDto, User, UserFromResponse } from '~type/user.type';
 
 import { apiClient, apiClientAuth } from '~api/apiClient';
 import { errorHandler, isHttpException } from '~helper/error-handler';
@@ -33,6 +33,17 @@ class UserService {
             if (isHttpException(response.data)) throw response.data;
             const users = response.data.map(user => this.parseContacts(user));
             return [users, null];
+        } catch (err) {
+            return errorHandler(err);
+        }
+    }
+
+    async update(data: UpdateUserDto): ReturnWithErrPromise<User> {
+        try {
+            const response = await apiClientAuth.patch<UserFromResponse>('/user', data);
+            if (isHttpException(response.data)) throw response.data;
+            const user = this.parseContacts(response.data);
+            return [user, null];
         } catch (err) {
             return errorHandler(err);
         }
