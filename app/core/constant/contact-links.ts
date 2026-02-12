@@ -8,8 +8,8 @@ export type ContactLinksType =
     | Record<string, string>;
 
 export const ContactLinks: ContactLinksType = {
-    telegram: 'https://t.me/@',
-    whatsapp: 'https://wa.me/@',
+    telegram: 'https://t.me/',
+    whatsapp: 'https://wa.me/',
 };
 
 export function isContactItem(name: string): name is ContactName {
