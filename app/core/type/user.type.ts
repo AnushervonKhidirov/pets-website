@@ -9,6 +9,14 @@ export type User = {
     address: Address | null;
 };
 
+export type UpdateUserDto = Partial<{
+    phone: string | null;
+    firstName: string | null;
+    lastName: string | null;
+    contacts: string | null; // Json of Contact[]
+    address: Omit<Address, 'id'> | null;
+}>;
+
 export type UserFromResponse = Omit<User, 'contacts'> & {
     contacts: string | null;
 };
@@ -16,8 +24,8 @@ export type UserFromResponse = Omit<User, 'contacts'> & {
 export type Address = {
     id: number;
     address: string;
-    latitude: string;
-    longitude: string;
+    latitude?: string;
+    longitude?: string;
 };
 
 export type Contact = {
