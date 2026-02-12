@@ -65,7 +65,5 @@ apiClientAuth.interceptors.response.use(async response => {
         return apiClient(originalRequest);
     }
 
-    tokenService.removeToken();
-    if (isInPrivate()) globalThis.location.replace('/');
     throw new HttpException(response.data);
 });
