@@ -8,7 +8,7 @@ import userService from '~service/user.service';
 import { Modal, Form, Input, Button, notification, Select } from 'antd';
 import { alertError } from '~commons/alert-error/alert-error';
 import { isValidPhoneNumber } from 'libphonenumber-js';
-import { ContactName } from '~constant/contact-links';
+import { ContactName, isContactItem } from '~constant/contact-links';
 
 type EditPersonalInfoModalProps = {
     user: User;
@@ -20,7 +20,9 @@ const EditPersonalInfoModal: FC<EditPersonalInfoModalProps> = ({ user, open, set
     const { setUser } = useUserStore(state => state);
 
     const [loading, setLoading] = useState(false);
-    const [additionalContacts, setAdditionalContacts] = useState<ContactName[]>([]);
+    const [additionalContacts, setAdditionalContacts] = useState<ContactName[]>(
+        user.contacts?.map(contact => contact.name) ?? [],
+    );
 
     const [api, context] = notification.useNotification();
 
@@ -30,20 +32,17 @@ const EditPersonalInfoModal: FC<EditPersonalInfoModalProps> = ({ user, open, set
         setAdditionalContacts(data);
     }
 
-    function closeModal() {
-        setOpen(false);
-    }
-
-    async function submit(data: Record<string, unknown>) {
+    async function submit(data: Record<string, string>) {
         setLoading(true);
 
-        const updatedUserData = convertContactData(data);
+        const updatedUserData = convertUserData(data);
         const [newUserData, err] = await userService.update(updatedUserData);
 
         if (err) {
             api.error(alertError(err));
         } else {
             setUser(newUserData);
+            setOpen(false);
         }
 
         setLoading(false);
@@ -54,21 +53,27 @@ const EditPersonalInfoModal: FC<EditPersonalInfoModalProps> = ({ user, open, set
             <Modal
                 title="Редактирование"
                 open={open}
-                onCancel={() => closeModal()}
+                onCancel={() => setOpen(false)}
                 centered
                 footer={null}
+                destroyOnHidden
             >
                 <Form onFinish={submit}>
-                    <Form.Item name="firstName" rules={[{ required: true }]}>
+                    <Form.Item
+                        name="firstName"
+                        rules={[{ required: true }]}
+                        initialValue={user.firstName}
+                    >
                         <Input placeholder="Имя" />
                     </Form.Item>
 
-                    <Form.Item name="lastName">
+                    <Form.Item name="lastName" initialValue={user.lastName}>
                         <Input placeholder="Фамилия" />
                     </Form.Item>
 
                     <Form.Item
                         name="phone"
+                        initialValue={user.phone}
                         rules={[
                             {
                                 validator: async (_, value) => {
@@ -83,14 +88,14 @@ const EditPersonalInfoModal: FC<EditPersonalInfoModalProps> = ({ user, open, set
                         <Input placeholder="Номер телефона" />
                     </Form.Item>
 
-                    <Form.Item name="address">
+                    <Form.Item name="address" initialValue={user.address?.address}>
                         <Input placeholder="Адрес" />
                     </Form.Item>
 
                     <Select
                         mode="multiple"
                         placeholder="Выберите дополнительные контакты"
-                        defaultValue={user.contacts.map(contact => contact.name as ContactName)}
+                        defaultValue={user.contacts?.map(contact => contact.name)}
                         options={contactOptions}
                         onChange={onChangeContacts}
                         style={{
@@ -103,6 +108,9 @@ const EditPersonalInfoModal: FC<EditPersonalInfoModalProps> = ({ user, open, set
                         return (
                             <Form.Item
                                 name={`contacts;${name}`}
+                                initialValue={
+                                    user.contacts?.find(contact => contact.name === name)?.value
+                                }
                                 rules={[
                                     { required: true, message: `Введите имя пользователя ${name}` },
                                 ]}
@@ -128,33 +136,33 @@ const EditPersonalInfoModal: FC<EditPersonalInfoModalProps> = ({ user, open, set
     );
 };
 
-function convertContactData(data: Record<string, unknown>): UpdateUserDto {
+function convertUserData(data: Record<string, string>): UpdateUserDto {
     const updatedUser: UpdateUserDto = {};
     const contacts: Contact[] = [];
 
     for (const [key, value] of Object.entries(data)) {
-        if (key.startsWith('contacts;') && typeof value === 'string') {
-            const [, name] = key.split(';');
-            contacts.push({ name, value: '@' + value });
+        const keyTest = key as keyof Omit<UpdateUserDto, 'contacts' | 'address'>;
+
+        if (!value) {
+            updatedUser[keyTest] = null;
             continue;
         }
 
-        if (key === 'address' && typeof value === 'string') {
+        if (key === 'address') {
             updatedUser.address = { address: value };
             continue;
         }
 
-        const stringValueKey = key as keyof Omit<UpdateUserDto, 'contacts' | 'address'>;
-
-        if (key && typeof value === 'string') {
-            updatedUser[stringValueKey] = value;
+        if (key.startsWith('contacts;')) {
+            const [, name] = key.split(';');
+            if (isContactItem(name)) contacts.push({ name, value });
             continue;
         }
 
-        updatedUser[stringValueKey] = null;
+        updatedUser[keyTest] = value;
     }
 
-    if (contacts.length > 0) updatedUser.contacts = JSON.stringify(contacts);
+    updatedUser.contacts = contacts.length > 0 ? contacts : null;
 
     return updatedUser;
 }

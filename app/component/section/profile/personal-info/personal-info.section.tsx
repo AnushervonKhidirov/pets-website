@@ -74,7 +74,7 @@ function getPhoneNumberNode(phone: string | null) {
 }
 
 function getContactsNode(contacts: User['contacts']) {
-    if (contacts.length === 0) return '—';
+    if (!contacts || contacts.length === 0) return '—';
 
     return (
         <div>
@@ -87,8 +87,8 @@ function getContactsNode(contacts: User['contacts']) {
                     <div key={name + value}>
                         <Text>{name}:</Text>{' '}
                         {link ? (
-                            <Link to={link + value.replace('@', '')} target="_blank">
-                                {value}
+                            <Link to={link + value} target="_blank">
+                                @{value}
                             </Link>
                         ) : (
                             <Text type="secondary">{value}</Text>
