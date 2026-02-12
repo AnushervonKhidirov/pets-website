@@ -1,12 +1,14 @@
 import type { FC } from 'react';
-import type { User } from '~type/user.type';
 import type { DescriptionsProps } from 'antd';
+import type { User } from '~type/user.type';
+import type { Coordinate } from '~commons/google-map';
 
 import { useState } from 'react';
 
 import { Link } from 'react-router';
 import { Typography, Descriptions, Button } from 'antd';
 import Container from '~commons/container/container';
+import GoogleMap from '~commons/google-map';
 import EditPersonalInfoModal from '~component/profile/edit-personal-info-modal';
 
 import { parsePhoneNumberFromString } from 'libphonenumber-js';
@@ -41,9 +43,26 @@ const PersonalInfoSection: FC<{ user: User }> = ({ user }) => {
         {
             key: '5',
             label: 'Адрес',
+            span: { sm: 2 },
             children: user.address?.address ?? '—',
         },
     ] satisfies DescriptionsProps['items'];
+
+    if (user.address?.latitude && user.address?.longitude) {
+        const coordinate: Coordinate = { lat: user.address.latitude, lng: user.address?.longitude };
+
+        items.push({
+            key: '6',
+            label: 'Карта',
+            children: (
+                <GoogleMap
+                    defaultCenter={coordinate}
+                    markers={[coordinate]}
+                    style={{ height: '500px' }}
+                />
+            ),
+        });
+    }
 
     return (
         user && (

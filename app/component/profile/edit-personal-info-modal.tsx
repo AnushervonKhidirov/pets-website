@@ -1,11 +1,14 @@
 import type { FC } from 'react';
+import type { MapMouseEvent } from '@vis.gl/react-google-maps';
 import type { User, Contact, UpdateUserDto } from '~type/user.type';
+import type { Coordinate } from '~commons/google-map';
 
 import { useState } from 'react';
 import useUserStore from '~store/user.store';
 import userService from '~service/user.service';
 
-import { Modal, Form, Input, Button, notification, Select } from 'antd';
+import { Modal, Form, Input, Button, notification, Select, Row } from 'antd';
+import GoogleMap from '~commons/google-map';
 import { alertError } from '~commons/alert-error/alert-error';
 import { isValidPhoneNumber } from 'libphonenumber-js';
 import { ContactName, isContactItem } from '~constant/contact-links';
@@ -17,6 +20,7 @@ type EditPersonalInfoModalProps = {
 };
 
 const EditPersonalInfoModal: FC<EditPersonalInfoModalProps> = ({ user, open, setOpen }) => {
+    const [form] = Form.useForm();
     const { setUser } = useUserStore(state => state);
 
     const [loading, setLoading] = useState(false);
@@ -58,7 +62,7 @@ const EditPersonalInfoModal: FC<EditPersonalInfoModalProps> = ({ user, open, set
                 footer={null}
                 destroyOnHidden
             >
-                <Form onFinish={submit}>
+                <Form onFinish={submit} form={form} preserve>
                     <Form.Item
                         name="firstName"
                         rules={[{ required: true }]}
@@ -125,6 +129,8 @@ const EditPersonalInfoModal: FC<EditPersonalInfoModalProps> = ({ user, open, set
                         );
                     })}
 
+                    <MapSelection address={user.address} />
+
                     <Button block color="cyan" variant="solid" htmlType="submit" loading={loading}>
                         Сохранить
                     </Button>
@@ -136,6 +142,61 @@ const EditPersonalInfoModal: FC<EditPersonalInfoModalProps> = ({ user, open, set
     );
 };
 
+const MapSelection: FC<{ address: User['address'] }> = ({ address }) => {
+    const form = Form.useFormInstance();
+
+    const coordinate =
+        address?.latitude && address?.longitude
+            ? [{ lat: address.latitude, lng: address?.longitude }]
+            : undefined;
+
+    const [mark, setMark] = useState<Coordinate[] | undefined>(coordinate);
+
+    function selectMark(e: MapMouseEvent) {
+        const coords: Coordinate = e.detail.latLng;
+
+        setMark([coords]);
+        form.setFieldsValue({ latitude: coords.lat, longitude: coords.lng });
+    }
+
+    function clearMark() {
+        setMark(undefined);
+        form.setFieldsValue({ latitude: null, longitude: null });
+    }
+
+    return (
+        <div style={{ marginBottom: 'var(--ant-form-item-margin-bottom)' }}>
+            <Form.Item name="latitude" initialValue={address?.latitude} hidden>
+                <Input placeholder="latitude" />
+            </Form.Item>
+
+            <Form.Item name="longitude" initialValue={address?.longitude} hidden>
+                <Input placeholder="longitude" />
+            </Form.Item>
+
+            <Row>
+                <GoogleMap
+                    onClick={selectMark}
+                    markers={mark}
+                    defaultZoom={12}
+                    style={{
+                        height: 200,
+                        marginBottom: 'var(--ant-form-item-margin-bottom)',
+                        border: '1px solid var(--ant-color-border)',
+                        borderRadius: 'var(--ant-border-radius)',
+                    }}
+                />
+            </Row>
+
+            <Row>
+                <Button block disabled={!mark} color="cyan" variant="filled" onClick={clearMark}>
+                    Удалить макрек
+                </Button>
+            </Row>
+        </div>
+    );
+};
+
 function convertUserData(data: Record<string, string>): UpdateUserDto {
     const updatedUser: UpdateUserDto = {};
     const contacts: Contact[] = [];
@@ -143,13 +204,28 @@ function convertUserData(data: Record<string, string>): UpdateUserDto {
     for (const [key, value] of Object.entries(data)) {
         const keyTest = key as keyof Omit<UpdateUserDto, 'contacts' | 'address'>;
 
+        console.log('address', updatedUser.address);
+
         if (!value) {
             updatedUser[keyTest] = null;
             continue;
         }
 
         if (key === 'address') {
-            updatedUser.address = { address: value };
+            const address = updatedUser.address ?? {};
+            updatedUser.address = { ...address, address: value };
+            continue;
+        }
+
+        if (key === 'latitude') {
+            const address = updatedUser.address ?? {};
+            updatedUser.address = { ...address, latitude: Number.parseFloat(value) };
+            continue;
+        }
+
+        if (key === 'longitude') {
+            const address = updatedUser.address ?? {};
+            updatedUser.address = { ...address, longitude: Number.parseFloat(value) };
             continue;
         }
 
