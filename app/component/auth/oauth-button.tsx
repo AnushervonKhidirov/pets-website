@@ -27,8 +27,6 @@ export const GoogleOAuthButton: FC<ButtonProps> = props => {
             const bc = new BroadcastChannel(BroadcastChannelName.AuthBroadcast);
 
             bc.onmessage = event => {
-                console.log(event);
-
                 if (event.data === 'success') {
                     globalThis.location.reload();
                     bc.close();

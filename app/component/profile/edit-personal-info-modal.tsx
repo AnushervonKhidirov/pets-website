@@ -204,8 +204,6 @@ function convertUserData(data: Record<string, string>): UpdateUserDto {
     for (const [key, value] of Object.entries(data)) {
         const keyTest = key as keyof Omit<UpdateUserDto, 'contacts' | 'address'>;
 
-        console.log('address', updatedUser.address);
-
         if (!value) {
             updatedUser[keyTest] = null;
             continue;
