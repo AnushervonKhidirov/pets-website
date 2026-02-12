@@ -1,3 +1,5 @@
+import { ContactName } from '~constant/contact-links';
+
 export type User = {
     id: number;
     authType: AuthType;
@@ -5,7 +7,7 @@ export type User = {
     phone: string | null;
     firstName: string;
     lastName: string | null;
-    contacts: Contact[];
+    contacts: Contact[] | null;
     address: Address | null;
 };
 
@@ -13,23 +15,19 @@ export type UpdateUserDto = Partial<{
     phone: string | null;
     firstName: string | null;
     lastName: string | null;
-    contacts: string | null; // Json of Contact[]
+    contacts: Contact[] | null;
     address: Omit<Address, 'id'> | null;
 }>;
-
-export type UserFromResponse = Omit<User, 'contacts'> & {
-    contacts: string | null;
-};
 
 export type Address = {
     id: number;
     address: string;
-    latitude?: string;
-    longitude?: string;
+    latitude?: number;
+    longitude?: number;
 };
 
 export type Contact = {
-    name: string;
+    name: ContactName;
     value: string;
 };
 
