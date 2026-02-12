@@ -3,9 +3,13 @@ export enum ContactName {
     WhatsApp = 'WhatsApp',
 }
 
-export const ContactLinks: Record<Lowercase<ContactName>, string | null> = {
-    telegram: 'https://t.me/',
-    whatsapp: 'https://wa.me/',
+export type ContactLinksType =
+    | Partial<Record<Lowercase<ContactName>, string>>
+    | Record<string, string>;
+
+export const ContactLinks: ContactLinksType = {
+    telegram: 'https://t.me/@',
+    whatsapp: 'https://wa.me/@',
 };
 
 export function isContactItem(name: string): name is ContactName {
