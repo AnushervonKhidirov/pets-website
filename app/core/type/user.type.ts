@@ -21,9 +21,9 @@ export type UpdateUserDto = Partial<{
 
 export type Address = {
     id: number;
-    address: string;
-    latitude?: number;
-    longitude?: number;
+    address?: string;
+    latitude?: number | null;
+    longitude?: number | null;
 };
 
 export type Contact = {
