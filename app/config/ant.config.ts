@@ -1,7 +1,6 @@
 import type { ThemeConfig } from 'antd';
 import { grey, generate } from '@ant-design/colors';
 
-// TODO: add dark theme
 export const cyan = generate('#7ba99d');
 export const red = generate('#d0463b');
 export const orange = generate('#c28e82');
