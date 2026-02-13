@@ -1,12 +1,12 @@
 import type { FC } from 'react';
 import type { GetProps } from 'antd';
-import type { WithClassName } from '~type/common.type';
+import type { WithAdditionalProps } from '~type/common.type';
 
 import Icon from '@ant-design/icons';
 
 type IconProps = Partial<GetProps<typeof Icon>>;
 
-const Paw: FC<WithClassName> = ({ className }) => {
+const Paw: FC<WithAdditionalProps> = ({ className }) => {
     return (
         <svg
             className={className}
@@ -25,7 +25,7 @@ const Paw: FC<WithClassName> = ({ className }) => {
     );
 };
 
-const User: FC<WithClassName> = ({ className }) => {
+const User: FC<WithAdditionalProps> = ({ className }) => {
     return (
         <svg
             className={className}
@@ -42,7 +42,7 @@ const User: FC<WithClassName> = ({ className }) => {
     );
 };
 
-const Users: FC<WithClassName> = ({ className }) => {
+const Users: FC<WithAdditionalProps> = ({ className }) => {
     return (
         <svg
             className={className}
@@ -61,7 +61,7 @@ const Users: FC<WithClassName> = ({ className }) => {
     );
 };
 
-const Search: FC<WithClassName> = ({ className }) => {
+const Search: FC<WithAdditionalProps> = ({ className }) => {
     return (
         <svg
             className={className}
@@ -78,7 +78,7 @@ const Search: FC<WithClassName> = ({ className }) => {
     );
 };
 
-const Tick: FC<WithClassName> = ({ className }) => {
+const Tick: FC<WithAdditionalProps> = ({ className }) => {
     return (
         <svg
             className={className}
@@ -95,7 +95,7 @@ const Tick: FC<WithClassName> = ({ className }) => {
     );
 };
 
-const Shield: FC<WithClassName> = ({ className }) => {
+const Shield: FC<WithAdditionalProps> = ({ className }) => {
     return (
         <svg
             className={className}
@@ -111,7 +111,7 @@ const Shield: FC<WithClassName> = ({ className }) => {
     );
 };
 
-const ShieldTick: FC<WithClassName> = ({ className }) => {
+const ShieldTick: FC<WithAdditionalProps> = ({ className }) => {
     return (
         <svg
             className={className}
@@ -128,7 +128,7 @@ const ShieldTick: FC<WithClassName> = ({ className }) => {
     );
 };
 
-const Heart: FC<WithClassName> = ({ className }) => {
+const Heart: FC<WithAdditionalProps> = ({ className }) => {
     return (
         <svg
             className={className}
@@ -144,7 +144,7 @@ const Heart: FC<WithClassName> = ({ className }) => {
     );
 };
 
-const ArrowRight: FC<WithClassName> = ({ className }) => {
+const ArrowRight: FC<WithAdditionalProps> = ({ className }) => {
     return (
         <svg
             className={className}
@@ -161,7 +161,7 @@ const ArrowRight: FC<WithClassName> = ({ className }) => {
     );
 };
 
-const ArrowLeft: FC<WithClassName> = ({ className }) => {
+const ArrowLeft: FC<WithAdditionalProps> = ({ className }) => {
     return (
         <svg
             className={className}
@@ -178,7 +178,7 @@ const ArrowLeft: FC<WithClassName> = ({ className }) => {
     );
 };
 
-const Phone: FC<WithClassName> = ({ className }) => {
+const Phone: FC<WithAdditionalProps> = ({ className }) => {
     return (
         <svg
             className={className}
@@ -194,7 +194,7 @@ const Phone: FC<WithClassName> = ({ className }) => {
     );
 };
 
-const Location: FC<WithClassName> = ({ className }) => {
+const Location: FC<WithAdditionalProps> = ({ className }) => {
     return (
         <svg
             className={className}
@@ -211,7 +211,7 @@ const Location: FC<WithClassName> = ({ className }) => {
     );
 };
 
-const Calendar: FC<WithClassName> = ({ className }) => {
+const Calendar: FC<WithAdditionalProps> = ({ className }) => {
     return (
         <svg
             className={className}
@@ -230,7 +230,7 @@ const Calendar: FC<WithClassName> = ({ className }) => {
     );
 };
 
-const Clock: FC<WithClassName> = ({ className }) => {
+const Clock: FC<WithAdditionalProps> = ({ className }) => {
     return (
         <svg
             className={className}
@@ -247,7 +247,7 @@ const Clock: FC<WithClassName> = ({ className }) => {
     );
 };
 
-const Filter: FC<WithClassName> = ({ className }) => {
+const Filter: FC<WithAdditionalProps> = ({ className }) => {
     return (
         <svg
             className={className}
@@ -263,7 +263,7 @@ const Filter: FC<WithClassName> = ({ className }) => {
     );
 };
 
-const Hash: FC<WithClassName> = ({ className }) => {
+const Hash: FC<WithAdditionalProps> = ({ className }) => {
     return (
         <svg
             className={className}
@@ -282,7 +282,7 @@ const Hash: FC<WithClassName> = ({ className }) => {
     );
 };
 
-const Share: FC<WithClassName> = ({ className }) => {
+const Share: FC<WithAdditionalProps> = ({ className }) => {
     return (
         <svg
             className={className}
@@ -302,7 +302,7 @@ const Share: FC<WithClassName> = ({ className }) => {
     );
 };
 
-const Upload: FC<WithClassName> = ({ className }) => {
+const Upload: FC<WithAdditionalProps> = ({ className }) => {
     return (
         <svg
             className={className}

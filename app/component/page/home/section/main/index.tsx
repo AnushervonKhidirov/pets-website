@@ -10,6 +10,7 @@ import { PawIcon, SearchIcon, UsersIcon } from '~icons';
 
 import logo from 'src/images/logo/logo-200x200.png';
 import classes from './main.module.css';
+import { orange } from '~/config/ant.config';
 
 const { Title, Text } = Typography;
 
@@ -33,7 +34,7 @@ const detailList = [
 
 const MainSection = () => {
     return (
-        <Container innerClassName={classes.inner_section} section colored>
+        <Container innerClassName={classes.inner_section} section color={orange[0]}>
             <div className={classes.logo}>
                 <img src={logo} alt="logo" />
             </div>
@@ -62,7 +63,7 @@ const MainSection = () => {
 
             <div className={classes.details}>
                 {detailList.map(({ Icon, value, about }) => (
-                    <Card className={classes.card} key={about}>
+                    <Card key={about} className={classes.card} alpha={0.5}>
                         <Icon className={classes.icon} />
                         <Title level={3} className={classes.value}>
                             <CountUp end={value} separator="," enableScrollSpy scrollSpyOnce />

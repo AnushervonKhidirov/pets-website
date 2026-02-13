@@ -1,33 +1,29 @@
 import type { FC } from 'react';
-import type { WithAdditionalProps } from '~type/common.type';
+import type { BackgroundProps } from '../background';
 
+import Background from '../background';
 import classNames from 'classnames';
 import classes from './container.module.css';
 
-type ContainerProps = WithAdditionalProps<{
-    innerClassName?: string;
+type ContainerProps = BackgroundProps<{
     section?: boolean;
-    colored?: boolean;
+    innerClassName?: string;
 }>;
 
 const Container: FC<ContainerProps> = ({
     section,
-    colored,
-    children,
     className,
     innerClassName,
+    children,
+    ...props
 }) => {
     return (
-        <div
-            className={classNames(
-                classes.container,
-                { [classes.colored]: colored },
-                { [classes.section]: section },
-                className,
-            )}
+        <Background
+            className={classNames(classes.container, { [classes.section]: section }, className)}
+            {...props}
         >
             <div className={classNames(classes.container_inner, innerClassName)}>{children}</div>
-        </div>
+        </Background>
     );
 };
 

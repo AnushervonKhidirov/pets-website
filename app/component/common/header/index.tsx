@@ -13,6 +13,7 @@ import { Container, Logo } from '~component/common';
 import AuthButton from '~component/auth/auth-button';
 
 import { Route } from '~constant/route';
+import { orange } from '~/config/ant.config';
 import classNames from 'classnames';
 import classes from './header.module.css';
 
@@ -72,7 +73,7 @@ const Header = ({ showBtn = true }: { showBtn?: boolean }) => {
 
     return (
         <header className={classes.header}>
-            <Container innerClassName={classes.header_inner}>
+            <Container innerClassName={classes.header_inner} color={orange[0]} alpha={0.8} blur={8}>
                 <Logo className={classes.logo} />
 
                 <div

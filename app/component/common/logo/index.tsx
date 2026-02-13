@@ -1,5 +1,5 @@
 import type { FC } from 'react';
-import type { WithClassName } from '~type/common.type';
+import type { WithAdditionalProps } from '~type/common.type';
 
 import logo from 'src/images/logo/logo.png';
 import logo_100 from 'src/images/logo/logo-100x100.png';
@@ -9,7 +9,7 @@ import logo_300 from 'src/images/logo/logo-300x300.png';
 import classNames from 'classnames';
 import classes from './logo.module.css';
 
-type LogoProps = WithClassName<{ logoSize?: logoSize }>;
+type LogoProps = WithAdditionalProps<{ logoSize?: logoSize }>;
 type logoSize = 'small' | 'medium' | 'large' | 'extraLarge';
 
 const Logo: FC<LogoProps> = ({ logoSize = 'small', className }) => {

@@ -1,10 +1,7 @@
 .header {
     position: sticky;
     top: 0;
-    background-color: var(--light-08);
     border-bottom: 1px solid var(--cyan-2);
-    backdrop-filter: blur(8px);
-    -webkit-backdrop-filter: blur(8px);
 }
 
 .header_inner {
