@@ -3,8 +3,7 @@
         "**/*",
         "**/.server/**/*",
         "**/.client/**/*",
-        ".react-router/types/**/*",
-        "app/routes/public/lost/lost.tsx"
+        ".react-router/types/**/*"
     ],
     "compilerOptions": {
         "lib": ["DOM", "DOM.Iterable", "ES2022"],
@@ -16,9 +15,8 @@
         "rootDirs": [".", "./.react-router/types"],
         "baseUrl": ".",
         "paths": {
-            "~commons/*": ["./app/component/common/*"],
-            "~icons/*": ["./app/component/icons/*"],
-            "~section/*": ["./app/component/section/*"],
+            "~icons": ["./app/component/icons"],
+            "~pageComponent/*": ["./app/component/page/*"],
             "~component/*": ["./app/component/*"],
             "~constant/*": ["./app/core/constant/*"],
             "~service/*": ["./app/core/service/*"],

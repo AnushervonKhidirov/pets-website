@@ -1,11 +1,11 @@
 import type { FC } from 'react';
 import type { ButtonProps } from 'antd';
-import type { AuthContent } from '~component/auth/auth-modal';
+import type { AuthContent } from './auth-modal';
 
 import { useState } from 'react';
 
 import { Button } from 'antd';
-import AuthModal from '~component/auth/auth-modal';
+import AuthModal from './auth-modal';
 
 type AuthButtonProps = ButtonProps & {
     contentType?: AuthContent;

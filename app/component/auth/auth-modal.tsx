@@ -8,7 +8,7 @@ import userService from '~service/user.service';
 import { Modal, Button, notification } from 'antd';
 import { SignInForm, SignUpForm } from './auth-form';
 import { GoogleOAuthButton } from './oauth-button';
-import { alertError } from '~commons/alert-error/alert-error';
+import { alertError } from '~helper/alert-error';
 
 type AuthModalProps = {
     open: boolean;

@@ -2,12 +2,11 @@ import { Link } from 'react-router';
 import CountUp from 'react-countup';
 import { Typography, Button } from 'antd';
 
-import Container from '~commons/container/container';
-import MyCard from '~commons/card/card';
+import { Container, Card } from '~component/common';
 import AuthButton from '~component/auth/auth-button';
 
 import { Route } from '~constant/route';
-import { PawIcon, SearchIcon, UsersIcon } from '~icons/icons';
+import { PawIcon, SearchIcon, UsersIcon } from '~icons';
 
 import logo from 'src/images/logo/logo-200x200.png';
 import classes from './main.module.css';
@@ -63,7 +62,7 @@ const MainSection = () => {
 
             <div className={classes.details}>
                 {detailList.map(({ Icon, value, about }) => (
-                    <MyCard className={classes.card} key={about}>
+                    <Card className={classes.card} key={about}>
                         <Icon className={classes.icon} />
                         <Title level={3} className={classes.value}>
                             <CountUp end={value} separator="," enableScrollSpy scrollSpyOnce />
@@ -71,7 +70,7 @@ const MainSection = () => {
                         <Text type="secondary" className={classes.about}>
                             {about}
                         </Text>
-                    </MyCard>
+                    </Card>
                 ))}
             </div>
         </Container>

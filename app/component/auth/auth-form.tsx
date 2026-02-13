@@ -7,7 +7,7 @@ import { useState } from 'react';
 
 import authService from '~service/auth.service';
 import tokenService from '~service/token.service';
-import { alertError } from '~commons/alert-error/alert-error';
+import { alertError } from '~helper/alert-error';
 
 type AuthFormProps = {
     onSuccess?: () => void | Promise<void>;

@@ -6,7 +6,7 @@ import { googleOAuthService } from '~service/oauth.service';
 
 import { Button, notification } from 'antd';
 import { GoogleOutlined } from '@ant-design/icons';
-import { alertError } from '~commons/alert-error/alert-error';
+import { alertError } from '~helper/alert-error';
 
 import { BroadcastChannelName } from '~constant/broadcast-channel';
 

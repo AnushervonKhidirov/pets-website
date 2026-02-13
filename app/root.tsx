@@ -6,7 +6,6 @@ import { ConfigProvider } from 'antd';
 import { themeConfig } from './config/ant.config';
 
 import './styles/fonts.css';
-import './styles/colors.css';
 import './styles/root.css';
 
 export const Layout: FC<PropsWithChildren> = ({ children }) => {
@@ -17,7 +16,7 @@ export const Layout: FC<PropsWithChildren> = ({ children }) => {
                 <meta name="viewport" content="width=device-width, initial-scale=1" />
                 <Meta />
             </head>
-            <body>
+            <body className="custom-ant">
                 <ConfigProvider theme={themeConfig}>{children}</ConfigProvider>
                 <ScrollRestoration />
                 <Scripts />

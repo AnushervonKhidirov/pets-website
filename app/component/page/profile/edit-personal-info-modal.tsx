@@ -1,15 +1,15 @@
 import type { FC } from 'react';
 import type { MapMouseEvent } from '@vis.gl/react-google-maps';
 import type { User, Contact, UpdateUserDto } from '~type/user.type';
-import type { Coordinate } from '~commons/google-map';
+import type { Coordinate } from '~component/common/google-map';
 
 import { useState } from 'react';
 import useUserStore from '~store/user.store';
 import userService from '~service/user.service';
 
 import { Modal, Form, Input, Button, notification, Select, Row } from 'antd';
-import GoogleMap from '~commons/google-map';
-import { alertError } from '~commons/alert-error/alert-error';
+import { GoogleMap } from '~component/common';
+import { alertError } from '~helper/alert-error';
 import { isValidPhoneNumber } from 'libphonenumber-js';
 import { ContactName, isContactItem } from '~constant/contact-links';
 
@@ -104,7 +104,7 @@ const EditPersonalInfoModal: FC<EditPersonalInfoModalProps> = ({ user, open, set
                         onChange={onChangeContacts}
                         style={{
                             width: '100%',
-                            marginBottom: 'var(--ant-form-item-margin-bottom)',
+                            marginBottom: 'var(--form-item-margin-bottom)',
                         }}
                     />
 
@@ -167,7 +167,7 @@ const MapSelection: FC<{ address: User['address'] }> = ({ address }) => {
     }
 
     return (
-        <div style={{ marginBottom: 'var(--ant-form-item-margin-bottom)' }}>
+        <div style={{ marginBottom: 'var(--form-item-margin-bottom)' }}>
             <Form.Item name="latitude" initialValue={address?.latitude} hidden>
                 <Input placeholder="latitude" />
             </Form.Item>
@@ -184,9 +184,9 @@ const MapSelection: FC<{ address: User['address'] }> = ({ address }) => {
                     defaultCenter={coordinate}
                     style={{
                         height: 200,
-                        marginBottom: 'var(--ant-form-item-margin-bottom)',
-                        border: '1px solid var(--ant-color-border)',
-                        borderRadius: 'var(--ant-border-radius)',
+                        marginBottom: 'var(--form-item-margin-bottom)',
+                        border: '1px solid var(--color-border)',
+                        borderRadius: 'var(--border-radius)',
                     }}
                 />
             </Row>

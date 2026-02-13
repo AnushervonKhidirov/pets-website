@@ -8,10 +8,9 @@ import { isLoggedIn } from '~helper/auth.helper';
 
 import { Button } from 'antd';
 import { MenuOutlined, CloseOutlined } from '@ant-design/icons';
-import Container from '~commons/container/container';
+import { PawIcon } from '~icons';
+import { Container, Logo } from '~component/common';
 import AuthButton from '~component/auth/auth-button';
-import Logo from '~commons/logo/logo';
-import { PawIcon } from '~icons/icons';
 
 import { Route } from '~constant/route';
 import classNames from 'classnames';

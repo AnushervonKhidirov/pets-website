@@ -1,4 +1,4 @@
-import Container from '~commons/container/container';
+import { Container } from '~component/common';
 
 import styles from './footer.module.css';
 

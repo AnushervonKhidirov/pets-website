@@ -1,8 +1,6 @@
 import { Typography } from 'antd';
-import Container from '~commons/container/container';
-import Grid from '~commons/grid/grid';
-import Card from '~commons/card/card';
-import { ShieldIcon, SearchIcon, HeartIcon } from '~icons/icons';
+import { Container, Grid, Card } from '~component/common';
+import { ShieldIcon, SearchIcon, HeartIcon } from '~icons';
 
 import classes from './feature.module.css';
 

@@ -1,7 +1,7 @@
 import type { ReturnWithErrPromise } from '~type/common.type';
 import type { UpdateUserDto, User } from '~type/user.type';
 
-import { apiClient, apiClientAuth } from '~api/apiClient';
+import { apiClient, apiClientAuth } from '~api/api-client';
 import { errorHandler, isHttpException } from '~helper/error-handler';
 
 class UserService {

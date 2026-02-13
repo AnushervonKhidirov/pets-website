@@ -6,18 +6,20 @@ const orange = generate('#bf6a2a');
 const red = generate('#d0463b');
 
 export const themeConfig: ThemeConfig = {
+    cssVar: { key: 'custom-ant', prefix: '' },
+
     token: {
         fontFamily: 'inherit',
         colorText: 'inherit',
+        colorTextHeading: grey[6],
+        fontSize: 16,
 
         cyan: cyan[5],
         orange: orange[5],
         red: red[5],
-        fontSize: 16,
     },
     components: {
         Typography: {
-            colorTextHeading: grey[6],
             lineHeightHeading1: 1,
             lineHeightHeading2: 1,
             lineHeightHeading3: 1,
@@ -29,7 +31,6 @@ export const themeConfig: ThemeConfig = {
         },
 
         Modal: {
-            colorTextHeading: grey[6],
             titleFontSize: 28,
             contentBg: '#fdf8f3',
             colorIcon: cyan[5],
@@ -61,7 +62,6 @@ export const themeConfig: ThemeConfig = {
         },
 
         Descriptions: {
-            titleColor: grey[6],
             itemPaddingBottom: 5,
         },
     },

@@ -1,21 +1,20 @@
 import type { FC } from 'react';
 import type { DescriptionsProps } from 'antd';
 import type { User } from '~type/user.type';
-import type { Coordinate } from '~commons/google-map';
+import type { Coordinate } from '~component/common/google-map';
 
 import { useState } from 'react';
 
 import { Link } from 'react-router';
 import { Typography, Descriptions, Button } from 'antd';
 import { EditOutlined } from '@ant-design/icons';
-import Container from '~commons/container/container';
-import GoogleMap from '~commons/google-map';
-import EditPersonalInfoModal from '~component/profile/edit-personal-info-modal';
+import { Container, GoogleMap } from '~component/common';
+import EditPersonalInfoModal from '../../edit-personal-info-modal';
 
 import { parsePhoneNumberFromString } from 'libphonenumber-js';
 import { ContactLinks, isContactItem } from '~constant/contact-links';
 
-import classes from './personal-info.section.module.css';
+import classes from './personal-info.module.css';
 
 const { Title, Text } = Typography;
 

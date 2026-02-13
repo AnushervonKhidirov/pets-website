@@ -4,7 +4,7 @@ import { useAuth } from '~hook/use-auth';
 import useUserStore from '~store/user.store';
 import userService from '~service/user.service';
 
-import Header from '~commons/header/header';
+import { Header } from '~component/common';
 import { isLoggedIn } from '~helper/auth.helper';
 
 export const Layout = () => {

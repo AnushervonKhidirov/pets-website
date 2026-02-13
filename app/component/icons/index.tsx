@@ -1,15 +1,15 @@
 import type { FC } from 'react';
-import type { WithClassName } from '~type/common.type';
-
 import type { GetProps } from 'antd';
+import type { WithClassName } from '~type/common.type';
 
 import Icon from '@ant-design/icons';
 
-type CustomIconComponentProps = GetProps<typeof Icon>;
+type IconProps = Partial<GetProps<typeof Icon>>;
 
-const Paw: FC = () => {
+const Paw: FC<WithClassName> = ({ className }) => {
     return (
         <svg
+            className={className}
             viewBox="0 0 24 24"
             fill="none"
             stroke="currentColor"
@@ -320,57 +320,21 @@ const Upload: FC<WithClassName> = ({ className }) => {
     );
 };
 
-export const PawIcon: React.FC<Partial<CustomIconComponentProps>> = props => (
-    <Icon component={Paw} {...props} />
-);
-export const UserIcon: React.FC<Partial<CustomIconComponentProps>> = props => (
-    <Icon component={User} {...props} />
-);
-export const UsersIcon: React.FC<Partial<CustomIconComponentProps>> = props => (
-    <Icon component={Users} {...props} />
-);
-export const SearchIcon: React.FC<Partial<CustomIconComponentProps>> = props => (
-    <Icon component={Search} {...props} />
-);
-export const TickIcon: React.FC<Partial<CustomIconComponentProps>> = props => (
-    <Icon component={Tick} {...props} />
-);
-export const ShieldIcon: React.FC<Partial<CustomIconComponentProps>> = props => (
-    <Icon component={Shield} {...props} />
-);
-export const ShieldTickIcon: React.FC<Partial<CustomIconComponentProps>> = props => (
-    <Icon component={ShieldTick} {...props} />
-);
-export const HeartIcon: React.FC<Partial<CustomIconComponentProps>> = props => (
-    <Icon component={Heart} {...props} />
-);
-export const ArrowRightIcon: React.FC<Partial<CustomIconComponentProps>> = props => (
-    <Icon component={ArrowRight} {...props} />
-);
-export const ArrowLeftIcon: React.FC<Partial<CustomIconComponentProps>> = props => (
-    <Icon component={ArrowLeft} {...props} />
-);
-export const PhoneIcon: React.FC<Partial<CustomIconComponentProps>> = props => (
-    <Icon component={Phone} {...props} />
-);
-export const LocationIcon: React.FC<Partial<CustomIconComponentProps>> = props => (
-    <Icon component={Location} {...props} />
-);
-export const CalendarIcon: React.FC<Partial<CustomIconComponentProps>> = props => (
-    <Icon component={Calendar} {...props} />
-);
-export const ClockIcon: React.FC<Partial<CustomIconComponentProps>> = props => (
-    <Icon component={Clock} {...props} />
-);
-export const FilterIcon: React.FC<Partial<CustomIconComponentProps>> = props => (
-    <Icon component={Filter} {...props} />
-);
-export const HashIcon: React.FC<Partial<CustomIconComponentProps>> = props => (
-    <Icon component={Hash} {...props} />
-);
-export const ShareIcon: React.FC<Partial<CustomIconComponentProps>> = props => (
-    <Icon component={Share} {...props} />
-);
-export const UploadIcon: React.FC<Partial<CustomIconComponentProps>> = props => (
-    <Icon component={Upload} {...props} />
-);
+export const PawIcon: FC<IconProps> = props => <Icon component={Paw} {...props} />;
+export const UserIcon: FC<IconProps> = props => <Icon component={User} {...props} />;
+export const UsersIcon: FC<IconProps> = props => <Icon component={Users} {...props} />;
+export const SearchIcon: FC<IconProps> = props => <Icon component={Search} {...props} />;
+export const TickIcon: FC<IconProps> = props => <Icon component={Tick} {...props} />;
+export const ShieldIcon: FC<IconProps> = props => <Icon component={Shield} {...props} />;
+export const ShieldTickIcon: FC<IconProps> = props => <Icon component={ShieldTick} {...props} />;
+export const HeartIcon: FC<IconProps> = props => <Icon component={Heart} {...props} />;
+export const ArrowRightIcon: FC<IconProps> = props => <Icon component={ArrowRight} {...props} />;
+export const ArrowLeftIcon: FC<IconProps> = props => <Icon component={ArrowLeft} {...props} />;
+export const PhoneIcon: FC<IconProps> = props => <Icon component={Phone} {...props} />;
+export const LocationIcon: FC<IconProps> = props => <Icon component={Location} {...props} />;
+export const CalendarIcon: FC<IconProps> = props => <Icon component={Calendar} {...props} />;
+export const ClockIcon: FC<IconProps> = props => <Icon component={Clock} {...props} />;
+export const FilterIcon: FC<IconProps> = props => <Icon component={Filter} {...props} />;
+export const HashIcon: FC<IconProps> = props => <Icon component={Hash} {...props} />;
+export const ShareIcon: FC<IconProps> = props => <Icon component={Share} {...props} />;
+export const UploadIcon: FC<IconProps> = props => <Icon component={Upload} {...props} />;

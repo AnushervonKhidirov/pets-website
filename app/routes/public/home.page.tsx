@@ -1,5 +1,5 @@
-import MainSection from '~section/home-page/main/main.section';
-import FeatureSection from '~section/home-page/feature/feature.section';
+import MainSection from '~pageComponent/home/section/main';
+import FeatureSection from '~pageComponent/home/section/feature';
 
 export function meta() {
     return [{ title: 'Home page' }];

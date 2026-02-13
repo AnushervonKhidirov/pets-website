@@ -17,7 +17,7 @@
 
 .headline {
     .colored {
-        color: var(--color-cyan-green-500);
+        color: var(--cyan);
     }
 }
 
@@ -45,7 +45,7 @@
     flex: 1;
 
     .icon {
-        color: var(--color-cyan-green-500);
+        color: var(--cyan);
         font-size: 2rem;
     }
 
