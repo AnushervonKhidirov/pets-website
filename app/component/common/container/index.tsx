@@ -1,12 +1,14 @@
-import type { FC, PropsWithChildren } from 'react';
-import type { WithClassName } from '~type/common.type';
+import type { FC } from 'react';
+import type { WithAdditionalProps } from '~type/common.type';
 
 import classNames from 'classnames';
 import classes from './container.module.css';
 
-type ContainerProps = PropsWithChildren<
-    WithClassName & { innerClassName?: string; section?: boolean; colored?: boolean }
->;
+type ContainerProps = WithAdditionalProps<{
+    innerClassName?: string;
+    section?: boolean;
+    colored?: boolean;
+}>;
 
 const Container: FC<ContainerProps> = ({
     section,

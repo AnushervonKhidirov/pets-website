@@ -9,7 +9,7 @@ import logo_300 from 'src/images/logo/logo-300x300.png';
 import classNames from 'classnames';
 import classes from './logo.module.css';
 
-type LogoProps = { logoSize?: logoSize } & WithClassName;
+type LogoProps = WithClassName<{ logoSize?: logoSize }>;
 type logoSize = 'small' | 'medium' | 'large' | 'extraLarge';
 
 const Logo: FC<LogoProps> = ({ logoSize = 'small', className }) => {
@@ -23,7 +23,9 @@ const Logo: FC<LogoProps> = ({ logoSize = 'small', className }) => {
     return (
         <div className={classNames(classes.logo, className)}>
             <img src={logoVersions[logoSize]} alt="logo" />
-            <div className={classes.name}>Home<span>Paw</span></div>
+            <div className={classes.name}>
+                Home<span>Paw</span>
+            </div>
         </div>
     );
 };
