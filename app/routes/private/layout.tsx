@@ -5,7 +5,7 @@ import useUserStore from '~store/user.store';
 import userService from '~service/user.service';
 
 import { Header } from '~component/common';
-import { isLoggedIn } from '~helper/auth.helper';
+import { isAuthorized } from '~helper/auth.helper';
 
 export const Layout = () => {
     const navigate = useNavigate();
@@ -18,7 +18,7 @@ export const Layout = () => {
     }
 
     useEffect(() => {
-        if (!isLoggedIn()) navigate('/');
+        if (!isAuthorized()) navigate('/');
     }, []);
 
     useAuth(() => {
@@ -28,7 +28,7 @@ export const Layout = () => {
     return (
         user && (
             <>
-                <Header showBtn={false} />
+                <Header />
                 <main>
                     <Outlet />
                 </main>
