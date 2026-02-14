@@ -2,15 +2,16 @@ import type { NavLinkRenderProps } from 'react-router';
 import type { ButtonProps } from 'antd';
 
 import { useState, useRef, useEffect } from 'react';
-import { NavLink, Link } from 'react-router';
+import { NavLink } from 'react-router';
 import useUserStore from '~store/user.store';
-import { isLoggedIn } from '~helper/auth.helper';
+import { isAuthorized } from '~helper/auth.helper';
 
 import { Button } from 'antd';
 import { MenuOutlined, CloseOutlined } from '@ant-design/icons';
 import { PawIcon } from '~icons';
 import { Container, Logo } from '~component/common';
 import AuthButton from '~component/auth/auth-button';
+import ProfileButton from '../profile-btn';
 
 import { Route } from '~constant/route';
 import { light } from '~/config/ant.config';
@@ -36,11 +37,13 @@ const navLinkList = [
     },
 ];
 
-const Header = ({ showBtn = true }: { showBtn?: boolean }) => {
+const Header = () => {
     const menuRef = useRef<HTMLDivElement>(null);
     const menuInnerRef = useRef<HTMLDivElement>(null);
     const { user } = useUserStore(state => state);
     const [menuOpened, setMenuOpened] = useState(false);
+
+    const isLogged = isAuthorized() || user;
 
     const headerButtonProps: ButtonProps = {
         className: classes.auth_btn,
@@ -50,14 +53,11 @@ const Header = ({ showBtn = true }: { showBtn?: boolean }) => {
         color: 'cyan',
     };
 
-    const HeaderButton =
-        isLoggedIn() || user ? (
-            <Link to={Route.Profile}>
-                <Button {...headerButtonProps}>Профиль</Button>
-            </Link>
-        ) : (
-            <AuthButton {...headerButtonProps} />
-        );
+    const HeaderButton = isLogged ? (
+        <ProfileButton className={classes.profile_btn} />
+    ) : (
+        <AuthButton {...headerButtonProps} />
+    );
 
     function menuHandler() {
         setMenuOpened(prevState => !prevState);
@@ -69,7 +69,7 @@ const Header = ({ showBtn = true }: { showBtn?: boolean }) => {
             const menuInner = menuInnerRef.current;
             menu.style.setProperty('--height', `${menuInner.offsetHeight}px`);
         }
-    }, [menuRef.current, menuInnerRef.current, window.innerWidth]);
+    }, [menuRef.current, menuInnerRef.current, globalThis.innerWidth, user]);
 
     return (
         <header className={classes.header}>
@@ -94,7 +94,7 @@ const Header = ({ showBtn = true }: { showBtn?: boolean }) => {
                             ))}
                         </nav>
 
-                        {showBtn && HeaderButton}
+                        {HeaderButton}
                     </div>
                 </div>
 
@@ -104,7 +104,9 @@ const Header = ({ showBtn = true }: { showBtn?: boolean }) => {
                     className={classes.menu_icon}
                     onClick={menuHandler}
                     icon={menuOpened ? <CloseOutlined /> : <MenuOutlined />}
-                ></Button>
+                />
+
+                {isLogged && <ProfileButton className={classes.profile_btn_mobile} />}
             </Container>
         </header>
     );
