@@ -5,6 +5,7 @@ export enum Route {
     ContactUs = '/contact-us',
 
     Profile = '/profile',
+    MyPets = '/profile/pets',
 
     OAuthGoogle = '/auth/google',
 }
