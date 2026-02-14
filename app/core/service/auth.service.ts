@@ -25,19 +25,10 @@ class AuthService {
         }
     }
 
-    async signOut(data: RefreshTokenDto): ReturnWithErrPromise {
+    async signOut(data: RefreshTokenDto, allDevices?: boolean): ReturnWithErrPromise {
         try {
-            const response = await apiClient.post('/auth/sign-out', data);
-            if (isHttpException(response.data)) throw new HttpException(response.data);
-            return [null, null];
-        } catch (err) {
-            return errorHandler(err);
-        }
-    }
-
-    async signOutEverywhere(data: RefreshTokenDto): ReturnWithErrPromise {
-        try {
-            const response = await apiClient.post('/auth/sign-out-everywhere', data);
+            const endpoint = allDevices ? '/auth/sign-out-everywhere' : '/auth/sign-out';
+            const response = await apiClient.post(endpoint, data);
             if (isHttpException(response.data)) throw new HttpException(response.data);
             return [null, null];
         } catch (err) {
