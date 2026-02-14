@@ -2,7 +2,7 @@ import { Typography } from 'antd';
 import { Container, Grid, Card, Background } from '~component/common';
 import { ShieldIcon, SearchIcon, HeartIcon } from '~icons';
 
-import { cyan, orange } from '~/config/ant.config';
+import { cyan, light } from '~/config/ant.config';
 import classes from './feature.module.css';
 
 const { Title, Text } = Typography;
@@ -33,7 +33,7 @@ const FeatureSection = () => {
 
             <Grid className={classes.list}>
                 {featureList.map(({ Icon, title, about }) => (
-                    <Card key={title} innerClassName={classes.card} color={orange[0]}>
+                    <Card key={title} innerClassName={classes.card} color={light[0]}>
                         <Background
                             style={{ width: '3rem', height: '3rem' }}
                             className={classes.icon}

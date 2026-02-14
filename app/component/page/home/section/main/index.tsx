@@ -10,7 +10,7 @@ import { PawIcon, SearchIcon, UsersIcon } from '~icons';
 
 import logo from 'src/images/logo/logo-200x200.png';
 import classes from './main.module.css';
-import { orange } from '~/config/ant.config';
+import { light } from '~/config/ant.config';
 
 const { Title, Text } = Typography;
 
@@ -34,7 +34,7 @@ const detailList = [
 
 const MainSection = () => {
     return (
-        <Container innerClassName={classes.inner_section} section color={orange[0]}>
+        <Container innerClassName={classes.inner_section} section color={light[0]}>
             <div className={classes.logo}>
                 <img src={logo} alt="logo" />
             </div>

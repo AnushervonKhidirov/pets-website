@@ -3,8 +3,8 @@ import { grey, generate } from '@ant-design/colors';
 
 export const cyan = generate('#7ba99d');
 export const red = generate('#d0463b');
-export const orange = generate('#c28e82');
-// export const orange = generate('#bf6a2a'); // prev orange
+export const orange = generate('#bf6a2a');
+export const light = generate('#c28e82');
 
 export const themeConfig: ThemeConfig = {
     cssVar: { key: 'custom-ant', prefix: '' },
