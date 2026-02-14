@@ -35,7 +35,7 @@
     flex-wrap: wrap;
 }
 
-.card > div {
+.card {
     display: grid;
     min-width: 15em;
     justify-items: center;
