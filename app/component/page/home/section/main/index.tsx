@@ -34,7 +34,7 @@ const detailList = [
 
 const MainSection = () => {
     return (
-        <Container innerClassName={classes.inner_section} section color={light[0]}>
+        <Container innerClassName={classes.inner_section} section color={light}>
             <div className={classes.logo}>
                 <img src={logo} alt="logo" />
             </div>

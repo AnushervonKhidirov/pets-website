@@ -33,7 +33,7 @@ const FeatureSection = () => {
 
             <Grid className={classes.list}>
                 {featureList.map(({ Icon, title, about }) => (
-                    <Card key={title} innerClassName={classes.card} color={light[0]}>
+                    <Card key={title} innerClassName={classes.card} color={light}>
                         <Background
                             style={{ width: '3rem', height: '3rem' }}
                             className={classes.icon}

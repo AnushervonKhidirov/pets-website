@@ -73,7 +73,7 @@ const Header = () => {
 
     return (
         <header className={classes.header}>
-            <Container innerClassName={classes.header_inner} color={light[0]} alpha={0.8} blur={8}>
+            <Container innerClassName={classes.header_inner} color={light} alpha={0.8} blur={8}>
                 <Logo className={classes.logo} />
 
                 <div
