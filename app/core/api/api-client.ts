@@ -2,23 +2,10 @@ import type { Token } from '~type/auth.type';
 
 import axios from 'axios';
 import tokenService from '~service/token.service';
-import { PrivateRoutes } from '~constant/route';
 import { HttpException, isHttpException } from '~helper/error-handler';
+import { isInPrivatePage } from '~helper/auth.helper';
 
 const baseURL = import.meta.env.VITE_API_URL;
-
-function isInPrivate() {
-    let isPrivate = false;
-
-    for (const route of PrivateRoutes) {
-        if (globalThis.location.pathname.includes(route)) {
-            isPrivate = true;
-            break;
-        }
-    }
-
-    return isPrivate;
-}
 
 export const apiClient = axios.create({
     baseURL,
@@ -55,7 +42,7 @@ apiClientAuth.interceptors.response.use(async response => {
 
         if (isHttpException(responseRefreshed.data)) {
             tokenService.removeToken();
-            if (isInPrivate()) globalThis.location.replace('/');
+            if (isInPrivatePage()) globalThis.location.replace('/');
             throw new HttpException(responseRefreshed.data);
         }
 
