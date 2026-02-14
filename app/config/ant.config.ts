@@ -5,7 +5,7 @@ export const cyan = generate('#7ba99d');
 export const red = generate('#d0463b');
 export const orange = generate('#bf6a2a');
 export const light = '#fdf8f3';
-// export const light = generate('#c28e82'); // NOSONAR
+// export const light = generate('#c28e82');
 
 export const themeConfig: ThemeConfig = {
     cssVar: { key: 'custom-ant', prefix: '' },
