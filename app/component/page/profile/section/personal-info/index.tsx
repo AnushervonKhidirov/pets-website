@@ -4,6 +4,9 @@ import type { User } from '~type/user.type';
 import type { Coordinate } from '~component/common/google-map';
 
 import { useState } from 'react';
+import useUserStore from '~store/user.store';
+import tokenService from '~service/token.service';
+import authService from '~service/auth.service';
 
 import { Link } from 'react-router';
 import { Typography, Descriptions, Button } from 'antd';
@@ -19,7 +22,18 @@ import classes from './personal-info.module.css';
 const { Title, Text } = Typography;
 
 const PersonalInfoSection: FC<{ user: User }> = ({ user }) => {
+    const { clearUserData } = useUserStore(state => state);
     const [open, setOpen] = useState(false);
+
+    async function logOut(allDevices: boolean = false) {
+        const token = tokenService.getToken();
+
+        if (token) await authService.signOut({ refreshToken: token.refreshToken }, allDevices);
+        tokenService.removeToken();
+        clearUserData();
+
+        globalThis.location.replace('/');
+    }
 
     const items: DescriptionsProps['items'] = [
         {
@@ -91,6 +105,16 @@ const PersonalInfoSection: FC<{ user: User }> = ({ user }) => {
                         </Button>
                     }
                 />
+
+                <div className={classes.buttons}>
+                    <Button danger type="primary" onClick={() => logOut()}>
+                        Выйти
+                    </Button>
+
+                    <Button danger type="primary" onClick={() => logOut(true)}>
+                        Выйти со всех устройств
+                    </Button>
+                </div>
 
                 <EditPersonalInfoModal user={user} open={open} setOpen={setOpen} />
             </Container>
