@@ -15,7 +15,7 @@ import { cyan } from '~/config/ant.config';
 import { isInPrivatePage } from '~helper/auth.helper';
 
 const ProfileButton: FC<{ className?: string }> = props => {
-    const { clearUserData } = useUserStore(state => state);
+    const { user, clearUserData } = useUserStore(state => state);
 
     const items: MenuProps['items'] = [
         {
@@ -66,6 +66,7 @@ const ProfileButton: FC<{ className?: string }> = props => {
     return (
         <Dropdown {...sharedProps}>
             <Avatar
+                src={user?.avatar}
                 size="large"
                 className={props.className}
                 style={{ backgroundColor: cyan[5], cursor: 'pointer' }}
