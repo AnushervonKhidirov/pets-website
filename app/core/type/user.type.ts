@@ -9,6 +9,7 @@ export type User = {
     lastName: string | null;
     contacts: Contact[] | null;
     address: Address | null;
+    avatar: string | null;
 };
 
 export type UpdateUserDto = Partial<{
