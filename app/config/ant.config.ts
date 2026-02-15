@@ -2,10 +2,8 @@ import type { ThemeConfig } from 'antd';
 import { grey, generate } from '@ant-design/colors';
 
 export const cyan = generate('#7ba99d');
-export const red = generate('#d0463b');
 export const orange = generate('#bf6a2a');
 export const light = '#fdf8f3';
-// export const light = generate('#c28e82');
 
 export const themeConfig: ThemeConfig = {
     cssVar: { key: 'custom-ant', prefix: '' },
@@ -18,7 +16,6 @@ export const themeConfig: ThemeConfig = {
 
         cyan: cyan[5],
         orange: orange[5],
-        red: red[5],
     },
     components: {
         Typography: {
