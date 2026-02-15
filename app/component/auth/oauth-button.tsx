@@ -4,7 +4,7 @@ import type { ButtonProps } from 'antd';
 import { useState } from 'react';
 import { googleOAuthService } from '~service/oauth.service';
 
-import { Button, notification } from 'antd';
+import { ConfigProvider, Button, notification } from 'antd';
 import { GoogleOutlined } from '@ant-design/icons';
 import { alertError } from '~helper/alert-error';
 
@@ -40,7 +40,7 @@ export const GoogleOAuthButton: FC<ButtonProps> = props => {
     }
 
     return (
-        <>
+        <ConfigProvider theme={{ token: { red: '#d0463b' } }}>
             <Button
                 {...props}
                 color="red"
@@ -53,6 +53,6 @@ export const GoogleOAuthButton: FC<ButtonProps> = props => {
             </Button>
 
             {context}
-        </>
+        </ConfigProvider>
     );
 };
