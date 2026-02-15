@@ -89,7 +89,7 @@ const PersonalInfoSection: FC<{ user: User }> = ({ user }) => {
 
     return (
         user && (
-            <Container section>
+            <Container innerClassName={classes.section} style={{ minHeight: '100%' }} section>
                 <Descriptions
                     title={
                         <Title level={3}>
