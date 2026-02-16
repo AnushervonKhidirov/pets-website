@@ -38,13 +38,6 @@ const ProfileButton: FC<{ className?: string }> = props => {
             danger: true,
             onClick: () => logOut(),
         },
-        {
-            key: 'Выйти со всех устройств',
-            label: 'Выйти со всех устройств',
-            icon: <LogoutOutlined />,
-            danger: true,
-            onClick: () => logOut(true),
-        },
     ];
 
     const sharedProps: DropdownProps = {
