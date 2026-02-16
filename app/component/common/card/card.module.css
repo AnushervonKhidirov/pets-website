@@ -1,0 +1,13 @@
+.card_wrapper {
+    background: transparent;
+    display: grid;
+
+    &:has(:global(.ant-card-cover)) {
+        grid-template-rows: max-content;
+    }
+}
+
+.card_content {
+    height: 100%;
+    padding: var(--card-body-padding);
+}
