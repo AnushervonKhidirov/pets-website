@@ -1,0 +1,14 @@
+.header {
+    display: grid;
+    grid-auto-flow: column;
+    align-items: center;
+    grid-template-columns: max-content max-content;
+    justify-content: space-between;
+    margin-bottom: 2rem;
+}
+
+@media screen and (max-width: 425px) {
+    .headline {
+        font-size: 0.8em;
+    }
+}

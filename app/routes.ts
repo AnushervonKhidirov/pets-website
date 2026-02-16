@@ -10,7 +10,10 @@ export default [
         route(Route.ContactUs, 'routes/public/contact.page.tsx'),
     ]),
 
-    layout('routes/private/layout.tsx', [route(Route.Profile, 'routes/private/profile.page.tsx')]),
+    layout('routes/private/layout.tsx', [
+        route(Route.Profile, 'routes/private/profile.page.tsx'),
+        route(Route.MyPets, 'routes/private/my-pets.page.tsx'),
+    ]),
 
     route(Route.OAuthGoogle, 'routes/oauth/oauth-google.page.tsx'),
 ] satisfies RouteConfig;
