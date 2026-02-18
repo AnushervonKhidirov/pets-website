@@ -4,6 +4,7 @@ import type { User } from './user.type';
 export type Pet = {
     id: number;
     name: string;
+    about: string | null;
     sex: Sex | null;
     birthday: Dayjs | null;
     microchipId: string | null;
@@ -11,7 +12,7 @@ export type Pet = {
     petType: PetType;
     breedId: number | null;
     breed: Omit<Breed, 'petType'> | null;
-    user: Pick<User, 'email' | 'phone' | 'firstName' | 'address'>;
+    user: Omit<User, 'authType'>;
     image: string | null;
     lost: boolean;
 };
