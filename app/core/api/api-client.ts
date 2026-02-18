@@ -5,10 +5,10 @@ import tokenService from '~service/token.service';
 import { HttpException, isHttpException } from '~helper/error-handler';
 import { isInPrivatePage } from '~helper/auth.helper';
 
-const baseURL = import.meta.env.VITE_API_URL;
+import { serverUrl } from '~constant/common';
 
 export const apiClient = axios.create({
-    baseURL,
+    baseURL: serverUrl,
     headers: {
         'Content-Type': 'application/json',
     },
