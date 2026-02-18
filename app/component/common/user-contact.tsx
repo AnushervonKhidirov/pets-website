@@ -52,8 +52,6 @@ export const Contacts: FC<ContactProps> = ({ contacts, email, returnValueIfEmpty
     return (
         <div>
             {contactList.map(({ name, value }) => {
-                console.log(name, value);
-
                 if (!isContactItem(name)) return returnValueIfEmpty;
                 const nameLowercase = name.toLowerCase() as Lowercase<typeof name>;
                 const link = ContactLinks[nameLowercase];
