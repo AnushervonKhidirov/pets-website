@@ -324,7 +324,6 @@ const Warning: FC<WithAdditionalProps> = ({ className }) => {
     return (
         <svg
             className={className}
-            xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 24 24"
             fill="none"
             stroke="currentColor"
@@ -337,6 +336,46 @@ const Warning: FC<WithAdditionalProps> = ({ className }) => {
             <path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3"></path>
             <path d="M12 9v4"></path>
             <path d="M12 17h.01"></path>
+        </svg>
+    );
+};
+
+const Male: FC<WithAdditionalProps> = ({ className }) => {
+    return (
+        <svg
+            className={className}
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth="2"
+            width="1em"
+            height="1em"
+        >
+            <circle cx="10" cy="14" r="6" />
+            <polyline points="15 3 21 3 21 9" />
+            <line x1="21" y1="3" x2="14.5" y2="9.5" />
+        </svg>
+    );
+};
+
+const Female: FC<WithAdditionalProps> = ({ className }) => {
+    return (
+        <svg
+            className={className}
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth="2"
+            width="1em"
+            height="1em"
+        >
+            <circle cx="12" cy="9" r="6" />
+            <line x1="12" y1="15" x2="12" y2="22" />
+            <line x1="9" y1="19" x2="15" y2="19" />
         </svg>
     );
 };
@@ -360,3 +399,5 @@ export const HashIcon: FC<IconProps> = props => <Icon component={Hash} {...props
 export const ShareIcon: FC<IconProps> = props => <Icon component={Share} {...props} />;
 export const UploadIcon: FC<IconProps> = props => <Icon component={Upload} {...props} />;
 export const WarningIcon: FC<IconProps> = props => <Icon component={Warning} {...props} />;
+export const MaleIcon: FC<IconProps> = props => <Icon component={Male} {...props} />;
+export const FemaleIcon: FC<IconProps> = props => <Icon component={Female} {...props} />;
