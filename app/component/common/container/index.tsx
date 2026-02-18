@@ -8,12 +8,14 @@ import classes from './container.module.css';
 type ContainerProps = BackgroundProps<{
     section?: boolean;
     innerClassName?: string;
+    maxWidth?: number;
 }>;
 
 const Container: FC<ContainerProps> = ({
     section,
     className,
     innerClassName,
+    maxWidth = 1200,
     children,
     ...props
 }) => {
@@ -22,7 +24,12 @@ const Container: FC<ContainerProps> = ({
             className={classNames(classes.container, { [classes.section]: section }, className)}
             {...props}
         >
-            <div className={classNames(classes.container_inner, innerClassName)}>{children}</div>
+            <div
+                className={classNames(classes.container_inner, innerClassName)}
+                style={{ maxWidth }}
+            >
+                {children}
+            </div>
         </Background>
     );
 };
