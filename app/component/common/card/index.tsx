@@ -26,6 +26,7 @@ const Card: FC<CardProps> = ({
             {...props}
             styles={{
                 body: { padding: 0, overflow: 'hidden' },
+                root: { overflow: 'hidden' },
             }}
             className={classes.card_wrapper}
         >
