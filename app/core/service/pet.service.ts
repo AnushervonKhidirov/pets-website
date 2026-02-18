@@ -1,9 +1,10 @@
 import type { ReturnWithErrPromise } from '~type/common.type';
-import type { Pet } from '~type/pet.type';
+import type { Pet, PetType, Breed, CratePetDto } from '~type/pet.type';
 
 import dayjs from 'dayjs';
 import { apiClient, apiClientAuth } from '~api/api-client';
 import { errorHandler, isHttpException } from '~helper/error-handler';
+import { serverUrl } from '~constant/common';
 
 type PetResponse = Omit<Pet, 'birthday'> & { birthday: string | null };
 
@@ -40,9 +41,62 @@ class PetService {
         }
     }
 
+    async getPetType(): ReturnWithErrPromise<PetType[]> {
+        try {
+            const petTypes = await apiClient.get<PetType[]>('/pet-type');
+            if (isHttpException(petTypes.data)) throw petTypes.data;
+            return [petTypes.data, null];
+        } catch (err) {
+            return errorHandler(err);
+        }
+    }
+
+    async getBreed({ petTypeId }: { petTypeId?: number } = {}): ReturnWithErrPromise<Breed[]> {
+        try {
+            const breeds = await apiClient.get<Breed[]>('/pet-breed', { params: { petTypeId } });
+            if (isHttpException(breeds.data)) throw breeds.data;
+            return [breeds.data, null];
+        } catch (err) {
+            return errorHandler(err);
+        }
+    }
+
+    async create({ birthday, ...data }: CratePetDto): ReturnWithErrPromise<Pet> {
+        const convertedData: Omit<CratePetDto, 'birthday'> & { birthday: string | null } = {
+            ...data,
+            birthday: birthday?.startOf('date').toString() ?? null,
+        };
+
+        try {
+            const pet = await apiClientAuth.post<PetResponse>('/pet', convertedData);
+            if (isHttpException(pet.data)) throw pet.data;
+            return [this.convertData(pet.data), null];
+        } catch (err) {
+            return errorHandler(err);
+        }
+    }
+
+    async setImage(file: File, petId: number): ReturnWithErrPromise<{ image: string }> {
+        try {
+            const formData = new FormData();
+            formData.append('image', file);
+
+            const pet = await apiClientAuth.post('/pet/image', formData, {
+                params: { petId },
+                headers: { 'Content-Type': 'multipart/form-data' },
+            });
+
+            if (isHttpException(pet.data)) throw pet.data;
+            return [pet.data, null];
+        } catch (err) {
+            return errorHandler(err);
+        }
+    }
+
     private convertData(pet: PetResponse): Pet {
         const birthday = dayjs(pet.birthday).isValid() ? dayjs(pet.birthday) : null;
-        return { ...pet, birthday };
+        const image = pet.image ? `${serverUrl}/pet/image/${pet.image}` : null;
+        return { ...pet, birthday, image };
     }
 }
 
