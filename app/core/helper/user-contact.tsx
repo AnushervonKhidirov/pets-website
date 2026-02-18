@@ -1,22 +1,35 @@
 import type { User } from '~type/user.type';
+import type { ButtonProps } from 'antd';
 
 import { Link } from 'react-router';
-import { Typography } from 'antd';
+import { Typography, Button } from 'antd';
 
 import { parsePhoneNumberFromString } from 'libphonenumber-js';
 import { ContactLinks, isContactItem } from '~constant/contact-links';
 
 const { Text } = Typography;
 
-export function getPhoneNumberNode(phone: string | null) {
-    if (!phone) return '—';
+export function getPhoneNumberNode(
+    phone: string | null,
+    asButton: boolean = false,
+    buttonProps: ButtonProps = {},
+) {
+    if (!phone) return null;
     const phoneData = parsePhoneNumberFromString(phone, 'TJ');
-    if (!phoneData) return '—';
+    if (!phoneData) return null;
+
+    if (asButton)
+        return (
+            <Link to={'tel:' + phoneData.number}>
+                <Button {...buttonProps}>{phoneData.nationalNumber}</Button>
+            </Link>
+        );
+
     return <Link to={'tel:' + phoneData.number}>{phoneData.nationalNumber}</Link>;
 }
 
 export function getContactsNode(contacts: User['contacts']) {
-    if (!contacts || contacts.length === 0) return '—';
+    if (!contacts || contacts.length === 0) return null;
 
     return (
         <div>
