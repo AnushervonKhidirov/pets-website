@@ -320,6 +320,24 @@ const Upload: FC<WithAdditionalProps> = ({ className }) => {
     );
 };
 
+const Warning: FC<WithAdditionalProps> = ({ className }) => {
+    return (
+        <svg
+            className={className}
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2"
+            width="1em"
+            height="1em"
+        >
+            <path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3"></path>
+            <path d="M12 9v4"></path>
+            <path d="M12 17h.01"></path>
+        </svg>
+    );
+};
+
 export const PawIcon: FC<IconProps> = props => <Icon component={Paw} {...props} />;
 export const UserIcon: FC<IconProps> = props => <Icon component={User} {...props} />;
 export const UsersIcon: FC<IconProps> = props => <Icon component={Users} {...props} />;
@@ -338,3 +356,4 @@ export const FilterIcon: FC<IconProps> = props => <Icon component={Filter} {...p
 export const HashIcon: FC<IconProps> = props => <Icon component={Hash} {...props} />;
 export const ShareIcon: FC<IconProps> = props => <Icon component={Share} {...props} />;
 export const UploadIcon: FC<IconProps> = props => <Icon component={Upload} {...props} />;
+export const WarningIcon: FC<IconProps> = props => <Icon component={Warning} {...props} />;
