@@ -3,6 +3,7 @@ import type { Dayjs } from 'dayjs';
 import type { DescriptionsProps } from 'antd';
 import type { Pet } from '~type/pet.type';
 
+import { Link } from 'react-router';
 import { Tag, Descriptions, Typography, Divider } from 'antd';
 import { PawIcon, TickIcon } from '~icons';
 import { Card, Background } from '~component/common';
@@ -10,6 +11,7 @@ import { Card, Background } from '~component/common';
 import dayjs from 'dayjs';
 import { cyan, light } from '~/config/ant.config';
 import { sex } from '~constant/pet';
+import { Route } from '~constant/route';
 
 import classes from './pet-card.module.css';
 import classNames from 'classnames';
@@ -41,16 +43,22 @@ const PetCard: FC<{ pet: Pet }> = ({ pet }) => {
     ];
 
     return (
-        <Card color={light} cover={<CardImage name={pet.name} image={pet.image} lost={pet.lost} />}>
-            <div style={{ marginBottom: '0.5em' }}>
-                <Title level={3}>{pet.name}</Title>
-                <Text type="secondary">{pet.breed?.ru}</Text>
-            </div>
+        <Link to={`${Route.PetInfo}/${pet.id}`}>
+            <Card
+                color={light}
+                hoverable
+                cover={<CardImage name={pet.name} image={pet.image} lost={pet.lost} />}
+            >
+                <div style={{ marginBottom: '0.5em' }}>
+                    <Title level={3}>{pet.name}</Title>
+                    <Text type="secondary">{pet.breed?.ru}</Text>
+                </div>
 
-            <Divider />
+                <Divider />
 
-            <Descriptions items={items} column={1} />
-        </Card>
+                <Descriptions items={items} column={1} />
+            </Card>
+        </Link>
     );
 };
 
@@ -77,7 +85,7 @@ const StatusTag: FC<{ lost: boolean }> = ({ lost }) => {
             variant="solid"
             className={classNames(classes.tag, { [classes.lost]: lost })}
         >
-            Разыскивается
+            Потерян
         </Tag>
     ) : (
         <Tag color="success" variant="outlined" icon={<TickIcon />} className={classes.tag}>
