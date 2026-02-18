@@ -1,0 +1,76 @@
+import type { FC, ReactNode } from 'react';
+import type { ButtonProps } from 'antd';
+import type { User } from '~type/user.type';
+
+import { Link } from 'react-router';
+import { Typography, Button } from 'antd';
+
+import { parsePhoneNumberFromString } from 'libphonenumber-js';
+import { ContactLinks, isContactItem } from '~constant/contact-links';
+
+const { Text } = Typography;
+
+type PhoneLinkProps = {
+    phone: string | null;
+    returnValueIfEmpty?: ReactNode;
+    asButton?: boolean | null;
+    buttonProps?: ButtonProps;
+};
+
+type ContactProps = {
+    contacts: User['contacts'];
+    email?: string;
+    returnValueIfEmpty?: ReactNode;
+};
+
+export const PhoneLink: FC<PhoneLinkProps> = ({
+    phone,
+    returnValueIfEmpty = null,
+    asButton,
+    buttonProps = {},
+}) => {
+    if (!phone) return returnValueIfEmpty;
+    const phoneData = parsePhoneNumberFromString(phone, 'TJ');
+    if (!phoneData) return returnValueIfEmpty;
+
+    if (asButton)
+        return (
+            <Link to={'tel:' + phoneData.number}>
+                <Button {...buttonProps}>{phoneData.nationalNumber}</Button>
+            </Link>
+        );
+
+    return <Link to={'tel:' + phoneData.number}>{phoneData.nationalNumber}</Link>;
+};
+
+export const Contacts: FC<ContactProps> = ({ contacts, email, returnValueIfEmpty = null }) => {
+    if (!contacts) return returnValueIfEmpty;
+
+    const contactList = email ? [...contacts, { name: 'Email', value: email }] : contacts;
+    if (contactList.length === 0) return returnValueIfEmpty;
+
+    return (
+        <div>
+            {contactList.map(({ name, value }) => {
+                console.log(name, value);
+
+                if (!isContactItem(name)) return returnValueIfEmpty;
+                const nameLowercase = name.toLowerCase() as Lowercase<typeof name>;
+                const link = ContactLinks[nameLowercase];
+
+                return (
+                    <div key={name + value}>
+                        <Text>{name}:</Text>{' '}
+                        {link ? (
+                            <Link to={link + value} target="_blank">
+                                @{value}
+                            </Link>
+                        ) : (
+                            <Text type="secondary">{value}</Text>
+                        )}
+                    </div>
+                );
+            })}
+        </div>
+    );
+};

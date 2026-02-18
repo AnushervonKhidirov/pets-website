@@ -11,3 +11,4 @@ import Footer from './footer';
 import Header from './header';
 
 export { Background, Card, PetCard, Container, Grid, Logo, UserAvatar, GoogleMap, Footer, Header };
+export { PhoneLink, Contacts } from './user-contact';
