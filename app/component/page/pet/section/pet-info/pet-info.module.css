@@ -1,0 +1,128 @@
+.header {
+    position: relative;
+    display: grid;
+    aspect-ratio: 1 / 5;
+    grid-template-areas: 'content';
+    overflow: hidden;
+
+    & > * {
+        width: 100%;
+        height: 100%;
+        grid-area: content;
+        overflow: hidden;
+    }
+}
+
+.header_overlay {
+    display: grid;
+    grid-template-areas: 'name tag';
+    grid-template-columns: 1fr max-content;
+    align-items: center;
+    align-content: end;
+    gap: 0.25em;
+    background-image: linear-gradient(transparent 50%, rgba(0, 0, 0, 0.75) 100%);
+    color: #fff;
+    line-height: 1;
+    padding: 0.5em 1em;
+    font-size: min(3.5vw, 20px);
+
+    &:has(.additional_text) {
+        grid-template-areas: 'name tag' 'additional_text tag';
+    }
+}
+
+.name {
+    grid-area: name;
+    font-size: 1.5em;
+    font-weight: 700;
+}
+
+.additional_text {
+    grid-area: additional_text;
+    opacity: 0.8;
+}
+
+.tag {
+    --line-width: 0.1em;
+
+    width: max-content;
+    height: max-content;
+    grid-area: tag;
+    line-height: 1;
+    border-radius: 5rem;
+    padding: 0.4em 0.75em;
+    font-size: 1em;
+
+    &.lost {
+        animation: lostAnim 0.75s linear infinite alternate-reverse;
+    }
+}
+
+.image {
+    object-fit: cover;
+    object-position: center;
+}
+
+.card_body {
+    display: grid;
+    gap: 2rem;
+    grid-template-areas: 'about_pet' 'about_owner';
+}
+
+.about_pet {
+    grid-area: about_pet;
+}
+
+.info_card_wrapper {
+    display: grid;
+    margin-top: 1.5rem;
+    gap: 1rem;
+}
+
+.info_card {
+    display: grid;
+    gap: 0.5rem;
+}
+
+.info_card_headline {
+    font-weight: 500;
+    font-size: 1.1em;
+    display: grid;
+    grid-template-columns: max-content max-content;
+    align-items: center;
+    gap: 0.5em;
+    line-height: 1;
+}
+
+.about_owner {
+    grid-area: about_owner;
+}
+
+.user_info {
+    display: grid;
+    gap: 0.75rem;
+}
+
+@media screen and (min-width: 769px) {
+    .card_body {
+        grid-template-areas: 'about_pet about_owner';
+        grid-template-columns: 0.6fr 0.4fr;
+    }
+}
+
+@media screen and (min-width: 550px) {
+    .info_card_wrapper {
+        grid-template-columns: 1fr 1fr;
+        gap: 1.5rem;
+    }
+}
+
+@keyframes lostAnim {
+    from {
+        opacity: 1;
+    }
+
+    to {
+        opacity: 0.5;
+    }
+}
