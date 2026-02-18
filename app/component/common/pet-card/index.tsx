@@ -9,6 +9,8 @@ import { Card, Background } from '~component/common';
 
 import dayjs from 'dayjs';
 import { cyan, light } from '~/config/ant.config';
+import { sex } from '~constant/pet';
+
 import classes from './pet-card.module.css';
 import classNames from 'classnames';
 
@@ -24,7 +26,7 @@ const PetCard: FC<{ pet: Pet }> = ({ pet }) => {
         {
             key: 'Пол',
             label: 'Пол',
-            children: pet.sex ?? '—',
+            children: pet.sex ? sex[pet.sex].ru : '—',
         },
         {
             key: 'Возраст',
@@ -90,7 +92,7 @@ function getAge(date?: Dayjs | null): string | number {
     const currentYear = dayjs().get('year');
     const birthYear = date.get('year');
 
-    return currentYear - birthYear;
+    return currentYear - birthYear + ' лет';
 }
 
 export default PetCard;
