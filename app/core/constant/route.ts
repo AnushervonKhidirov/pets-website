@@ -3,6 +3,7 @@ export enum Route {
     Lost = '/lost',
     VetClinic = '/vet-clinic',
     ContactUs = '/contact-us',
+    PetInfo = '/pet',
 
     Profile = '/profile',
     MyPets = '/profile/pets',
