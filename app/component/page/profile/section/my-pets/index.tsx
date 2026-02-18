@@ -10,7 +10,7 @@ import { Empty, Button, Typography, notification } from 'antd';
 import { PlusOutlined } from '@ant-design/icons';
 import { Container, Grid, PetCard } from '~component/common';
 import { alertError } from '~helper/alert-error';
-import PetModal from '~pageComponent/profile/pet-modal';
+import PetModal from '~component/pet/pet-modal';
 
 import blackCat from 'src/images/black-cat.png';
 import blackCatHand from 'src/images/black-cat-hand.png';
@@ -74,12 +74,11 @@ const MyPets: FC = () => {
                     description={
                         <span>
                             У вас пока нет питомцев.
-                            <br /> Котик укажет кнопку!
+                            <br /> Котик укажет на кнопку!
                         </span>
                     }
                 />
             )}
-            {context}
 
             <PetModal
                 pet={selectedPet}
@@ -87,6 +86,8 @@ const MyPets: FC = () => {
                 open={modalOpen}
                 setOpen={setModalOpen}
             />
+
+            {context}
         </Container>
     );
 };
