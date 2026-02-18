@@ -22,7 +22,7 @@ class PetService {
 
     async getOne(id: number): ReturnWithErrPromise<Pet> {
         try {
-            const pet = await apiClient.get<PetResponse>(`/pet${id}`);
+            const pet = await apiClient.get<PetResponse>(`/pet/${id}`);
             if (isHttpException(pet.data)) throw pet.data;
             return [this.convertData(pet.data), null];
         } catch (err) {
