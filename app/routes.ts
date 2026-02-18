@@ -8,6 +8,7 @@ export default [
         route(Route.Lost, 'routes/public/lost.page.tsx'),
         route(Route.VetClinic, 'routes/public/vet.page.tsx'),
         route(Route.ContactUs, 'routes/public/contact.page.tsx'),
+        route(Route.PetInfo + '/:petId', 'routes/public/pet-info.page.tsx'),
     ]),
 
     layout('routes/private/layout.tsx', [
