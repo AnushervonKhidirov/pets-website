@@ -10,6 +10,10 @@ import petService from '~service/pet.service';
 import { Container } from '~component/common';
 import PetInfoSection from '~pageComponent/pet/section/pet-info';
 
+export function meta() {
+    return [{ title: 'Pet' }];
+}
+
 const PetInfo: FC = () => {
     const params = useParams<Route.LoaderArgs['params']>();
 
