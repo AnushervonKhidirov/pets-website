@@ -42,6 +42,9 @@ export const themeConfig: ThemeConfig = {
 
         Button: {
             colorBgContainer: 'transparent',
+            colorBgSolid: grey[6],
+            colorBgSolidHover: grey[5],
+            colorBgSolidActive: grey[7],
 
             contentFontSizeSM: 12,
             controlHeightSM: 26,
