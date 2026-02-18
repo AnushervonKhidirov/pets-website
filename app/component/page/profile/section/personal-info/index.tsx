@@ -10,9 +10,8 @@ import authService from '~service/auth.service';
 
 import { Typography, Descriptions, Button } from 'antd';
 import { EditOutlined } from '@ant-design/icons';
-import { Container, GoogleMap } from '~component/common';
+import { Container, GoogleMap, PhoneLink, Contacts } from '~component/common';
 import EditPersonalInfoModal from '../../edit-personal-info-modal';
-import { getPhoneNumberNode, getContactsNode } from '~helper/user-contact';
 
 import classes from './personal-info.module.css';
 
@@ -49,13 +48,13 @@ const PersonalInfoSection: FC<{ user: User }> = ({ user }) => {
             key: '3',
             label: 'Номер телефона',
             styles: { content: { paddingBottom: 15 } },
-            children: getPhoneNumberNode(user.phone),
+            children: <PhoneLink phone={user.phone} returnValueIfEmpty="—" />,
         },
         {
             key: '4',
             label: 'Дополнительные контакты',
             styles: { content: { paddingBottom: 15 } },
-            children: getContactsNode(user.contacts),
+            children: <Contacts contacts={user.contacts} returnValueIfEmpty="—" />,
         },
         {
             key: '5',
