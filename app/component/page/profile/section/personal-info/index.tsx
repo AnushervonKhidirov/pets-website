@@ -16,7 +16,7 @@ import { getPhoneNumberNode, getContactsNode } from '~helper/user-contact';
 
 import classes from './personal-info.module.css';
 
-const { Title, Text } = Typography;
+const { Title } = Typography;
 
 const PersonalInfoSection: FC<{ user: User }> = ({ user }) => {
     const { clearUserData } = useUserStore(state => state);
