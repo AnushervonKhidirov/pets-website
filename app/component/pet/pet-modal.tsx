@@ -1,8 +1,8 @@
 import type { FC } from 'react';
-import type { Breed, CratePetDto, Pet, PetType } from '~type/pet.type';
+import type { UploadProps } from 'antd';
+import type { Breed, PetDto, Pet, PetType } from '~type/pet.type';
 
 import { useState } from 'react';
-import { useEffectOnce } from '~hook/use-effect-once';
 import petService from '~service/pet.service';
 import useMyPetsStore from '~store/my-pets.store';
 
@@ -15,16 +15,28 @@ import { alertError } from '~helper/alert-error';
 import { reduceSize } from '~helper/image.helper';
 
 type PetModalProps = {
-    pet: Pet | null;
-    setPet: (pet: Pet | null) => void;
     open: boolean;
     setOpen: (state: boolean) => void;
+    pet?: Pet | null;
 };
 
-const PetModal: FC<PetModalProps> = ({ pet, setPet, open, setOpen }) => {
+type SubmitData = PetDto & { image?: File };
+
+const PetModal: FC<PetModalProps> = ({ open, setOpen, pet }) => {
     const [form] = Form.useForm();
     const [api, context] = notification.useNotification();
-    const { addPet } = useMyPetsStore(state => state);
+    const { addPet, updatePet } = useMyPetsStore(state => state);
+
+    const defaultFileList: UploadProps['fileList'] = pet?.image
+        ? [
+              {
+                  uid: '-1',
+                  name: 'placeholder',
+                  status: 'done',
+                  url: pet.image,
+              },
+          ]
+        : undefined;
 
     const [loading, setLoading] = useState(false);
 
@@ -37,13 +49,45 @@ const PetModal: FC<PetModalProps> = ({ pet, setPet, open, setOpen }) => {
         label: sex[key].ru,
     }));
 
-    function openChangeHandler(open: boolean) {
-        if (!open && pet) setPet(null);
-    }
-
-    async function submit({ image, ...data }: CratePetDto & { image?: File }) {
+    async function submit(data: SubmitData) {
         setLoading(true);
 
+        if (pet) {
+            await update(pet.id, data);
+        } else {
+            await create(data);
+        }
+
+        setLoading(false);
+    }
+
+    async function update(petId: number, { image, ...data }: SubmitData) {
+        const [pet, err] = await petService.update(petId, data);
+
+        if (err) {
+            api.error(alertError(err));
+        } else {
+            const newPetData = { ...pet };
+
+            if (image) {
+                const [petImage, err] = await petService.setImage(image, pet.id);
+
+                if (err) {
+                    api.error(alertError(err));
+                } else {
+                    newPetData.image = petImage.image;
+                }
+            } else if (image === null) {
+                const [, err] = await petService.deleteImage(pet.id);
+                if (err) api.error(alertError(err));
+                newPetData.image = null;
+            }
+
+            updatePet(newPetData);
+        }
+    }
+
+    async function create({ image, ...data }: SubmitData) {
         const [pet, err] = await petService.create(data);
 
         if (err) {
@@ -63,8 +107,6 @@ const PetModal: FC<PetModalProps> = ({ pet, setPet, open, setOpen }) => {
 
             addPet(newPetData);
         }
-
-        setLoading(false);
     }
 
     async function fetchPtyTypes() {
@@ -83,14 +125,21 @@ const PetModal: FC<PetModalProps> = ({ pet, setPet, open, setOpen }) => {
         if (err) {
             api.error(alertError(err));
         } else {
+            const filteredBreeds = pet
+                ? breeds.filter(breed => breed.petTypeId === pet.petTypeId)
+                : breeds;
+
             setBreeds(breeds);
+            setBreedsFiltered(filteredBreeds);
         }
     }
 
-    useEffectOnce(() => {
-        fetchPtyTypes();
-        fetchBreeds();
-    });
+    function openChangeHandler(open: boolean) {
+        if (open) {
+            if (petTypes.length === 0) fetchPtyTypes();
+            if (breeds.length === 0) fetchBreeds();
+        }
+    }
 
     return (
         <>
@@ -112,7 +161,11 @@ const PetModal: FC<PetModalProps> = ({ pet, setPet, open, setOpen }) => {
                         <Input placeholder="Кличка" />
                     </Form.Item>
 
-                    <Form.Item name="petTypeId" initialValue={pet?.petTypeId ?? null}>
+                    <Form.Item
+                        name="petTypeId"
+                        rules={[{ required: true, message: 'Выберите вид питомца' }]}
+                        initialValue={pet?.petTypeId ?? null}
+                    >
                         <Select
                             placeholder="Вид"
                             options={petTypes.map(({ id, ru }) => ({ value: id, label: ru }))}
@@ -167,7 +220,7 @@ const PetModal: FC<PetModalProps> = ({ pet, setPet, open, setOpen }) => {
                     <Form.Item>
                         <ImgCrop
                             aspect={1 / 0.55}
-                            quality={0.7}
+                            quality={1}
                             modalTitle="Обрезка изображения"
                             showGrid
                             modalOk="Обрезать"
@@ -176,7 +229,7 @@ const PetModal: FC<PetModalProps> = ({ pet, setPet, open, setOpen }) => {
                         >
                             <Upload
                                 beforeUpload={async file => {
-                                    await reduceSize(file);
+                                    return (await reduceSize(file)) as File;
                                 }}
                                 customRequest={({ file, onSuccess }) => {
                                     form.setFieldValue('image', file);
@@ -189,14 +242,7 @@ const PetModal: FC<PetModalProps> = ({ pet, setPet, open, setOpen }) => {
                                 listType="picture-card"
                                 maxCount={1}
                                 accept="image/png, image/jpeg, image/jpg"
-                                // fileList={[
-                                //     {
-                                //         uid: '-1',
-                                //         name: 'image.png',
-                                //         status: 'done',
-                                //         url: 'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png',
-                                //     },
-                                // ]}
+                                defaultFileList={defaultFileList}
                             >
                                 Загрузить фотографию
                             </Upload>
