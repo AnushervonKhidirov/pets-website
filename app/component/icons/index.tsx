@@ -359,6 +359,29 @@ const Female: FC<CustomIconProps> = ({ strokeWidth = 2 }) => {
     );
 };
 
+const Gender: FC<CustomIconProps> = ({ strokeWidth = 2 }) => {
+    return (
+        <svg
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth={strokeWidth}
+            width="1em"
+            height="1em"
+        >
+            <circle cx="9" cy="9" r="5" />
+            <line x1="9" y1="14" x2="9" y2="22" />
+            <line x1="6" y1="18" x2="12" y2="18" />
+
+            <circle cx="15" cy="9" r="5" />
+            <polyline points="19 1 23 1 23 5" />
+            <line x1="23" y1="1" x2="18.5" y2="5.5" />
+        </svg>
+    );
+};
+
 export const PawIcon: FC<IconProps> = props => (
     <Icon component={() => <Paw strokeWidth={props.strokeWidth} />} {...props} />
 );
@@ -421,4 +444,7 @@ export const MaleIcon: FC<IconProps> = props => (
 );
 export const FemaleIcon: FC<IconProps> = props => (
     <Icon component={() => <Female strokeWidth={props.strokeWidth} />} {...props} />
+);
+export const GenderIcon: FC<IconProps> = props => (
+    <Icon component={() => <Gender strokeWidth={props.strokeWidth} />} {...props} />
 );

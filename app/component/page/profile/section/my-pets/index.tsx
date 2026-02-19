@@ -5,12 +5,12 @@ import petService from '~service/pet.service';
 import useMyPetsStore from '~store/my-pets.store';
 
 import { Empty, Typography, notification } from 'antd';
-import { Container, Grid, PetCard } from '~component/common';
+import { Container, Grid } from '~component/common';
 import { alertError } from '~helper/alert-error';
 import { CratePetButton } from '~component/pet/pet-action-buttons';
+import PetInfoCard from '~component/pet/pet-info-card';
 
 import empty from 'src/images/empty-pet-image.png';
-
 import classes from './my-pets.module.css';
 
 const { Title } = Typography;
@@ -46,7 +46,7 @@ const MyPets: FC = () => {
             {Array.isArray(pets) && pets.length > 0 ? (
                 <Grid size="large">
                     {pets.map(pet => (
-                        <PetCard key={pet.id} pet={pet} />
+                        <PetInfoCard key={pet.id} pet={pet} />
                     ))}
                 </Grid>
             ) : (
