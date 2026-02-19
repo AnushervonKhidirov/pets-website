@@ -34,7 +34,7 @@ const MyPets: FC = () => {
     });
 
     return (
-        <Container section>
+        <Container section style={{ minHeight: '100%' }}>
             <div className={classes.header}>
                 <Title level={3}>
                     <span className={classes.headline}>Ваши питомцы</span>

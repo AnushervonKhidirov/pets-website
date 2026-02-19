@@ -39,7 +39,7 @@ const PetInfo: FC = () => {
     if (isError) return <ErrorPage />;
     return (
         pet && (
-            <Container section maxWidth={1000} style={{ height: '100%' }}>
+            <Container section maxWidth={1000} style={{ minHeight: '100%' }}>
                 <PetInfoCard pet={pet} />
             </Container>
         )
