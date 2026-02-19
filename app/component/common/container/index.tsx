@@ -2,6 +2,8 @@ import type { FC } from 'react';
 import type { BackgroundProps } from '../background';
 
 import Background from '../background';
+
+import { lightGray } from '~/config/ant.config';
 import classNames from 'classnames';
 import classes from './container.module.css';
 
@@ -17,11 +19,13 @@ const Container: FC<ContainerProps> = ({
     innerClassName,
     maxWidth = 1200,
     children,
+    color = lightGray,
     ...props
 }) => {
     return (
         <Background
             className={classNames(classes.container, { [classes.section]: section }, className)}
+            color={color}
             {...props}
         >
             <div

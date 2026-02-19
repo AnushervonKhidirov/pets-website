@@ -1,6 +1,7 @@
 .container {
     position: relative;
     display: grid;
+    align-content: start;
 
     &.section {
         padding-block: 3rem;
