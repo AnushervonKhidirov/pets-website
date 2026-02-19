@@ -60,12 +60,11 @@ const ProfileButton: FC<{ className?: string }> = props => {
         <Dropdown {...sharedProps}>
             <Avatar
                 src={user?.avatar}
+                icon={<UserIcon />}
                 size="large"
                 className={props.className}
                 style={{ backgroundColor: cyan[5], cursor: 'pointer' }}
-            >
-                <UserIcon style={{ fontSize: '1.5em' }} />
-            </Avatar>
+            />
         </Dropdown>
     );
 };
