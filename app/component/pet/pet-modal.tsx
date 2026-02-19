@@ -213,6 +213,13 @@ const PetModal: FC<PetModalProps> = ({ open, setOpen, pet }) => {
                         <Input placeholder="Номер чипа" />
                     </Form.Item>
 
+                    <Form.Item name="about" initialValue={pet?.about ?? null}>
+                        <Input.TextArea
+                            placeholder="Описание"
+                            autoSize={{ minRows: 2, maxRows: 3 }}
+                        />
+                    </Form.Item>
+
                     <Form.Item name="image" hidden>
                         <Input />
                     </Form.Item>
