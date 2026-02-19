@@ -1,4 +1,6 @@
 import type { FC } from 'react';
+import type { Pet } from '~type/pet.type';
+import type { MenuProps } from 'antd';
 
 import { useEffectOnce } from '~hook/use-effect-once';
 import petService from '~service/pet.service';
@@ -7,8 +9,13 @@ import useMyPetsStore from '~store/my-pets.store';
 import { Empty, Typography, notification } from 'antd';
 import { Container, Grid } from '~component/common';
 import { alertError } from '~helper/alert-error';
-import { CratePetButton, LostPetButton } from '~component/pet/pet-action-buttons';
 import PetInfoCard from '~component/pet/pet-info-card';
+import {
+    CratePetButton,
+    LostPetButton,
+    EditPetButton,
+    DeletePetButton,
+} from '~component/pet/pet-action-buttons';
 
 import empty from 'src/images/empty-pet-image.png';
 import classes from './my-pets.module.css';
@@ -46,9 +53,7 @@ const MyPets: FC = () => {
             {Array.isArray(pets) && pets.length > 0 ? (
                 <Grid size="large">
                     {pets.map(pet => (
-                        <PetInfoCard key={pet.id} pet={pet}>
-                            <LostPetButton pet={pet} size="large" />
-                        </PetInfoCard>
+                        <PetCard key={pet.id} pet={pet} />
                     ))}
                 </Grid>
             ) : (
@@ -61,6 +66,34 @@ const MyPets: FC = () => {
 
             {context}
         </Container>
+    );
+};
+
+const PetCard: FC<{ pet: Pet }> = ({ pet }) => {
+    const actions: MenuProps['items'] = [
+        {
+            key: 'Профиль',
+            label: (
+                <EditPetButton pet={pet} variant="text" block style={{ justifyContent: 'start' }} />
+            ),
+        },
+        {
+            key: 'Мои питомцы',
+            label: (
+                <DeletePetButton
+                    pet={pet}
+                    type="primary"
+                    block
+                    style={{ justifyContent: 'start' }}
+                />
+            ),
+        },
+    ];
+
+    return (
+        <PetInfoCard pet={pet} actions={actions}>
+            <LostPetButton pet={pet} size="large" />
+        </PetInfoCard>
     );
 };
 
