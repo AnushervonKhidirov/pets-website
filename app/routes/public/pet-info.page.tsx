@@ -1,6 +1,6 @@
 import type { FC } from 'react';
 import type { Route } from './+types/pet-info.page';
-import type { Pet } from '~type/pet.type';
+import type { PetWithUser } from '~type/pet.type';
 
 import { useState } from 'react';
 import { useParams } from 'react-router';
@@ -17,7 +17,7 @@ export function meta() {
 const PetInfo: FC = () => {
     const params = useParams<Route.LoaderArgs['params']>();
 
-    const [pet, setPet] = useState<Pet | null>(null);
+    const [pet, setPet] = useState<PetWithUser | null>(null);
     const [isError, setIsError] = useState(false);
 
     async function fetchPet(petId: number) {
