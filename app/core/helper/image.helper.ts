@@ -1,4 +1,4 @@
-export async function reduceSize(file: File, width: number = 800) {
+export async function reduceSize(file: File, width: number = 1000) {
     const img = new Image();
     img.src = URL.createObjectURL(file);
 
