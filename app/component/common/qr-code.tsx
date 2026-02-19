@@ -44,7 +44,7 @@ const QRCode: FC<QRCodeProps & { name?: string }> = ({ type = 'canvas', name, ..
 
             <Button
                 block
-                color="default"
+                color="cyan"
                 variant="solid"
                 onClick={
                     type === 'canvas'
