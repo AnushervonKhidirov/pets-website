@@ -1,8 +1,10 @@
 import type { ThemeConfig } from 'antd';
-import { grey, generate } from '@ant-design/colors';
+import { generate } from '@ant-design/colors';
 
 export const cyan = generate('#7ba99d');
 export const orange = generate('#bf6a2a');
+export const gray = generate('#bfbfbf');
+
 export const light = '#fdf8f3';
 
 export const themeConfig: ThemeConfig = {
@@ -11,11 +13,12 @@ export const themeConfig: ThemeConfig = {
     token: {
         fontFamily: 'inherit',
         colorText: 'inherit',
-        colorTextHeading: grey[6],
+        colorTextHeading: gray[8],
         fontSize: 16,
 
         cyan: cyan[5],
         orange: orange[5],
+        colorTextDescription: gray[6],
     },
     components: {
         Typography: {
@@ -42,9 +45,9 @@ export const themeConfig: ThemeConfig = {
 
         Button: {
             colorBgContainer: 'transparent',
-            colorBgSolid: grey[6],
-            colorBgSolidHover: grey[5],
-            colorBgSolidActive: grey[7],
+            colorBgSolid: gray[8],
+            colorBgSolidHover: gray[7],
+            colorBgSolidActive: gray[9],
 
             contentFontSizeSM: 12,
             controlHeightSM: 26,
