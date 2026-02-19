@@ -1,6 +1,5 @@
-import type { FC, RefObject } from 'react';
+import type { FC } from 'react';
 
-import { useEffect, useRef } from 'react';
 import { useEffectOnce } from '~hook/use-effect-once';
 import petService from '~service/pet.service';
 import useMyPetsStore from '~store/my-pets.store';
@@ -10,8 +9,7 @@ import { Container, Grid, PetCard } from '~component/common';
 import { alertError } from '~helper/alert-error';
 import { CratePetButton } from '~component/pet/pet-action-buttons';
 
-import blackCat from 'src/images/black-cat.png';
-import blackCatHand from 'src/images/black-cat-hand.png';
+import empty from 'src/images/empty-pet-image.png';
 
 import classes from './my-pets.module.css';
 
@@ -19,7 +17,6 @@ const { Title } = Typography;
 
 const MyPets: FC = () => {
     const { pets, setPets } = useMyPetsStore(state => state);
-    const buttonRef = useRef<HTMLButtonElement>(null);
     const [api, context] = notification.useNotification();
 
     async function fetchMyPets() {
@@ -47,77 +44,21 @@ const MyPets: FC = () => {
             </div>
 
             {Array.isArray(pets) && pets.length > 0 ? (
-                <Grid size='large'>
+                <Grid size="large">
                     {pets.map(pet => (
                         <PetCard key={pet.id} pet={pet} />
                     ))}
                 </Grid>
             ) : (
                 <Empty
-                    image={<Cat buttonRef={buttonRef} />}
-                    styles={{ image: { height: '15rem' } }}
-                    description={
-                        <span>
-                            У вас пока нет питомцев.
-                            <br /> Котик укажет на кнопку!
-                        </span>
-                    }
+                    image={empty}
+                    styles={{ image: { height: '10rem', marginTop: '5rem', marginBottom: '1rem' } }}
+                    description={<span>У вас пока нет питомцев.</span>}
                 />
             )}
 
             {context}
         </Container>
-    );
-};
-
-const Cat: FC<{ buttonRef: RefObject<HTMLButtonElement | null> }> = ({ buttonRef }) => {
-    const handRef = useRef<HTMLImageElement>(null);
-
-    useEffect(() => {
-        const setAngleBind = setAngle.bind(null, handRef, buttonRef);
-
-        setAngleBind();
-        globalThis.addEventListener('resize', setAngleBind);
-
-        return () => {
-            globalThis.removeEventListener('resize', setAngleBind);
-        };
-    }, [handRef.current, buttonRef.current]);
-
-    function setAngle(
-        handRef: RefObject<HTMLImageElement | null>,
-        buttonRef: RefObject<HTMLButtonElement | null>,
-    ) {
-        if (handRef.current && buttonRef.current) {
-            const handPosition = {
-                x: handRef.current.getBoundingClientRect().x,
-                y:
-                    handRef.current.getBoundingClientRect().y +
-                    handRef.current.getBoundingClientRect().height / 2,
-            };
-
-            const buttonPosition = {
-                x:
-                    buttonRef.current.getBoundingClientRect().x +
-                    buttonRef.current.getBoundingClientRect().width / 2 -
-                    handPosition.x,
-                y:
-                    buttonRef.current.getBoundingClientRect().y +
-                    buttonRef.current.getBoundingClientRect().height / 2 -
-                    handPosition.y,
-            };
-
-            const radian = Math.atan2(buttonPosition.y, buttonPosition.x);
-            const degree = (radian * 180) / Math.PI;
-            handRef.current.style.transform = `rotate(${degree}deg)`;
-        }
-    }
-
-    return (
-        <div className={classes.empty_img}>
-            <img className={classes.cat} src={blackCat} alt="Cat" />
-            <img className={classes.cat_hand} ref={handRef} src={blackCatHand} alt="Cat's hand" />
-        </div>
     );
 };
 
