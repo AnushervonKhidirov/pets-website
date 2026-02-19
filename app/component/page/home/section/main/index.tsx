@@ -63,7 +63,7 @@ const MainSection = () => {
 
             <div className={classes.details}>
                 {detailList.map(({ Icon, value, about }) => (
-                    <Card key={about} innerClassName={classes.card} alpha={0.5}>
+                    <Card key={about} innerClassName={classes.card} alpha={0.75}>
                         <Icon className={classes.icon} />
                         <Title level={3} className={classes.value}>
                             <CountUp end={value} separator="," enableScrollSpy scrollSpyOnce />
