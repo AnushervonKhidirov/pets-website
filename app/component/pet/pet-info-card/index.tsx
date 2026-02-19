@@ -87,7 +87,11 @@ const OwnerCard: FC<{ user: PetWithUser['user'] }> = ({ user }) => {
                 </Title>
 
                 <div className={classes.user_info}>
-                    <UserAvatar firstName={user.firstName} lastName={user.lastName} />
+                    <UserAvatar
+                        avatar={user.avatar}
+                        firstName={user.firstName}
+                        lastName={user.lastName}
+                    />
                     <PhoneLink
                         phone={user.phone}
                         asButton
