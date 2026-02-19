@@ -1,19 +1,18 @@
 import type { FC } from 'react';
 import type { GetProps } from 'antd';
-import type { WithAdditionalProps } from '~type/common.type';
 
 import Icon from '@ant-design/icons';
 
-type IconProps = Partial<GetProps<typeof Icon>>;
+type CustomIconProps = { strokeWidth?: number };
+type IconProps = Partial<GetProps<typeof Icon> & { strokeWidth?: number }>;
 
-const Paw: FC<WithAdditionalProps> = ({ className }) => {
+const Paw: FC<CustomIconProps> = ({ strokeWidth = 2 }) => {
     return (
         <svg
-            className={className}
             viewBox="0 0 24 24"
             fill="none"
             stroke="currentColor"
-            strokeWidth="2"
+            strokeWidth={strokeWidth}
             width="1em"
             height="1em"
         >
@@ -25,14 +24,13 @@ const Paw: FC<WithAdditionalProps> = ({ className }) => {
     );
 };
 
-const User: FC<WithAdditionalProps> = ({ className }) => {
+const User: FC<CustomIconProps> = ({ strokeWidth = 2 }) => {
     return (
         <svg
-            className={className}
             viewBox="0 0 24 24"
             fill="none"
             stroke="currentColor"
-            strokeWidth="2"
+            strokeWidth={strokeWidth}
             width="1em"
             height="1em"
         >
@@ -42,14 +40,13 @@ const User: FC<WithAdditionalProps> = ({ className }) => {
     );
 };
 
-const Users: FC<WithAdditionalProps> = ({ className }) => {
+const Users: FC<CustomIconProps> = ({ strokeWidth = 2 }) => {
     return (
         <svg
-            className={className}
             viewBox="0 0 24 24"
             fill="none"
             stroke="currentColor"
-            strokeWidth="2"
+            strokeWidth={strokeWidth}
             width="1em"
             height="1em"
         >
@@ -61,14 +58,13 @@ const Users: FC<WithAdditionalProps> = ({ className }) => {
     );
 };
 
-const Search: FC<WithAdditionalProps> = ({ className }) => {
+const Search: FC<CustomIconProps> = ({ strokeWidth = 2 }) => {
     return (
         <svg
-            className={className}
             viewBox="0 0 24 24"
             fill="none"
             stroke="currentColor"
-            strokeWidth="2"
+            strokeWidth={strokeWidth}
             width="1em"
             height="1em"
         >
@@ -78,14 +74,13 @@ const Search: FC<WithAdditionalProps> = ({ className }) => {
     );
 };
 
-const Tick: FC<WithAdditionalProps> = ({ className }) => {
+const Tick: FC<CustomIconProps> = ({ strokeWidth = 2 }) => {
     return (
         <svg
-            className={className}
             viewBox="0 0 24 24"
             fill="none"
             stroke="currentColor"
-            strokeWidth="2"
+            strokeWidth={strokeWidth}
             width="1em"
             height="1em"
         >
@@ -95,14 +90,13 @@ const Tick: FC<WithAdditionalProps> = ({ className }) => {
     );
 };
 
-const Shield: FC<WithAdditionalProps> = ({ className }) => {
+const Shield: FC<CustomIconProps> = ({ strokeWidth = 2 }) => {
     return (
         <svg
-            className={className}
             viewBox="0 0 24 24"
             fill="none"
             stroke="currentColor"
-            strokeWidth="2"
+            strokeWidth={strokeWidth}
             width="1em"
             height="1em"
         >
@@ -111,14 +105,13 @@ const Shield: FC<WithAdditionalProps> = ({ className }) => {
     );
 };
 
-const ShieldTick: FC<WithAdditionalProps> = ({ className }) => {
+const ShieldTick: FC<CustomIconProps> = ({ strokeWidth = 2 }) => {
     return (
         <svg
-            className={className}
             viewBox="0 0 24 24"
             fill="none"
             stroke="currentColor"
-            strokeWidth="2"
+            strokeWidth={strokeWidth}
             width="1em"
             height="1em"
         >
@@ -128,14 +121,13 @@ const ShieldTick: FC<WithAdditionalProps> = ({ className }) => {
     );
 };
 
-const Heart: FC<WithAdditionalProps> = ({ className }) => {
+const Heart: FC<CustomIconProps> = ({ strokeWidth = 2 }) => {
     return (
         <svg
-            className={className}
             viewBox="0 0 24 24"
             fill="none"
             stroke="currentColor"
-            strokeWidth="2"
+            strokeWidth={strokeWidth}
             width="1em"
             height="1em"
         >
@@ -144,14 +136,13 @@ const Heart: FC<WithAdditionalProps> = ({ className }) => {
     );
 };
 
-const ArrowRight: FC<WithAdditionalProps> = ({ className }) => {
+const ArrowRight: FC<CustomIconProps> = ({ strokeWidth = 2 }) => {
     return (
         <svg
-            className={className}
             viewBox="0 0 24 24"
             fill="none"
             stroke="currentColor"
-            strokeWidth="2"
+            strokeWidth={strokeWidth}
             width="1em"
             height="1em"
         >
@@ -161,14 +152,13 @@ const ArrowRight: FC<WithAdditionalProps> = ({ className }) => {
     );
 };
 
-const ArrowLeft: FC<WithAdditionalProps> = ({ className }) => {
+const ArrowLeft: FC<CustomIconProps> = ({ strokeWidth = 2 }) => {
     return (
         <svg
-            className={className}
             viewBox="0 0 24 24"
             fill="none"
             stroke="currentColor"
-            strokeWidth="2"
+            strokeWidth={strokeWidth}
             width="1em"
             height="1em"
         >
@@ -178,14 +168,13 @@ const ArrowLeft: FC<WithAdditionalProps> = ({ className }) => {
     );
 };
 
-const Phone: FC<WithAdditionalProps> = ({ className }) => {
+const Phone: FC<CustomIconProps> = ({ strokeWidth = 2 }) => {
     return (
         <svg
-            className={className}
             viewBox="0 0 24 24"
             fill="none"
             stroke="currentColor"
-            strokeWidth="2"
+            strokeWidth={strokeWidth}
             width="1em"
             height="1em"
         >
@@ -194,14 +183,13 @@ const Phone: FC<WithAdditionalProps> = ({ className }) => {
     );
 };
 
-const Location: FC<WithAdditionalProps> = ({ className }) => {
+const Location: FC<CustomIconProps> = ({ strokeWidth = 2 }) => {
     return (
         <svg
-            className={className}
             viewBox="0 0 24 24"
             fill="none"
             stroke="currentColor"
-            strokeWidth="2"
+            strokeWidth={strokeWidth}
             width="1em"
             height="1em"
         >
@@ -211,14 +199,13 @@ const Location: FC<WithAdditionalProps> = ({ className }) => {
     );
 };
 
-const Calendar: FC<WithAdditionalProps> = ({ className }) => {
+const Calendar: FC<CustomIconProps> = ({ strokeWidth = 2 }) => {
     return (
         <svg
-            className={className}
             viewBox="0 0 24 24"
             fill="none"
             stroke="currentColor"
-            strokeWidth="2"
+            strokeWidth={strokeWidth}
             width="1em"
             height="1em"
         >
@@ -230,14 +217,13 @@ const Calendar: FC<WithAdditionalProps> = ({ className }) => {
     );
 };
 
-const Clock: FC<WithAdditionalProps> = ({ className }) => {
+const Clock: FC<CustomIconProps> = ({ strokeWidth = 2 }) => {
     return (
         <svg
-            className={className}
             viewBox="0 0 24 24"
             fill="none"
             stroke="currentColor"
-            strokeWidth="2"
+            strokeWidth={strokeWidth}
             width="1em"
             height="1em"
         >
@@ -247,14 +233,13 @@ const Clock: FC<WithAdditionalProps> = ({ className }) => {
     );
 };
 
-const Filter: FC<WithAdditionalProps> = ({ className }) => {
+const Filter: FC<CustomIconProps> = ({ strokeWidth = 2 }) => {
     return (
         <svg
-            className={className}
             viewBox="0 0 24 24"
             fill="none"
             stroke="currentColor"
-            strokeWidth="2"
+            strokeWidth={strokeWidth}
             width="1em"
             height="1em"
         >
@@ -263,14 +248,13 @@ const Filter: FC<WithAdditionalProps> = ({ className }) => {
     );
 };
 
-const Hash: FC<WithAdditionalProps> = ({ className }) => {
+const Hash: FC<CustomIconProps> = ({ strokeWidth = 2 }) => {
     return (
         <svg
-            className={className}
             viewBox="0 0 24 24"
             fill="none"
             stroke="currentColor"
-            strokeWidth="2"
+            strokeWidth={strokeWidth}
             width="1em"
             height="1em"
         >
@@ -282,14 +266,13 @@ const Hash: FC<WithAdditionalProps> = ({ className }) => {
     );
 };
 
-const Share: FC<WithAdditionalProps> = ({ className }) => {
+const Share: FC<CustomIconProps> = ({ strokeWidth = 2 }) => {
     return (
         <svg
-            className={className}
             viewBox="0 0 24 24"
             fill="none"
             stroke="currentColor"
-            strokeWidth="2"
+            strokeWidth={strokeWidth}
             width="1em"
             height="1em"
         >
@@ -302,14 +285,13 @@ const Share: FC<WithAdditionalProps> = ({ className }) => {
     );
 };
 
-const Upload: FC<WithAdditionalProps> = ({ className }) => {
+const Upload: FC<CustomIconProps> = ({ strokeWidth = 2 }) => {
     return (
         <svg
-            className={className}
             viewBox="0 0 24 24"
             fill="none"
             stroke="currentColor"
-            strokeWidth="2"
+            strokeWidth={strokeWidth}
             width="1em"
             height="1em"
         >
@@ -320,16 +302,15 @@ const Upload: FC<WithAdditionalProps> = ({ className }) => {
     );
 };
 
-const Warning: FC<WithAdditionalProps> = ({ className }) => {
+const Warning: FC<CustomIconProps> = ({ strokeWidth = 2 }) => {
     return (
         <svg
-            className={className}
             viewBox="0 0 24 24"
             fill="none"
             stroke="currentColor"
             strokeLinecap="round"
             strokeLinejoin="round"
-            strokeWidth="2"
+            strokeWidth={strokeWidth}
             width="1em"
             height="1em"
         >
@@ -340,16 +321,15 @@ const Warning: FC<WithAdditionalProps> = ({ className }) => {
     );
 };
 
-const Male: FC<WithAdditionalProps> = ({ className }) => {
+const Male: FC<CustomIconProps> = ({ strokeWidth = 2 }) => {
     return (
         <svg
-            className={className}
             viewBox="0 0 24 24"
             fill="none"
             stroke="currentColor"
             strokeLinecap="round"
             strokeLinejoin="round"
-            strokeWidth="2"
+            strokeWidth={strokeWidth}
             width="1em"
             height="1em"
         >
@@ -360,16 +340,15 @@ const Male: FC<WithAdditionalProps> = ({ className }) => {
     );
 };
 
-const Female: FC<WithAdditionalProps> = ({ className }) => {
+const Female: FC<CustomIconProps> = ({ strokeWidth = 2 }) => {
     return (
         <svg
-            className={className}
             viewBox="0 0 24 24"
             fill="none"
             stroke="currentColor"
             strokeLinecap="round"
             strokeLinejoin="round"
-            strokeWidth="2"
+            strokeWidth={strokeWidth}
             width="1em"
             height="1em"
         >
@@ -380,24 +359,66 @@ const Female: FC<WithAdditionalProps> = ({ className }) => {
     );
 };
 
-export const PawIcon: FC<IconProps> = props => <Icon component={Paw} {...props} />;
-export const UserIcon: FC<IconProps> = props => <Icon component={User} {...props} />;
-export const UsersIcon: FC<IconProps> = props => <Icon component={Users} {...props} />;
-export const SearchIcon: FC<IconProps> = props => <Icon component={Search} {...props} />;
-export const TickIcon: FC<IconProps> = props => <Icon component={Tick} {...props} />;
-export const ShieldIcon: FC<IconProps> = props => <Icon component={Shield} {...props} />;
-export const ShieldTickIcon: FC<IconProps> = props => <Icon component={ShieldTick} {...props} />;
-export const HeartIcon: FC<IconProps> = props => <Icon component={Heart} {...props} />;
-export const ArrowRightIcon: FC<IconProps> = props => <Icon component={ArrowRight} {...props} />;
-export const ArrowLeftIcon: FC<IconProps> = props => <Icon component={ArrowLeft} {...props} />;
-export const PhoneIcon: FC<IconProps> = props => <Icon component={Phone} {...props} />;
-export const LocationIcon: FC<IconProps> = props => <Icon component={Location} {...props} />;
-export const CalendarIcon: FC<IconProps> = props => <Icon component={Calendar} {...props} />;
-export const ClockIcon: FC<IconProps> = props => <Icon component={Clock} {...props} />;
-export const FilterIcon: FC<IconProps> = props => <Icon component={Filter} {...props} />;
-export const HashIcon: FC<IconProps> = props => <Icon component={Hash} {...props} />;
-export const ShareIcon: FC<IconProps> = props => <Icon component={Share} {...props} />;
-export const UploadIcon: FC<IconProps> = props => <Icon component={Upload} {...props} />;
-export const WarningIcon: FC<IconProps> = props => <Icon component={Warning} {...props} />;
-export const MaleIcon: FC<IconProps> = props => <Icon component={Male} {...props} />;
-export const FemaleIcon: FC<IconProps> = props => <Icon component={Female} {...props} />;
+export const PawIcon: FC<IconProps> = props => (
+    <Icon component={() => <Paw strokeWidth={props.strokeWidth} />} {...props} />
+);
+export const UserIcon: FC<IconProps> = props => (
+    <Icon component={() => <User strokeWidth={props.strokeWidth} />} {...props} />
+);
+export const UsersIcon: FC<IconProps> = props => (
+    <Icon component={() => <Users strokeWidth={props.strokeWidth} />} {...props} />
+);
+export const SearchIcon: FC<IconProps> = props => (
+    <Icon component={() => <Search strokeWidth={props.strokeWidth} />} {...props} />
+);
+export const TickIcon: FC<IconProps> = props => (
+    <Icon component={() => <Tick strokeWidth={props.strokeWidth} />} {...props} />
+);
+export const ShieldIcon: FC<IconProps> = props => (
+    <Icon component={() => <Shield strokeWidth={props.strokeWidth} />} {...props} />
+);
+export const ShieldTickIcon: FC<IconProps> = props => (
+    <Icon component={() => <ShieldTick strokeWidth={props.strokeWidth} />} {...props} />
+);
+export const HeartIcon: FC<IconProps> = props => (
+    <Icon component={() => <Heart strokeWidth={props.strokeWidth} />} {...props} />
+);
+export const ArrowRightIcon: FC<IconProps> = props => (
+    <Icon component={() => <ArrowRight strokeWidth={props.strokeWidth} />} {...props} />
+);
+export const ArrowLeftIcon: FC<IconProps> = props => (
+    <Icon component={() => <ArrowLeft strokeWidth={props.strokeWidth} />} {...props} />
+);
+export const PhoneIcon: FC<IconProps> = props => (
+    <Icon component={() => <Phone strokeWidth={props.strokeWidth} />} {...props} />
+);
+export const LocationIcon: FC<IconProps> = props => (
+    <Icon component={() => <Location strokeWidth={props.strokeWidth} />} {...props} />
+);
+export const CalendarIcon: FC<IconProps> = props => (
+    <Icon component={() => <Calendar strokeWidth={props.strokeWidth} />} {...props} />
+);
+export const ClockIcon: FC<IconProps> = props => (
+    <Icon component={() => <Clock strokeWidth={props.strokeWidth} />} {...props} />
+);
+export const FilterIcon: FC<IconProps> = props => (
+    <Icon component={() => <Filter strokeWidth={props.strokeWidth} />} {...props} />
+);
+export const HashIcon: FC<IconProps> = props => (
+    <Icon component={() => <Hash strokeWidth={props.strokeWidth} />} {...props} />
+);
+export const ShareIcon: FC<IconProps> = props => (
+    <Icon component={() => <Share strokeWidth={props.strokeWidth} />} {...props} />
+);
+export const UploadIcon: FC<IconProps> = props => (
+    <Icon component={() => <Upload strokeWidth={props.strokeWidth} />} {...props} />
+);
+export const WarningIcon: FC<IconProps> = props => (
+    <Icon component={() => <Warning strokeWidth={props.strokeWidth} />} {...props} />
+);
+export const MaleIcon: FC<IconProps> = props => (
+    <Icon component={() => <Male strokeWidth={props.strokeWidth} />} {...props} />
+);
+export const FemaleIcon: FC<IconProps> = props => (
+    <Icon component={() => <Female strokeWidth={props.strokeWidth} />} {...props} />
+);
