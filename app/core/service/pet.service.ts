@@ -85,6 +85,16 @@ class PetService {
         }
     }
 
+    async setLostStatus(id: number, lost: boolean): ReturnWithErrPromise<Pet> {
+        try {
+            const pet = await apiClientAuth.patch<PetResponse>(`/pet/${id}`, { lost });
+            if (isHttpException(pet.data)) throw pet.data;
+            return [this.convertData(pet.data), null];
+        } catch (err) {
+            return errorHandler(err);
+        }
+    }
+
     async delete(id: number): ReturnWithErrPromise<Pet> {
         try {
             const pet = await apiClientAuth.delete<PetResponse>(`/pet/${id}`);
