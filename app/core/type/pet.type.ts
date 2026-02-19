@@ -17,10 +17,7 @@ export type Pet = {
     lost: boolean;
 };
 
-export type CratePetDto = Pick<
-    Pet,
-    'name' | 'sex' | 'birthday' | 'microchipId' | 'petTypeId' | 'breedId'
->;
+export type PetDto = Omit<Pet, 'id' | 'petType' | 'breed' | 'user' | 'image' | 'lost'>;
 
 export type PetType = {
     id: number;
