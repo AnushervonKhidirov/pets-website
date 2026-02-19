@@ -1,8 +1,9 @@
-import type { FC, JSX, ReactNode } from 'react';
+import type { FC, JSX } from 'react';
 import type { Pet, PetWithUser } from '~type/pet.type';
-import type { Dayjs } from 'dayjs';
+import type { WithAdditionalProps } from '~type/common.type';
 
 import { Tag, Typography } from 'antd';
+import { red } from '@ant-design/colors';
 import { cyan, gray, light } from '~/config/ant.config';
 import {
     PawIcon,
@@ -15,7 +16,6 @@ import {
 } from '~icons';
 import { Background, Card, UserAvatar, PhoneLink, Contacts } from '~component/common';
 
-import dayjs from 'dayjs';
 import { sex } from '~constant/pet';
 import placeholder from 'src/images/pet-placeholder.png';
 
@@ -24,11 +24,10 @@ import classes from './pet-info-card.module.css';
 
 const { Title, Text } = Typography;
 
-type InfoItem = { icon: JSX.Element; headline: string; value: string | number };
+type InfoItem = { icon: JSX.Element; headline: string; value: string | number; isDanger?: boolean };
+type PetInfoCardProps = WithAdditionalProps<{ pet: Pet | PetWithUser }>;
 
-const PetInfoCard: FC<{ pet: Pet | PetWithUser }> = ({ pet }) => {
-    const age = getAge(pet.birthday);
-
+const PetInfoCard: FC<PetInfoCardProps> = ({ pet, children }) => {
     const infoItem: InfoItem[] = [
         {
             icon: <PawIcon />,
@@ -38,7 +37,7 @@ const PetInfoCard: FC<{ pet: Pet | PetWithUser }> = ({ pet }) => {
         {
             icon: <CalendarIcon />,
             headline: 'Возраст',
-            value: age ?? '',
+            value: pet.birthday?.isValid() ? pet.birthday.toNow(true) : '',
         },
         {
             icon: <GenderIcon />,
@@ -49,6 +48,12 @@ const PetInfoCard: FC<{ pet: Pet | PetWithUser }> = ({ pet }) => {
             icon: <HashIcon />,
             headline: 'Чип',
             value: pet.microchipId ?? '',
+        },
+        {
+            icon: <WarningIcon />,
+            headline: 'Дата пропажи',
+            value: pet.lostAt?.startOf('day').format('DD MMMM YYYY') ?? '',
+            isDanger: true,
         },
     ].filter(item => Boolean(item.value));
 
@@ -67,13 +72,21 @@ const PetInfoCard: FC<{ pet: Pet | PetWithUser }> = ({ pet }) => {
                 {pet.about && <Text>{pet.about}</Text>}
 
                 <div className={classes.info_card_wrapper}>
-                    {infoItem.map(({ icon, headline, value }) => (
-                        <InfoCard key={value} icon={icon} headline={headline} text={value} />
+                    {infoItem.map(({ icon, headline, value, isDanger = undefined }) => (
+                        <InfoCard
+                            key={value}
+                            icon={icon}
+                            headline={headline}
+                            value={value}
+                            isDanger={isDanger}
+                        />
                     ))}
                 </div>
             </div>
 
             {'user' in pet && <OwnerCard user={pet.user} />}
+
+            {children}
         </Card>
     );
 };
@@ -110,17 +123,21 @@ const OwnerCard: FC<{ user: PetWithUser['user'] }> = ({ user }) => {
     );
 };
 
-const InfoCard: FC<{ icon: ReactNode; headline: string; text: string | number }> = ({
-    icon,
-    headline,
-    text,
-}) => {
+const InfoCard: FC<InfoItem> = ({ icon, headline, value, isDanger }) => {
+    const cardColor = isDanger ? red[0] : light;
+    const headlineColor = isDanger ? red[5] : cyan[5];
+
     return (
-        <Card color={light} innerClassName={classes.info_card}>
-            <div className={classes.info_card_headline} style={{ color: cyan[5] }}>
+        <Card
+            color={cardColor}
+            innerClassName={classes.info_card}
+            variant={isDanger ? 'outlined' : 'borderless'}
+            style={{ borderColor: red[2] }}
+        >
+            <div className={classes.info_card_headline} style={{ color: headlineColor }}>
                 {icon} <span>{headline}</span>
             </div>
-            <div className={classes.info_card_value}>{text}</div>
+            <div className={classes.info_card_value}>{value}</div>
         </Card>
     );
 };
@@ -140,7 +157,7 @@ const CardImage: FC<{ pet: Pet }> = ({ pet }) => {
 
             <div className={classes.header_overlay}>
                 <div className={classes.name}>{pet.name}</div>
-                {pet.breed?.ru && <div className={classes.additional_text}>{pet.breed.ru}</div>}
+                {pet.breed?.ru && <div className={classes.breed}>{pet.breed.ru}</div>}
                 <StatusTag lost={pet.lost} />
             </div>
         </Background>
@@ -163,14 +180,5 @@ const StatusTag: FC<{ lost: boolean }> = ({ lost }) => {
         </Tag>
     );
 };
-
-function getAge(date?: Dayjs | null): string | null {
-    if (!date?.isValid()) return null;
-
-    const currentYear = dayjs().get('year');
-    const birthYear = date.get('year');
-
-    return currentYear - birthYear + ' лет';
-}
 
 export default PetInfoCard;
