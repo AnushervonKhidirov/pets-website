@@ -6,6 +6,7 @@ export const orange = generate('#bf6a2a');
 export const gray = generate('#bfbfbf');
 
 export const light = '#fdf8f3';
+export const lightGray = '#f9fafb';
 
 export const themeConfig: ThemeConfig = {
     cssVar: { key: 'custom-ant', prefix: '' },
