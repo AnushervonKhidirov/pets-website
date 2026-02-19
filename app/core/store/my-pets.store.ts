@@ -7,6 +7,7 @@ type MyPetsActions = {
     setPets: (pets: Pet[]) => void;
     addPet: (pet: Pet) => void;
     updatePet: (pet: Pet) => void;
+    deletePet: (petId: number) => void;
     clearMyPetsData: () => void;
 };
 
@@ -17,6 +18,11 @@ const useMyPetsStore = create<MyPetsState & MyPetsActions>()(set => ({
     updatePet: pet =>
         set(state => ({
             pets: state.pets.map(statePet => (statePet.id === pet.id ? pet : statePet)),
+        })),
+
+    deletePet: petId =>
+        set(state => ({
+            pets: state.pets.filter(statePet => statePet.id !== petId),
         })),
     clearMyPetsData: () => set({ pets: [] }),
 }));
