@@ -8,7 +8,7 @@ import { useEffectOnce } from '~hook/use-effect-once';
 import petService from '~service/pet.service';
 
 import { Container } from '~component/common';
-import PetInfoSection from '~pageComponent/pet/section/pet-info';
+import PetInfoCard from '~component/pet/pet-info-card';
 
 export function meta() {
     return [{ title: 'Pet' }];
@@ -37,7 +37,13 @@ const PetInfo: FC = () => {
     });
 
     if (isError) return <ErrorPage />;
-    return pet && <PetInfoSection pet={pet} />;
+    return (
+        pet && (
+            <Container section maxWidth={1000} style={{ height: '100%' }}>
+                <PetInfoCard pet={pet} />
+            </Container>
+        )
+    );
 };
 
 const ErrorPage = () => {
