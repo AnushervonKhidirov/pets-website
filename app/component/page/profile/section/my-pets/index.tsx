@@ -47,7 +47,7 @@ const MyPets: FC = () => {
             </div>
 
             {Array.isArray(pets) && pets.length > 0 ? (
-                <Grid>
+                <Grid size='large'>
                     {pets.map(pet => (
                         <PetCard key={pet.id} pet={pet} />
                     ))}

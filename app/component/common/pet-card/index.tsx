@@ -1,79 +1,50 @@
 import type { FC } from 'react';
-import type { Dayjs } from 'dayjs';
-import type { DescriptionsProps } from 'antd';
 import type { Pet } from '~type/pet.type';
 
 import { Link } from 'react-router';
-import { Tag, Descriptions, Typography, Divider } from 'antd';
-import { PawIcon, TickIcon } from '~icons';
+import { Tag } from 'antd';
+import { TickIcon, WarningIcon } from '~icons';
 import { Card, Background } from '~component/common';
 
-import dayjs from 'dayjs';
-import { cyan, light } from '~/config/ant.config';
-import { sex } from '~constant/pet';
+import { gray, light } from '~/config/ant.config';
 import { Route } from '~constant/route';
 
 import classes from './pet-card.module.css';
 import classNames from 'classnames';
-
-const { Title, Text } = Typography;
+import placeholder from 'src/images/pet-placeholder.png';
 
 const PetCard: FC<{ pet: Pet }> = ({ pet }) => {
-    const items: DescriptionsProps['items'] = [
-        {
-            key: 'Вид питомца',
-            label: 'Вид питомца',
-            children: pet.petType.ru,
-        },
-        {
-            key: 'Пол',
-            label: 'Пол',
-            children: pet.sex ? sex[pet.sex].ru : '—',
-        },
-        {
-            key: 'Возраст',
-            label: 'Возраст',
-            children: getAge(pet.birthday),
-        },
-        {
-            key: 'Чип',
-            label: 'Чип',
-            children: pet.microchipId ?? '—',
-        },
-    ];
-
     return (
         <Link to={`${Route.PetInfo}/${pet.id}`}>
             <Card
                 color={light}
                 hoverable
-                cover={<CardImage name={pet.name} image={pet.image} lost={pet.lost} />}
-            >
-                <div style={{ marginBottom: '0.5em' }}>
-                    <Title level={3}>{pet.name}</Title>
-                    <Text type="secondary">{pet.breed?.ru}</Text>
-                </div>
-
-                <Divider />
-
-                <Descriptions items={items} column={1} />
-            </Card>
+                cover={<CardImage pet={pet} />}
+                contentStyles={{ display: 'none' }}
+                style={{ borderRadius: '1rem' }}
+            />
         </Link>
     );
 };
 
-const CardImage: FC<Pick<Pet, 'name' | 'image' | 'lost'>> = ({ name, image, lost }) => {
+const CardImage: FC<{ pet: Pet }> = ({ pet }) => {
     return (
         <Background
-            color={cyan[0]}
-            style={{ aspectRatio: '1/0.5', display: 'grid', justifyContent: 'center' }}
+            className={classes.header}
+            color={gray[2]}
+            style={{ aspectRatio: '1/0.5', display: 'grid' }}
         >
-            {image ? (
-                <img src={image} alt={name} className={classes.image} />
-            ) : (
-                <PawIcon style={{ fontSize: '5rem', color: cyan[5] }} />
-            )}
-            <StatusTag lost={lost} />
+            <img
+                src={pet.image ?? placeholder}
+                alt={pet.name}
+                className={classNames(classes.image, { [classes.placeholder]: !pet.image })}
+            />
+
+            <div className={classes.header_overlay}>
+                <div className={classes.name}>{pet.name}</div>
+                {pet.breed?.ru && <div className={classes.breed}>{pet.breed.ru}</div>}
+                <StatusTag lost={pet.lost} />
+            </div>
         </Background>
     );
 };
@@ -83,6 +54,7 @@ const StatusTag: FC<{ lost: boolean }> = ({ lost }) => {
         <Tag
             color="error"
             variant="solid"
+            icon={<WarningIcon />}
             className={classNames(classes.tag, { [classes.lost]: lost })}
         >
             Потерян
@@ -93,14 +65,5 @@ const StatusTag: FC<{ lost: boolean }> = ({ lost }) => {
         </Tag>
     );
 };
-
-function getAge(date?: Dayjs | null): string | number {
-    if (!date?.isValid()) return '—';
-
-    const currentYear = dayjs().get('year');
-    const birthYear = date.get('year');
-
-    return currentYear - birthYear + ' лет';
-}
 
 export default PetCard;
