@@ -12,10 +12,11 @@ export type Pet = {
     petType: PetType;
     breedId: number | null;
     breed: Omit<Breed, 'petType'> | null;
-    user: Omit<User, 'authType'>;
     image: string | null;
     lost: boolean;
 };
+
+export type PetWithUser = Pet & { user: Omit<User, 'authType'> };
 
 export type PetDto = Omit<Pet, 'id' | 'petType' | 'breed' | 'user' | 'image' | 'lost'>;
 

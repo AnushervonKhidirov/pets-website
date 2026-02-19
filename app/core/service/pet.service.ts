@@ -1,5 +1,5 @@
 import type { ReturnWithErrPromise } from '~type/common.type';
-import type { Pet, PetType, Breed, PetDto } from '~type/pet.type';
+import type { Pet, PetWithUser, PetType, Breed, PetDto } from '~type/pet.type';
 
 import dayjs from 'dayjs';
 import { apiClient, apiClientAuth } from '~api/api-client';
@@ -7,6 +7,7 @@ import { errorHandler, isHttpException } from '~helper/error-handler';
 import { serverUrl } from '~constant/common';
 
 type PetResponse = Omit<Pet, 'birthday'> & { birthday: string | null };
+type PetResponseWithUser = PetResponse & { user: PetWithUser['user'] };
 
 class PetService {
     async getMy(): ReturnWithErrPromise<Pet[]> {
@@ -20,9 +21,9 @@ class PetService {
         }
     }
 
-    async getOne(id: number): ReturnWithErrPromise<Pet> {
+    async getOne(id: number): ReturnWithErrPromise<PetWithUser> {
         try {
-            const pet = await apiClient.get<PetResponse>(`/pet/${id}`);
+            const pet = await apiClient.get<PetResponseWithUser>(`/pet/${id}`);
             if (isHttpException(pet.data)) throw pet.data;
             return [this.convertData(pet.data), null];
         } catch (err) {
@@ -131,7 +132,7 @@ class PetService {
         }
     }
 
-    private convertData(pet: PetResponse): Pet {
+    private convertData<T extends PetResponse | PetResponseWithUser>(pet: T) {
         const birthday = dayjs(pet.birthday).isValid() ? dayjs(pet.birthday) : null;
         const image = pet.image ? `${serverUrl}/pet/image/${pet.image}` : null;
         return { ...pet, birthday, image };
