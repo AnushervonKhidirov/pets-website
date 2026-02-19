@@ -2,12 +2,14 @@ import type { FC } from 'react';
 import type { Pet } from '~type/pet.type';
 import type { MenuProps } from 'antd';
 
+import { useState } from 'react';
 import { useEffectOnce } from '~hook/use-effect-once';
 import petService from '~service/pet.service';
 import useMyPetsStore from '~store/my-pets.store';
 
-import { Empty, Typography, notification } from 'antd';
-import { Container, Grid } from '~component/common';
+import { Empty, Typography, Modal, notification, Button } from 'antd';
+import { QrcodeOutlined } from '@ant-design/icons';
+import { Container, Grid, QRCode } from '~component/common';
 import { alertError } from '~helper/alert-error';
 import PetInfoCard from '~component/pet/pet-info-card';
 import {
@@ -17,6 +19,7 @@ import {
     DeletePetButton,
 } from '~component/pet/pet-action-buttons';
 
+import { Route } from '~constant/route';
 import empty from 'src/images/empty-pet-image.png';
 import classes from './my-pets.module.css';
 
@@ -70,15 +73,31 @@ const MyPets: FC = () => {
 };
 
 const PetCard: FC<{ pet: Pet }> = ({ pet }) => {
+    const [qrOpened, setQrOpened] = useState(false);
+
     const actions: MenuProps['items'] = [
         {
-            key: 'Профиль',
+            key: 'QR',
+            label: (
+                <Button
+                    icon={<QrcodeOutlined />}
+                    onClick={() => setQrOpened(true)}
+                    variant="text"
+                    color="cyan"
+                    style={{ justifyContent: 'start' }}
+                >
+                    Показать QR код
+                </Button>
+            ),
+        },
+        {
+            key: 'Редактировать',
             label: (
                 <EditPetButton pet={pet} variant="text" block style={{ justifyContent: 'start' }} />
             ),
         },
         {
-            key: 'Мои питомцы',
+            key: 'Удалить',
             label: (
                 <DeletePetButton
                     pet={pet}
@@ -91,9 +110,26 @@ const PetCard: FC<{ pet: Pet }> = ({ pet }) => {
     ];
 
     return (
-        <PetInfoCard pet={pet} actions={actions}>
-            <LostPetButton pet={pet} size="large" />
-        </PetInfoCard>
+        <>
+            <PetInfoCard pet={pet} actions={actions}>
+                <LostPetButton pet={pet} size="large" />
+            </PetInfoCard>
+
+            <Modal
+                title={'QR Код'}
+                centered
+                footer={null}
+                width="auto"
+                styles={{ container: { backgroundColor: '#fff' } }}
+                open={qrOpened}
+                onCancel={() => setQrOpened(false)}
+            >
+                <QRCode
+                    name={pet.name}
+                    value={`${globalThis.location.origin}${Route.PetInfo}/${pet.id}`}
+                />
+            </Modal>
+        </>
     );
 };
 
