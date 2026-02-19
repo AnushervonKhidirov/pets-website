@@ -55,6 +55,7 @@ export const DeletePetButton: FC<ButtonProps> = ({ pet, hideText, ...props }) =>
                 description={`Питомец ${pet.name} будет удален`}
                 icon={<WarningIcon style={{ color: red.primary }} />}
                 placement="topRight"
+                arrow={false}
                 open={open}
                 okText="Удалить"
                 okButtonProps={{ loading: confirmLoading, type: 'primary', danger: true }}
