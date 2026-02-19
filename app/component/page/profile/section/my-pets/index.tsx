@@ -1,16 +1,14 @@
 import type { FC, RefObject } from 'react';
-import type { Pet } from '~type/pet.type';
 
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef } from 'react';
 import { useEffectOnce } from '~hook/use-effect-once';
 import petService from '~service/pet.service';
 import useMyPetsStore from '~store/my-pets.store';
 
-import { Empty, Button, Typography, notification } from 'antd';
-import { PlusOutlined } from '@ant-design/icons';
+import { Empty, Typography, notification } from 'antd';
 import { Container, Grid, PetCard } from '~component/common';
 import { alertError } from '~helper/alert-error';
-import PetModal from '~component/pet/pet-modal';
+import { CratePetButton } from '~component/pet/pet-action-buttons';
 
 import blackCat from 'src/images/black-cat.png';
 import blackCatHand from 'src/images/black-cat-hand.png';
@@ -23,9 +21,6 @@ const MyPets: FC = () => {
     const { pets, setPets } = useMyPetsStore(state => state);
     const buttonRef = useRef<HTMLButtonElement>(null);
     const [api, context] = notification.useNotification();
-
-    const [selectedPet, setSelectedPet] = useState<Pet | null>(null);
-    const [modalOpen, setModalOpen] = useState(false);
 
     async function fetchMyPets() {
         const [myPets, err] = await petService.getMy();
@@ -48,17 +43,7 @@ const MyPets: FC = () => {
                     <span className={classes.headline}>Ваши питомцы</span>
                 </Title>
 
-                <Button
-                    color="cyan"
-                    variant="solid"
-                    ref={buttonRef}
-                    onClick={() => {
-                        setSelectedPet(null);
-                        setModalOpen(true);
-                    }}
-                >
-                    <PlusOutlined style={{ fontSize: '1.25em' }} />
-                </Button>
+                <CratePetButton />
             </div>
 
             {Array.isArray(pets) && pets.length > 0 ? (
@@ -79,13 +64,6 @@ const MyPets: FC = () => {
                     }
                 />
             )}
-
-            <PetModal
-                pet={selectedPet}
-                setPet={setSelectedPet}
-                open={modalOpen}
-                setOpen={setModalOpen}
-            />
 
             {context}
         </Container>
