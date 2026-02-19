@@ -140,13 +140,16 @@ export const LostPetButton: FC<ButtonProps> = ({ pet, hideText, ...props }) => {
     return (
         <>
             <Button
-                color="gold"
+                danger={!pet.lost}
+                color={pet.lost ? 'cyan' : undefined}
+                type="primary"
                 variant="solid"
                 loading={loading}
                 onClick={() => lostStatusHandler(!pet.lost)}
+                icon={pet.lost ? null : <WarningIcon />}
                 {...props}
             >
-                {pet.lost ? 'Нашелся' : 'Потерялся'}
+                {pet.lost ? 'Питомец нашелся' : 'Питомец потерялся'}
             </Button>
 
             {context}
