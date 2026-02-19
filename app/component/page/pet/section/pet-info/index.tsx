@@ -1,5 +1,5 @@
 import type { FC, ReactNode } from 'react';
-import type { Pet } from '~type/pet.type';
+import type { PetWithUser } from '~type/pet.type';
 import type { Dayjs } from 'dayjs';
 
 import { Tag, Typography } from 'antd';
@@ -28,7 +28,7 @@ const GenderIcon = {
     Female: <FemaleIcon />,
 };
 
-const PetInfoSection: FC<{ pet: Pet }> = ({ pet }) => {
+const PetInfoSection: FC<{ pet: PetWithUser }> = ({ pet }) => {
     const age = getAge(pet.birthday);
 
     return (
@@ -46,7 +46,7 @@ const PetInfoSection: FC<{ pet: Pet }> = ({ pet }) => {
                     {pet.about && <Text>{pet.about}</Text>}
 
                     <div className={classes.info_card_wrapper}>
-                        <InfoCard Icon={<PawIcon />} headline="Тип питомца" text={pet.petType.ru} />
+                        <InfoCard Icon={<PawIcon />} headline="Вид питомца" text={pet.petType.ru} />
                         {age && <InfoCard Icon={<CalendarIcon />} headline="Возраст" text={age} />}
 
                         {pet.sex && (
@@ -109,11 +109,7 @@ const InfoCard: FC<{ Icon: ReactNode; headline: string; text: string | number }>
     );
 };
 
-const CardImage: FC<{ pet: Pet }> = ({ pet }) => {
-    const additionalText = [pet.breed?.ru, getAge(pet.birthday), pet.sex && sex[pet.sex].ru]
-        .filter(Boolean)
-        .join(' • ');
-
+const CardImage: FC<{ pet: PetWithUser }> = ({ pet }) => {
     return (
         <Background
             className={classes.header}
@@ -128,7 +124,7 @@ const CardImage: FC<{ pet: Pet }> = ({ pet }) => {
 
             <div className={classes.header_overlay}>
                 <div className={classes.name}>{pet.name}</div>
-                {additionalText && <div className={classes.additional_text}>{additionalText}</div>}
+                {pet.breed?.ru && <div className={classes.additional_text}>{pet.breed.ru}</div>}
                 <StatusTag lost={pet.lost} />
             </div>
         </Background>
