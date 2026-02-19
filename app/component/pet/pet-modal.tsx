@@ -84,6 +84,7 @@ const PetModal: FC<PetModalProps> = ({ open, setOpen, pet }) => {
             }
 
             updatePet(newPetData);
+            setTimeout(() => setOpen(false), 500)
         }
     }
 
@@ -106,6 +107,7 @@ const PetModal: FC<PetModalProps> = ({ open, setOpen, pet }) => {
             }
 
             addPet(newPetData);
+            setTimeout(() => setOpen(false), 500)
         }
     }
 
