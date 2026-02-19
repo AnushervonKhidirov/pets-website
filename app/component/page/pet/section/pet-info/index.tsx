@@ -3,7 +3,7 @@ import type { PetWithUser } from '~type/pet.type';
 import type { Dayjs } from 'dayjs';
 
 import { Tag, Typography } from 'antd';
-import { cyan, light } from '~/config/ant.config';
+import { cyan, gray, light } from '~/config/ant.config';
 import {
     PawIcon,
     TickIcon,
@@ -20,6 +20,7 @@ import dayjs from 'dayjs';
 import { sex } from '~constant/pet';
 import classNames from 'classnames';
 import classes from './pet-info.module.css';
+import placeholder from 'src/images/pet-placeholder.png';
 
 const { Title, Text } = Typography;
 
@@ -113,14 +114,14 @@ const CardImage: FC<{ pet: PetWithUser }> = ({ pet }) => {
     return (
         <Background
             className={classes.header}
-            color={cyan[0]}
+            color={gray[2]}
             style={{ aspectRatio: '1/0.5', display: 'grid' }}
         >
-            {pet.image ? (
-                <img src={pet.image} alt={pet.name} className={classes.image} />
-            ) : (
-                <PawIcon style={{ fontSize: '5rem', color: cyan[5] }} />
-            )}
+            <img
+                src={pet.image ?? placeholder}
+                alt={pet.name}
+                className={classNames(classes.image, { [classes.placeholder]: !pet.image })}
+            />
 
             <div className={classes.header_overlay}>
                 <div className={classes.name}>{pet.name}</div>
