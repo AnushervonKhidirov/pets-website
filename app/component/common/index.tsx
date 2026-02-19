@@ -6,8 +6,7 @@ import Logo from './logo';
 import UserAvatar from './avatar';
 import GoogleMap from './google-map';
 
-import Footer from './footer';
 import Header from './header';
 
-export { Background, Card, Container, Grid, Logo, UserAvatar, GoogleMap, Footer, Header };
+export { Background, Card, Container, Grid, Logo, UserAvatar, GoogleMap, Header };
 export { PhoneLink, Contacts } from './user-contact';

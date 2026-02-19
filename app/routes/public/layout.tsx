@@ -3,7 +3,7 @@ import { useAuth } from '~hook/use-auth';
 import useUserStore from '~store/user.store';
 import userService from '~service/user.service';
 
-import { Header, Footer } from '~component/common';
+import { Header } from '~component/common';
 
 export const Layout = () => {
     const { user, setUser } = useUserStore(state => state);
@@ -24,7 +24,6 @@ export const Layout = () => {
             <main>
                 <Outlet />
             </main>
-            <Footer />
         </>
     );
 };

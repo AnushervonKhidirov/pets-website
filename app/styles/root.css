@@ -13,7 +13,7 @@
 body {
     display: grid;
     min-height: 100dvh;
-    grid-template-areas: 'header' 'main' 'footer';
+    grid-template-areas: 'header' 'main';
     grid-template-rows: max-content 1fr max-content;
     font-family: Ubuntu, sans-serif;
     cursor: default;
@@ -26,11 +26,6 @@ header {
 
 main {
     grid-area: main;
-}
-
-footer {
-    grid-area: footer;
-    z-index: 9;
 }
 
 button {
