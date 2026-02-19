@@ -110,7 +110,7 @@ export const EditPetButton: FC<ButtonProps> = ({ pet, hideText, ...props }) => {
                 icon={<EditOutlined />}
                 {...props}
             >
-                {!hideText && 'Резактировать'}
+                {!hideText && 'Редактировать'}
             </Button>
 
             <PetModal pet={pet} open={modalOpen} setOpen={setModalOpen} />
