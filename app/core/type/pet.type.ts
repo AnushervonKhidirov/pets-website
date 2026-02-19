@@ -14,6 +14,7 @@ export type Pet = {
     breed: Omit<Breed, 'petType'> | null;
     image: string | null;
     lost: boolean;
+    lostAt: Dayjs | null;
 };
 
 export type PetWithUser = Pet & { user: Omit<User, 'authType'> };

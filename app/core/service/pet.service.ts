@@ -88,7 +88,10 @@ class PetService {
 
     async setLostStatus(id: number, lost: boolean): ReturnWithErrPromise<Pet> {
         try {
-            const pet = await apiClientAuth.patch<PetResponse>(`/pet/${id}`, { lost });
+            const pet = await apiClientAuth.patch<PetResponse>(`/pet/${id}`, {
+                lost,
+                lostAt: lost ? dayjs() : null,
+            });
             if (isHttpException(pet.data)) throw pet.data;
             return [this.convertData(pet.data), null];
         } catch (err) {
@@ -134,14 +137,16 @@ class PetService {
 
     private convertData<T extends PetResponse | PetResponseWithUser>(pet: T) {
         const birthday = dayjs(pet.birthday).isValid() ? dayjs(pet.birthday) : null;
+        const lostAt = dayjs(pet.lostAt).isValid() ? dayjs(pet.lostAt) : null;
         const image = pet.image ? `${serverUrl}/pet/image/${pet.image}` : null;
-        return { ...pet, birthday, image };
+        return { ...pet, birthday, lostAt, image };
     }
 
-    private prepareDataToPush({ birthday, ...data }: PetDto) {
+    private prepareDataToPush({ birthday, lostAt, ...data }: PetDto) {
         const convertedData: Record<keyof PetDto, string | number | null> = {
             ...data,
             birthday: birthday?.startOf('date').toString() ?? null,
+            lostAt: lostAt?.startOf('date').toString() ?? null,
         };
 
         if ('image' in convertedData) delete convertedData.image;
