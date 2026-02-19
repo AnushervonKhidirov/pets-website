@@ -7,7 +7,7 @@ import useMyPetsStore from '~store/my-pets.store';
 import { Empty, Typography, notification } from 'antd';
 import { Container, Grid } from '~component/common';
 import { alertError } from '~helper/alert-error';
-import { CratePetButton } from '~component/pet/pet-action-buttons';
+import { CratePetButton, LostPetButton } from '~component/pet/pet-action-buttons';
 import PetInfoCard from '~component/pet/pet-info-card';
 
 import empty from 'src/images/empty-pet-image.png';
@@ -46,7 +46,9 @@ const MyPets: FC = () => {
             {Array.isArray(pets) && pets.length > 0 ? (
                 <Grid size="large">
                     {pets.map(pet => (
-                        <PetInfoCard key={pet.id} pet={pet} />
+                        <PetInfoCard key={pet.id} pet={pet}>
+                            <LostPetButton pet={pet} size="large" />
+                        </PetInfoCard>
                     ))}
                 </Grid>
             ) : (
