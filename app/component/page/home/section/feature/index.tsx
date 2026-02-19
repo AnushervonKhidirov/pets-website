@@ -27,7 +27,7 @@ const featureList = [
 
 const FeatureSection = () => {
     return (
-        <Container innerClassName={classes.inner_section} section>
+        <Container innerClassName={classes.inner_section} section color="#fff">
             <Text className={classes.sup_headline}>Возможности</Text>
             <Title level={3}>Всё для безопасности вашего друга</Title>
 
