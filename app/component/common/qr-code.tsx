@@ -3,6 +3,8 @@ import type { QRCodeProps } from 'antd';
 
 import { Button, Space, QRCode as AntQR } from 'antd';
 
+import logo_100 from 'src/images/logo/logo-100x100.png';
+
 function doDownload(url: string, fileName: string) {
     const a = document.createElement('a');
     a.download = fileName;
@@ -28,14 +30,21 @@ const downloadSvgQRCode = (name: string = 'QRCode') => {
     doDownload(url, `${name}.png`);
 };
 
-const QRCode: FC<QRCodeProps & { name?: string }> = ({ type = 'canvas', name, ...props }) => {
+const QRCode: FC<QRCodeProps & { name?: string }> = ({
+    type = 'canvas',
+    size = 250,
+    name,
+    ...props
+}) => {
     return (
         <Space vertical>
             <AntQR
                 id="qr-code"
                 type={type}
                 marginSize={1}
-                size={250}
+                icon={logo_100}
+                iconSize={size / 4}
+                size={size}
                 color="#000"
                 bgColor="#fff"
                 {...props}
