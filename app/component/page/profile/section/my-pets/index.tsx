@@ -3,9 +3,9 @@ import type { Pet } from '~type/pet.type';
 import type { MenuProps } from 'antd';
 
 import { useState } from 'react';
-import { useEffectOnce } from '~hook/use-effect-once';
-import petService from '~service/pet.service';
+import { useQuery } from '@tanstack/react-query';
 import useMyPetsStore from '~store/my-pets.store';
+import petService from '~service/pet.service';
 
 import { Link } from 'react-router';
 import { Empty, Typography, Modal, notification, Button } from 'antd';
@@ -24,11 +24,18 @@ import {
 import { Route } from '~constant/route';
 import empty from 'src/images/empty-pet-image.png';
 import classes from './my-pets.module.css';
+import Loader from '~component/common/loader';
 
 const { Title } = Typography;
 
 const MyPets: FC = () => {
     const { pets, setPets } = useMyPetsStore(state => state);
+
+    const { isPending } = useQuery({
+        queryKey: ['my-pets'],
+        queryFn: fetchMyPets,
+    });
+
     const [api, context] = notification.useNotification();
 
     async function fetchMyPets() {
@@ -36,14 +43,14 @@ const MyPets: FC = () => {
 
         if (err) {
             api.error(alertError(err));
-        } else {
-            setPets(myPets);
+            throw err;
         }
+
+        setPets(myPets);
+        return myPets;
     }
 
-    useEffectOnce(() => {
-        fetchMyPets();
-    });
+    if (isPending) return <Loader />;
 
     return (
         <Container section style={{ minHeight: '100%' }}>
@@ -55,7 +62,7 @@ const MyPets: FC = () => {
                 <CratePetButton />
             </div>
 
-            {Array.isArray(pets) && pets.length > 0 ? (
+            {pets.length > 0 ? (
                 <Grid size="large">
                     {pets.map(pet => (
                         <PetCard key={pet.id} pet={pet} />
@@ -64,7 +71,9 @@ const MyPets: FC = () => {
             ) : (
                 <Empty
                     image={empty}
-                    styles={{ image: { height: '10rem', marginTop: '5rem', marginBottom: '1rem' } }}
+                    styles={{
+                        image: { height: '10rem', marginTop: '5rem', marginBottom: '1rem' },
+                    }}
                     description={<span>У вас пока нет питомцев.</span>}
                 />
             )}
