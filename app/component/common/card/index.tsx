@@ -30,15 +30,17 @@ const Card: FC<CardProps> = ({
             }}
             className={classes.card_wrapper}
         >
-            <Background
-                color={color}
-                alpha={alpha}
-                blur={blur}
-                style={contentStyles}
-                className={classNames(classes.card_content, innerClassName)}
-            >
-                {props.children}
-            </Background>
+            {props.children ? (
+                <Background
+                    color={color}
+                    alpha={alpha}
+                    blur={blur}
+                    style={contentStyles}
+                    className={classNames(classes.card_content, innerClassName)}
+                >
+                    {props.children}
+                </Background>
+            ) : null}
         </AntCard>
     );
 };
