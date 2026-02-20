@@ -26,12 +26,12 @@
         '. more_btn'
         '. .'
         'name tag';
-    grid-template-columns: 18em max-content;
+    grid-template-columns: 1fr max-content;
     grid-template-rows: max-content 1fr max-content;
     justify-content: space-between;
     align-items: end;
     align-content: end;
-    gap: 0.25em;
+    gap: 0.25em 1em;
     color: #fff;
     font-size: min(3.5vw, 20px);
     line-height: 1;
