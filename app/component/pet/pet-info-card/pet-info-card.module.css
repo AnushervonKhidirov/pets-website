@@ -33,9 +33,9 @@
     align-content: end;
     gap: 0.25em 1em;
     color: #fff;
-    font-size: min(3.5vw, 20px);
+    font-size: min(3.5cqw, 30px);
     line-height: 1;
-    padding: 0.5em 1em;
+    padding: 1em;
     z-index: 1;
 
     &:has(.breed) {
@@ -75,6 +75,7 @@
     grid-area: more_btn;
     justify-self: self-end;
     color: #000;
+    font-size: 1rem;
     box-shadow: 0 0 1em rgba(0, 0, 0, 0.26);
     border-radius: 100%;
     padding: 0.5rem;
@@ -173,6 +174,14 @@
     .info_card_wrapper {
         grid-template-columns: 1fr 1fr;
         gap: 1.5rem;
+    }
+}
+
+@container card (width <= 500px) {
+    .info_card:not(.danger) {
+        padding-block: 1rem;
+        grid-auto-flow: column;
+        justify-content: space-between;
     }
 }
 
