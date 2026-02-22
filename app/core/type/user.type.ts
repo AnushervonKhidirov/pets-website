@@ -1,5 +1,3 @@
-import { ContactName } from '~constant/contact-links';
-
 export type User = {
     id: number;
     authType: AuthType;
@@ -12,23 +10,15 @@ export type User = {
     avatar: string | null;
 };
 
-export type UpdateUserDto = Partial<{
-    phone: string | null;
-    firstName: string | null;
-    lastName: string | null;
-    contacts: Contact[] | null;
-    address: Omit<Address, 'id'> | null;
-}>;
-
 export type Address = {
     id: number;
-    address?: string;
-    latitude?: number | null;
-    longitude?: number | null;
+    address: string | null;
+    latitude: number | null;
+    longitude: number | null;
 };
 
 export type Contact = {
-    name: ContactName;
+    name: string;
     value: string;
 };
 
@@ -37,3 +27,20 @@ export enum AuthType {
     Google = 'Google',
     Yandex = 'Yandex',
 }
+
+export type UpdateUserDto = {
+    firstName: User['firstName'];
+    lastName: User['lastName'];
+    phone: User['phone'];
+    contacts: User['contacts'];
+    address: Omit<Address, 'id'> | null;
+};
+
+export type UpdateUserFormData = Record<string, string> & {
+    firstName: User['firstName'];
+    lastName?: User['lastName'];
+    phone?: User['phone'];
+    address?: Address['address'];
+    latitude?: Address['latitude'];
+    longitude?: Address['longitude'];
+};

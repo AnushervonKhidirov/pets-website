@@ -11,7 +11,7 @@ import authService from '~service/auth.service';
 import { Typography, Descriptions, Button } from 'antd';
 import { EditOutlined } from '@ant-design/icons';
 import { Container, GoogleMap, PhoneLink, Contacts } from '~component/common';
-import EditPersonalInfoModal from '../../edit-personal-info-modal';
+import EditPersonalInfoModal from '~component/profile/edit-personal-info-modal';
 
 import classes from './personal-info.module.css';
 

@@ -1,6 +1,6 @@
 import useUserStore from '~store/user.store';
 
-import PersonalInfoSection from '~pageComponent/profile/section/personal-info';
+import PersonalInfoSection from '~component/profile/personal-info';
 
 export function meta() {
     return [{ title: 'Profile' }];

@@ -1,7 +1,6 @@
 export enum ContactName {
     Telegram = 'Telegram',
     WhatsApp = 'WhatsApp',
-    Email = 'Email',
 }
 
 export type ContactLinksType =
@@ -13,8 +12,3 @@ export const ContactLinks: ContactLinksType = {
     whatsapp: 'https://wa.me/',
     email: 'mailto:',
 };
-
-export function isContactItem(name: string): name is ContactName {
-    const contactNames = Object.values(ContactName) as string[];
-    return contactNames.includes(name);
-}

@@ -6,7 +6,7 @@ import { Link } from 'react-router';
 import { Typography, Button } from 'antd';
 
 import { parsePhoneNumberFromString } from 'libphonenumber-js';
-import { ContactLinks, isContactItem } from '~constant/contact-links';
+import { ContactLinks } from '~constant/contact-links';
 
 const { Text } = Typography;
 
@@ -52,9 +52,9 @@ export const Contacts: FC<ContactProps> = ({ contacts, email, returnValueIfEmpty
     return (
         <div>
             {contactList.map(({ name, value }) => {
-                if (!isContactItem(name)) return returnValueIfEmpty;
-                const nameLowercase = name.toLowerCase() as Lowercase<typeof name>;
-                const link = ContactLinks[nameLowercase];
+                const key = name.toLowerCase();
+                const link =
+                    key in ContactLinks ? ContactLinks[key as keyof typeof ContactLinks] : null;
 
                 return (
                     <div key={name + value}>

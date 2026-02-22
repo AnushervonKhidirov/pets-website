@@ -1,6 +1,6 @@
 import type { FC } from 'react';
 import type { MapMouseEvent } from '@vis.gl/react-google-maps';
-import type { User, Contact, UpdateUserDto } from '~type/user.type';
+import type { User, Contact, UpdateUserDto, UpdateUserFormData } from '~type/user.type';
 import type { Coordinate } from '~component/common/google-map';
 
 import { useState } from 'react';
@@ -9,9 +9,9 @@ import userService from '~service/user.service';
 
 import { Modal, Form, Input, Button, notification, Select, Row } from 'antd';
 import { GoogleMap } from '~component/common';
-import { alertError } from '~helper/alert-error';
 import { isValidPhoneNumber } from 'libphonenumber-js';
-import { ContactName, isContactItem } from '~constant/contact-links';
+import { ContactName } from '~constant/contact-links';
+import { alertError } from '~helper/alert-error';
 
 type EditPersonalInfoModalProps = {
     user: User;
@@ -19,24 +19,28 @@ type EditPersonalInfoModalProps = {
     setOpen: (state: boolean) => void;
 };
 
+type AdditionalContactOption = { label: string; value: string };
+
 const EditPersonalInfoModal: FC<EditPersonalInfoModalProps> = ({ user, open, setOpen }) => {
     const [form] = Form.useForm();
     const { setUser } = useUserStore(state => state);
 
     const [loading, setLoading] = useState(false);
-    const [additionalContacts, setAdditionalContacts] = useState<ContactName[]>(
+    const [additionalContacts, setAdditionalContacts] = useState(
         user.contacts?.map(contact => contact.name) ?? [],
     );
 
     const [api, context] = notification.useNotification();
 
-    const contactOptions = Object.values(ContactName).map(name => ({ label: name, value: name }));
+    const contactOptions = Object.values(ContactName).map(
+        name => ({ label: name, value: name }) as AdditionalContactOption,
+    );
 
-    function onChangeContacts(data: ContactName[]) {
+    function onChangeContacts(data: string[]) {
         setAdditionalContacts(data);
     }
 
-    async function submit(data: Record<string, string>) {
+    async function submit(data: UpdateUserFormData) {
         setLoading(true);
 
         const updatedUserData = convertUserData(data);
@@ -200,46 +204,37 @@ const MapSelection: FC<{ address: User['address'] }> = ({ address }) => {
     );
 };
 
-function convertUserData(data: Record<string, string>): UpdateUserDto {
-    const updatedUser: UpdateUserDto = {};
-    const contacts: Contact[] = [];
+function convertUserData(data: UpdateUserFormData): UpdateUserDto {
+    const updatedUser: UpdateUserDto = {
+        firstName: data.firstName,
+        lastName: data.lastName ?? null,
+        phone: data.phone ?? null,
+        address: getAddress(),
+        contacts: getContacts(),
+    };
 
-    for (const [key, value] of Object.entries(data)) {
-        const keyTest = key as keyof Omit<UpdateUserDto, 'contacts' | 'address'>;
+    function getAddress() {
+        if (!('address' in data) && !('latitude' in data) && !('longitude' in data)) return null;
 
-        if (!value) {
-            updatedUser[keyTest] = null;
-            continue;
-        }
-
-        if (key === 'address') {
-            const address = updatedUser.address ?? {};
-            updatedUser.address = { ...address, address: value };
-            continue;
-        }
-
-        if (key === 'latitude') {
-            const address = updatedUser.address ?? {};
-            updatedUser.address = { ...address, latitude: Number.parseFloat(value) };
-            continue;
-        }
-
-        if (key === 'longitude') {
-            const address = updatedUser.address ?? {};
-            updatedUser.address = { ...address, longitude: Number.parseFloat(value) };
-            continue;
-        }
-
-        if (key.startsWith('contacts;')) {
-            const [, name] = key.split(';');
-            if (isContactItem(name)) contacts.push({ name, value });
-            continue;
-        }
-
-        updatedUser[keyTest] = value;
+        return {
+            address: data.address ?? null,
+            latitude: data.latitude ?? null,
+            longitude: data.longitude ?? null,
+        };
     }
 
-    updatedUser.contacts = contacts.length > 0 ? contacts : null;
+    function getContacts() {
+        const contacts: Contact[] = [];
+
+        for (const [key, value] of Object.entries(data)) {
+            if (key.startsWith('contacts;') && value) {
+                const [, name] = key.split(';');
+                contacts.push({ name, value: value.toString() });
+            }
+        }
+
+        return contacts;
+    }
 
     return updatedUser;
 }
