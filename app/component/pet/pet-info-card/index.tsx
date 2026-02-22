@@ -37,7 +37,7 @@ const PetInfoCard: FC<PetInfoCardProps> = ({ pet, children, actions }) => {
     const infoItem: InfoItem[] = [
         {
             icon: <PawIcon />,
-            headline: 'Вид питомца',
+            headline: 'Вид',
             value: pet.petType.ru,
         },
         {
@@ -92,7 +92,7 @@ const PetInfoCard: FC<PetInfoCardProps> = ({ pet, children, actions }) => {
 
             {'user' in pet && <OwnerCard user={pet.user} />}
 
-            {children}
+            {children ? <div>{children}</div> : null}
         </Card>
     );
 };
@@ -124,10 +124,7 @@ const CardHeader: FC<{ pet: Pet; actions?: MenuProps['items'] }> = ({ pet, actio
 
                 {actions && (
                     <Dropdown {...sharedProps}>
-                        <Background
-                            style={{ width: 'auto' }}
-                            className={classes.more_btn}
-                        >
+                        <Background style={{ width: 'auto' }} className={classes.more_btn}>
                             <MoreOutlined />
                         </Background>
                     </Dropdown>
@@ -161,7 +158,7 @@ const InfoCard: FC<InfoItem> = ({ icon, headline, value, isDanger }) => {
     return (
         <Card
             color={cardColor}
-            innerClassName={classes.info_card}
+            innerClassName={classNames(classes.info_card, { [classes.danger]: isDanger })}
             variant={isDanger ? 'outlined' : 'borderless'}
             style={{ borderColor: red[2] }}
         >

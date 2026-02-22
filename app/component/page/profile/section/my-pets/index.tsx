@@ -140,7 +140,7 @@ const PetCard: FC<{ pet: Pet }> = ({ pet }) => {
     return (
         <>
             <PetInfoCard pet={pet} actions={actions}>
-                <LostPetButton pet={pet} size="large" />
+                <LostPetButton pet={pet} block size="large" />
             </PetInfoCard>
 
             <Modal

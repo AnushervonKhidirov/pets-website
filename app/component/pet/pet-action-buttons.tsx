@@ -150,7 +150,7 @@ export const LostPetButton: FC<ButtonProps> = ({ pet, hideText, ...props }) => {
                 icon={pet.lost ? null : <WarningIcon />}
                 {...props}
             >
-                {pet.lost ? 'Питомец нашелся' : 'Питомец потерялся'}
+                {pet.lost ? 'Нашелся' : 'Потерялся'}
             </Button>
 
             {context}
