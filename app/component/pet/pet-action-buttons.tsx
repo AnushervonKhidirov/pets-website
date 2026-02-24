@@ -11,6 +11,7 @@ import { PlusOutlined, EditOutlined, DeleteOutlined } from '@ant-design/icons';
 import { red } from '@ant-design/colors';
 import { WarningIcon } from '~icons';
 import PetModal from './pet-modal';
+import LostInfoModal from './lost-pet-modal';
 import { alertError } from '~helper/alert-error';
 
 type ButtonProps = AntBtnProps & {
@@ -120,40 +121,27 @@ export const EditPetButton: FC<ButtonProps> = ({ pet, hideText, ...props }) => {
 };
 
 export const LostPetButton: FC<ButtonProps> = ({ pet, hideText, ...props }) => {
-    const [api, context] = notification.useNotification();
-    const { updatePet } = useMyPetsStore(state => state);
-    const [loading, setLoading] = useState(false);
-
-    async function lostStatusHandler(lostStatus: boolean) {
-        setLoading(true);
-
-        const [lostPet, err] = await petService.setLostStatus(pet?.id, lostStatus);
-
-        if (err) {
-            api.error(alertError(err));
-        } else {
-            updatePet(lostPet);
-        }
-
-        setLoading(false);
-    }
+    const [modalOpen, setModalOpen] = useState(false);
 
     return (
         <>
             <Button
-                danger={!pet.lost}
-                color={pet.lost ? 'cyan' : undefined}
+                danger={!pet.lostInfo}
+                color="cyan"
                 type="primary"
                 variant="solid"
-                loading={loading}
-                onClick={() => lostStatusHandler(!pet.lost)}
-                icon={pet.lost ? null : <WarningIcon />}
+                onClick={() => setModalOpen(true)}
                 {...props}
             >
-                {pet.lost ? 'Нашелся' : 'Потерялся'}
+                Заявление о пропаже
             </Button>
 
-            {context}
+            <LostInfoModal
+                petId={pet.id}
+                lostInfo={pet.lostInfo}
+                open={modalOpen}
+                setOpen={setModalOpen}
+            />
         </>
     );
 };
