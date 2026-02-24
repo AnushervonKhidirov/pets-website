@@ -7,10 +7,8 @@ import { useQuery } from '@tanstack/react-query';
 import useMyPetsStore from '~store/my-pets.store';
 import petService from '~service/pet.service';
 
-import { Link } from 'react-router';
 import { Empty, Typography, Modal, notification, Button } from 'antd';
 import { QrcodeOutlined } from '@ant-design/icons';
-import { PawIcon } from '~icons';
 import { Container, Grid, QRCode } from '~component/common';
 import { alertError } from '~helper/alert-error';
 import PetInfoCard from '~component/pet/pet-info-card';
@@ -89,29 +87,14 @@ const PetCard: FC<{ pet: Pet }> = ({ pet }) => {
 
     const actions: MenuProps['items'] = [
         {
-            key: 'pet_profile',
-            label: (
-                <Link to={petProfilePage} target="_blank">
-                    <Button
-                        icon={<PawIcon />}
-                        onClick={() => setQrOpened(true)}
-                        variant="text"
-                        color="cyan"
-                        style={{ justifyContent: 'start' }}
-                    >
-                        Профиль питомца
-                    </Button>
-                </Link>
-            ),
-        },
-        {
             key: 'qr_code',
             label: (
                 <Button
                     icon={<QrcodeOutlined />}
                     onClick={() => setQrOpened(true)}
+                    block
                     variant="text"
-                    color="cyan"
+                    color="default"
                     style={{ justifyContent: 'start' }}
                 >
                     QR-код питомца
@@ -121,7 +104,13 @@ const PetCard: FC<{ pet: Pet }> = ({ pet }) => {
         {
             key: 'edit',
             label: (
-                <EditPetButton pet={pet} variant="text" block style={{ justifyContent: 'start' }} />
+                <EditPetButton
+                    pet={pet}
+                    color="default"
+                    variant="text"
+                    block
+                    style={{ justifyContent: 'start' }}
+                />
             ),
         },
         {
