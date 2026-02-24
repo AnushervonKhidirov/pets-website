@@ -35,6 +35,7 @@ export const themeConfig: ThemeConfig = {
 
         Modal: {
             titleFontSize: 28,
+            titleLineHeight: 1,
             contentBg: orange[0],
             colorIcon: cyan[5],
             colorIconHover: cyan[5],
