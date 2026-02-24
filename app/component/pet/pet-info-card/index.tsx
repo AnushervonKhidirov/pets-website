@@ -58,7 +58,7 @@ const PetInfoCard: FC<PetInfoCardProps> = ({ pet, children, actions }) => {
         {
             icon: <WarningIcon />,
             headline: 'Дата пропажи',
-            value: pet.lostAt?.startOf('day').format('DD MMMM YYYY') ?? '',
+            value: pet.lostInfo?.lostAt.startOf('day').format('DD MMMM YYYY') ?? '',
             isDanger: true,
         },
     ].filter(item => Boolean(item.value));
@@ -120,7 +120,7 @@ const CardHeader: FC<{ pet: Pet; actions?: MenuProps['items'] }> = ({ pet, actio
             <div className={classes.header_overlay}>
                 <div className={classes.name}>{pet.name}</div>
                 {pet.breed?.ru && <div className={classes.breed}>{pet.breed.ru}</div>}
-                <StatusTag lost={pet.lost} />
+                <StatusTag lost={!!pet.lostInfo} />
 
                 {actions && (
                     <Dropdown {...sharedProps}>
