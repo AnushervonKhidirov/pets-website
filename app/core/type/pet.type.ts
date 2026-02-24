@@ -1,4 +1,5 @@
 import type { Dayjs } from 'dayjs';
+import type { LostInfo } from './lost-info.type';
 import type { User } from './user.type';
 
 export type Pet = {
@@ -13,13 +14,10 @@ export type Pet = {
     breedId: number | null;
     breed: Omit<Breed, 'petType'> | null;
     image: string | null;
-    lost: boolean;
-    lostAt: Dayjs | null;
+    lostInfo: LostInfo | null;
 };
 
 export type PetWithUser = Pet & { user: Omit<User, 'authType'> };
-
-export type PetDto = Omit<Pet, 'id' | 'petType' | 'breed' | 'user' | 'image' | 'lost'>;
 
 export type PetType = {
     id: number;
@@ -34,6 +32,8 @@ export type Breed = {
     petTypeId: number;
     petType: PetType;
 };
+
+export type PetDto = Omit<Pet, 'id' | 'petType' | 'breed' | 'user' | 'image' | 'lostInfo'>;
 
 export enum Sex {
     Male = 'Male',
