@@ -12,7 +12,9 @@ import './config/dayjs.config';
 import './styles/fonts.css';
 import './styles/root.css';
 
-const queryClient = new QueryClient({ defaultOptions: { queries: { retry: 0 } } });
+const queryClient = new QueryClient({
+    defaultOptions: { queries: { retry: 0, refetchOnWindowFocus: false } },
+});
 
 export const Layout: FC<PropsWithChildren> = ({ children }) => {
     return (
