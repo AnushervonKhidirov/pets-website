@@ -3,6 +3,7 @@ import type { Route } from './+types/root';
 
 import { isRouteErrorResponse, Meta, Outlet, Scripts, ScrollRestoration } from 'react-router';
 import { ConfigProvider } from 'antd';
+import ruRU from 'antd/locale/ru_RU';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
 import { themeConfig } from './config/ant.config';
@@ -22,7 +23,7 @@ export const Layout: FC<PropsWithChildren> = ({ children }) => {
                 <Meta />
             </head>
             <body className="custom-ant">
-                <ConfigProvider theme={themeConfig}>
+                <ConfigProvider theme={themeConfig} locale={ruRU}>
                     <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>
                 </ConfigProvider>
                 <ScrollRestoration />
