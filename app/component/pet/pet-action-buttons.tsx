@@ -133,7 +133,7 @@ export const LostPetButton: FC<ButtonProps> = ({ pet, hideText, ...props }) => {
                 onClick={() => setModalOpen(true)}
                 {...props}
             >
-                Заявление о пропаже
+                Объявление о пропаже
             </Button>
 
             <LostInfoModal
