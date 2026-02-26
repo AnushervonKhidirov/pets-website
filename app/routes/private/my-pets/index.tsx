@@ -59,7 +59,7 @@ const MyPets: FC = () => {
             {pets.length > 0 ? (
                 <Grid size="large">
                     {pets.map(pet => (
-                        <Link key={pet.id} to={`${Route.PetInfo}/${pet.id}`} target="_blank">
+                        <Link key={pet.id} to={`${Route.MyPet}/${pet.id}`} target="_blank">
                             <PetInfoCard pet={pet} hoverable hideBody />
                         </Link>
                     ))}
@@ -67,10 +67,10 @@ const MyPets: FC = () => {
             ) : (
                 <Empty
                     image={empty}
+                    description={<span>У вас пока нет питомцев.</span>}
                     styles={{
                         image: { height: '10rem', marginTop: '5rem', marginBottom: '1rem' },
                     }}
-                    description={<span>У вас пока нет питомцев.</span>}
                 />
             )}
 
