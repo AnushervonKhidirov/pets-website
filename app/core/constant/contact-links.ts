@@ -4,11 +4,24 @@ export enum ContactName {
 }
 
 export type ContactLinksType =
-    | Partial<Record<Lowercase<ContactName>, string>>
-    | Record<string, string>;
+    | Partial<Record<Lowercase<ContactName>, ContactLinksValue>>
+    | Record<string, ContactLinksValue>;
+
+export type ContactLinksValue = {
+    value: string;
+    prefix?: string;
+};
 
 export const ContactLinks: ContactLinksType = {
-    telegram: 'https://t.me/',
-    whatsapp: 'https://wa.me/',
-    email: 'mailto:',
+    telegram: {
+        value: 'https://t.me/',
+        prefix: '@'
+    },
+    whatsapp: {
+        value: 'https://wa.me/',
+        prefix: '@'
+    },
+    email: {
+        value: 'mailto:',
+    },
 };
