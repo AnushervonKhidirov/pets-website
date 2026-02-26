@@ -3,6 +3,7 @@
     container-name: card;
 }
 
+/* card header */
 .header {
     position: relative;
     display: grid;
@@ -70,18 +71,6 @@
     opacity: 0.8;
 }
 
-.more_btn {
-    aspect-ratio: 1 / 1;
-    grid-area: more_btn;
-    justify-self: self-end;
-    color: #000;
-    font-size: 1rem;
-    box-shadow: 0 0 1em rgba(0, 0, 0, 0.26);
-    border-radius: 100%;
-    padding: 0.5rem;
-    cursor: pointer;
-}
-
 .tag {
     --line-width: 0.1em;
 
@@ -110,46 +99,53 @@
     }
 }
 
+/* more button */
+.more_btn {
+    aspect-ratio: 1 / 1;
+    grid-area: more_btn;
+    justify-self: self-end;
+    color: #000;
+    font-size: 1rem;
+    border-radius: 100%;
+    padding: 0.5rem;
+    box-shadow: 0 0 1em rgba(0, 0, 0, 0.26);
+    cursor: pointer;
+}
+
+/* card budy */
 .card_body {
     display: grid;
-    grid-template-areas: 'about_pet';
-    grid-template-rows: 1fr;
     gap: 2rem;
-
-    &:has(.about_owner) {
-        grid-template-areas: 'about_pet' 'about_owner';
-    }
 }
 
-.about_pet {
-    grid-area: about_pet;
-}
-
-.info_card_wrapper {
+.main_info {
     display: grid;
-    gap: 1rem;
-    margin-top: 1.5rem;
+    grid-auto-rows: max-content;
+    gap: 1.5rem;
 }
 
-.info_card {
+.additional_info {
+    display: grid;
+    grid-auto-rows: max-content;
+    gap: 1rem;
+}
+
+/* lost info */
+.lost_info_card {
     display: grid;
     gap: 0.5rem;
 }
 
-.info_card_headline {
+.lost_info_card_headline {
     display: grid;
     grid-template-columns: max-content max-content;
     align-items: center;
     gap: 0.5em;
     font-size: 1.1em;
     font-weight: 500;
-    line-height: 1;
 }
 
-.about_owner {
-    grid-area: about_owner;
-}
-
+/* owner info */
 .user_info {
     display: grid;
     gap: 0.75rem;
@@ -157,31 +153,7 @@
 
 @container card (width > 750px) {
     .card_body {
-        grid-template-areas: 'about_pet';
-        grid-template-columns: 0.6fr 0.4fr;
-
-        &:has(.about_owner) {
-            grid-template-areas: 'about_pet about_owner';
-        }
-    }
-}
-
-@container card (width > 500px) {
-    .header_overlay {
-        padding: 1rem;
-    }
-
-    .info_card_wrapper {
-        grid-template-columns: 1fr 1fr;
-        gap: 1.5rem;
-    }
-}
-
-@container card (width <= 500px) {
-    .info_card:not(.danger) {
-        padding-block: 1rem;
-        grid-auto-flow: column;
-        justify-content: space-between;
+        grid-template-columns: 1fr minmax(max-content, 300px);
     }
 }
 
