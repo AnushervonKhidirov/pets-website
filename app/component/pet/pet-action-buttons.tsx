@@ -7,7 +7,7 @@ import useMyPetsStore from '~store/my-pets.store';
 import petService from '~service/pet.service';
 
 import { Button, Popconfirm, notification } from 'antd';
-import { PlusOutlined, EditOutlined, DeleteOutlined } from '@ant-design/icons';
+import { EditOutlined, DeleteOutlined } from '@ant-design/icons';
 import { red } from '@ant-design/colors';
 import { WarningIcon } from '~icons';
 import PetModal from './pet-modal';
@@ -76,26 +76,6 @@ export const DeletePetButton: FC<ButtonProps> = ({ pet, hideText, ...props }) =>
             </Popconfirm>
 
             {context}
-        </>
-    );
-};
-
-export const CratePetButton: FC<Omit<ButtonProps, 'pet'>> = ({ hideText, ...props }) => {
-    const [modalOpen, setModalOpen] = useState(false);
-
-    return (
-        <>
-            <Button
-                color="cyan"
-                variant="solid"
-                onClick={() => setModalOpen(true)}
-                icon={<PlusOutlined />}
-                {...props}
-            >
-                {!hideText && 'Добавить'}
-            </Button>
-
-            <PetModal open={modalOpen} setOpen={setModalOpen} />
         </>
     );
 };
