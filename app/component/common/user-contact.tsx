@@ -60,8 +60,9 @@ export const Contacts: FC<ContactProps> = ({ contacts, email, returnValueIfEmpty
                     <div key={name + value}>
                         <Text>{name}:</Text>{' '}
                         {link ? (
-                            <Link to={link + value} target="_blank">
-                                @{value}
+                            <Link to={link.value + value} target="_blank">
+                                {link.prefix}
+                                {value}
                             </Link>
                         ) : (
                             <Text type="secondary">{value}</Text>
