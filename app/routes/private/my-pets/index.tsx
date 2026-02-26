@@ -1,15 +1,17 @@
 import type { FC } from 'react';
+import type { Pet } from '~type/pet.type';
 
+import { useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
-import useMyPetsStore from '~store/my-pets.store';
 import petService from '~service/pet.service';
 
 import { Link } from 'react-router';
-import { Empty, Typography, notification } from 'antd';
+import { Empty, Typography, Button, notification } from 'antd';
+import { PlusOutlined } from '@ant-design/icons';
 import { Container, Grid, Loader } from '~component/common';
 import { alertError } from '~helper/alert-error';
 import PetInfoCard from '~component/pet/pet-info-card';
-import { CratePetButton } from '~component/pet/pet-action-buttons';
+import PetModal from '~component/pet/pet-modal';
 
 import { Route } from '~constant/route';
 import empty from 'src/images/empty-pet-image.png';
@@ -22,7 +24,7 @@ export function meta() {
 const { Title } = Typography;
 
 const MyPets: FC = () => {
-    const { pets, setPets } = useMyPetsStore(state => state);
+    const [pets, setPets] = useState<Pet[]>([]);
 
     const { isPending } = useQuery({
         queryKey: ['my-pets'],
@@ -52,7 +54,7 @@ const MyPets: FC = () => {
                     <span className={classes.headline}>Ваши питомцы</span>
                 </Title>
 
-                <CratePetButton />
+                <AddPetButton onSuccess={pet => setPets(pets => [...pets, pet])} />
             </div>
 
             {pets.length > 0 ? (
@@ -75,6 +77,25 @@ const MyPets: FC = () => {
 
             {context}
         </Container>
+    );
+};
+
+export const AddPetButton: FC<{ onSuccess: (pet: Pet) => void }> = ({ onSuccess }) => {
+    const [modalOpen, setModalOpen] = useState(false);
+
+    return (
+        <>
+            <Button
+                color="cyan"
+                variant="solid"
+                onClick={() => setModalOpen(true)}
+                icon={<PlusOutlined />}
+            >
+                Добавить
+            </Button>
+
+            <PetModal open={modalOpen} setOpen={setModalOpen} onSuccess={onSuccess} />
+        </>
     );
 };
 
