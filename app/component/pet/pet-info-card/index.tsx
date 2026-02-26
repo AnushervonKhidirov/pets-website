@@ -9,7 +9,6 @@ import { red } from '@ant-design/colors';
 import { Background, Card, UserAvatar, PhoneLink, Contacts, QRCode } from '~component/common';
 import { MoreOutlined } from '@ant-design/icons';
 import { TickIcon, WarningIcon, PhoneIcon } from '~icons';
-import { LostPetButton } from '../pet-action-buttons';
 
 import { cyan, gray } from '~/config/ant.config';
 import { sex } from '~constant/pet';
@@ -27,7 +26,6 @@ type PetInfoCardProps = WithAdditionalProps<{
     hideBody?: boolean;
     showQR?: boolean;
     showOwner?: boolean;
-    showLostBtn?: boolean;
     actions?: MenuProps['items'];
 }>;
 
@@ -37,8 +35,8 @@ const PetInfoCard: FC<PetInfoCardProps> = ({
     hideBody,
     showQR,
     showOwner,
-    showLostBtn,
     actions,
+    children,
 }) => {
     const petProfilePage = `${Route.PetInfo}/${pet.id}`;
 
@@ -103,7 +101,7 @@ const PetInfoCard: FC<PetInfoCardProps> = ({
 
                         {'user' in pet && showOwner && <OwnerCard user={pet.user} />}
 
-                        {showLostBtn && <LostPetButton pet={pet} block size="large" />}
+                        {children}
                     </div>
                 </>
             )}

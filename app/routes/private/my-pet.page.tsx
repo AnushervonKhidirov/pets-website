@@ -1,25 +1,27 @@
 import type { FC } from 'react';
-import type { Route } from './+types/my-pet.page';
+import type { Route as TRoute } from './+types/my-pet.page';
 import type { MenuProps } from 'antd';
-import type { PetWithUser } from '~type/pet.type';
+import type { Pet } from '~type/pet.type';
 
-import { useParams } from 'react-router';
+import { useState } from 'react';
+import { useParams, useNavigate } from 'react-router';
 import { useQuery } from '@tanstack/react-query';
 import petService from '~service/pet.service';
 
 import { notification } from 'antd';
 import { Container, Loader } from '~component/common';
 import PetInfoCard from '~component/pet/pet-info-card';
+import { DeletePetButton, EditPetButton, LostPetButton } from '~component/pet/pet-action-buttons';
 
 import { alertError } from '~helper/alert-error';
-import { DeletePetButton, EditPetButton } from '~component/pet/pet-action-buttons';
+import { Route } from '~constant/route';
 
 export function meta() {
     return [{ title: 'Pet' }];
 }
 
 const MyPet: FC = () => {
-    const params = useParams<Route.LoaderArgs['params']>();
+    const params = useParams<TRoute.LoaderArgs['params']>();
     const [api, context] = notification.useNotification();
 
     const { isPending, data: pet } = useQuery({
@@ -52,17 +54,25 @@ const MyPet: FC = () => {
     );
 };
 
-const PetCard: FC<{ pet: PetWithUser }> = ({ pet }) => {
+const PetCard: FC<{ pet: Pet }> = ({ pet }) => {
+    const navigation = useNavigate();
+    const [currPet, setCurrPet] = useState(pet);
+
+    function deletePetHandler() {
+        navigation(Route.MyPets);
+    }
+
     const actions: MenuProps['items'] = [
         {
             key: 'edit',
             label: (
                 <EditPetButton
+                    block
                     pet={pet}
                     color="default"
                     variant="text"
-                    block
                     style={{ justifyContent: 'start' }}
+                    onSuccess={setCurrPet}
                 />
             ),
         },
@@ -70,16 +80,21 @@ const PetCard: FC<{ pet: PetWithUser }> = ({ pet }) => {
             key: 'delete',
             label: (
                 <DeletePetButton
+                    block
                     pet={pet}
                     type="primary"
-                    block
                     style={{ justifyContent: 'start' }}
+                    onSuccess={deletePetHandler}
                 />
             ),
         },
     ];
 
-    return <PetInfoCard pet={pet} showQR showLostBtn actions={actions}></PetInfoCard>;
+    return (
+        <PetInfoCard pet={currPet} showQR actions={actions}>
+            <LostPetButton pet={currPet} block size="large" onSuccess={setCurrPet} />
+        </PetInfoCard>
+    );
 };
 
 export default MyPet;

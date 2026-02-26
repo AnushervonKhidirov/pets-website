@@ -1,8 +1,8 @@
 import type { FC } from 'react';
 import type { LostInfo, LostInfoDto } from '~type/lost-info.type';
+import type { Pet } from '~type/pet.type';
 
 import { useState } from 'react';
-import useMyPetsStore from '~store/my-pets.store';
 import lostInfoService from '~service/lost-info.service';
 
 import { Modal, Form, Input, Button, DatePicker, notification } from 'antd';
@@ -12,15 +12,21 @@ import { alertError } from '~helper/alert-error';
 import classes from './lost-pet-modal.module.css';
 
 type EditPersonalInfoModalProps = {
-    petId: number;
+    pet: Pet;
     lostInfo?: LostInfo | null;
     open: boolean;
     setOpen: (state: boolean) => void;
+    onSuccess?: (pet: Pet) => void;
 };
 
-const LostInfoModal: FC<EditPersonalInfoModalProps> = ({ petId, lostInfo, open, setOpen }) => {
+const LostInfoModal: FC<EditPersonalInfoModalProps> = ({
+    pet,
+    lostInfo,
+    open,
+    setOpen,
+    onSuccess,
+}) => {
     const [form] = Form.useForm();
-    const { pets, updatePet } = useMyPetsStore(state => state);
 
     const [loading, setLoading] = useState(false);
     const [loadingRemove, setLoadingRemove] = useState(false);
@@ -30,13 +36,12 @@ const LostInfoModal: FC<EditPersonalInfoModalProps> = ({ petId, lostInfo, open, 
     async function submit(data: LostInfoDto) {
         setLoading(true);
 
-        const [lostInfo, err] = await lostInfoHandler(petId, data);
+        const [lostInfo, err] = await lostInfoHandler(pet.id, data);
 
         if (err) {
             api.error(alertError(err));
-        } else {
-            const pet = pets.find(pet => pet.id === petId);
-            if (pet) updatePet({ ...pet, lostInfo: lostInfo });
+        } else if (onSuccess) {
+            onSuccess({ ...pet, lostInfo: lostInfo });
         }
 
         setLoading(false);
@@ -47,13 +52,12 @@ const LostInfoModal: FC<EditPersonalInfoModalProps> = ({ petId, lostInfo, open, 
     async function remove() {
         setLoadingRemove(true);
 
-        const [, err] = await lostInfoService.delete(petId);
+        const [, err] = await lostInfoService.delete(pet.id);
 
         if (err) {
             api.error(alertError(err));
-        } else {
-            const pet = pets.find(pet => pet.id === petId);
-            if (pet) updatePet({ ...pet, lostInfo: null });
+        } else if (onSuccess) {
+            onSuccess({ ...pet, lostInfo: null });
         }
 
         setLoadingRemove(false);

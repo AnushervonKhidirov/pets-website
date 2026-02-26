@@ -3,7 +3,6 @@ import type { ButtonProps as AntBtnProps } from 'antd';
 import type { Pet } from '~type/pet.type';
 
 import { useState } from 'react';
-import useMyPetsStore from '~store/my-pets.store';
 import petService from '~service/pet.service';
 
 import { Button, Popconfirm, notification } from 'antd';
@@ -16,13 +15,12 @@ import { alertError } from '~helper/alert-error';
 
 type ButtonProps = AntBtnProps & {
     pet: Pet;
-    hideText?: boolean;
+    onSuccess?: (pet: Pet) => void;
 };
 
-export const DeletePetButton: FC<ButtonProps> = ({ pet, hideText, ...props }) => {
+export const DeletePetButton: FC<ButtonProps> = ({ pet, onSuccess, ...props }) => {
     const [api, context] = notification.useNotification();
 
-    const { deletePet } = useMyPetsStore(state => state);
     const [open, setOpen] = useState(false);
     const [confirmLoading, setConfirmLoading] = useState(false);
 
@@ -37,12 +35,12 @@ export const DeletePetButton: FC<ButtonProps> = ({ pet, hideText, ...props }) =>
 
         if (err) {
             api.error(alertError(err));
-        } else {
-            setTimeout(() => deletePet(pet.id), 500);
+        } else if (onSuccess) {
+            onSuccess(pet);
         }
 
         setConfirmLoading(false);
-        setTimeout(() => setOpen(false), 500);
+        setOpen(false);
     }
 
     const handleCancel = () => {
@@ -71,7 +69,7 @@ export const DeletePetButton: FC<ButtonProps> = ({ pet, hideText, ...props }) =>
                     icon={<DeleteOutlined />}
                     {...props}
                 >
-                    {!hideText && 'Удалить'}
+                    Удалить
                 </Button>
             </Popconfirm>
 
@@ -80,7 +78,7 @@ export const DeletePetButton: FC<ButtonProps> = ({ pet, hideText, ...props }) =>
     );
 };
 
-export const EditPetButton: FC<ButtonProps> = ({ pet, hideText, ...props }) => {
+export const EditPetButton: FC<ButtonProps> = ({ pet, onSuccess, ...props }) => {
     const [modalOpen, setModalOpen] = useState(false);
 
     return (
@@ -92,15 +90,15 @@ export const EditPetButton: FC<ButtonProps> = ({ pet, hideText, ...props }) => {
                 icon={<EditOutlined />}
                 {...props}
             >
-                {!hideText && 'Редактировать'}
+                Редактировать
             </Button>
 
-            <PetModal pet={pet} open={modalOpen} setOpen={setModalOpen} />
+            <PetModal pet={pet} open={modalOpen} setOpen={setModalOpen} onSuccess={onSuccess} />
         </>
     );
 };
 
-export const LostPetButton: FC<ButtonProps> = ({ pet, hideText, ...props }) => {
+export const LostPetButton: FC<ButtonProps> = ({ pet, onSuccess, ...props }) => {
     const [modalOpen, setModalOpen] = useState(false);
 
     return (
@@ -117,10 +115,11 @@ export const LostPetButton: FC<ButtonProps> = ({ pet, hideText, ...props }) => {
             </Button>
 
             <LostInfoModal
-                petId={pet.id}
+                pet={pet}
                 lostInfo={pet.lostInfo}
                 open={modalOpen}
                 setOpen={setModalOpen}
+                onSuccess={onSuccess}
             />
         </>
     );

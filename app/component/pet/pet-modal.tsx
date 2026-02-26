@@ -4,7 +4,6 @@ import type { Breed, PetDto, Pet, PetType } from '~type/pet.type';
 
 import { useState } from 'react';
 import petService from '~service/pet.service';
-import useMyPetsStore from '~store/my-pets.store';
 
 import { Modal, Form, Input, Select, DatePicker, Upload, Button, notification } from 'antd';
 import ImgCrop from 'antd-img-crop';
@@ -26,7 +25,6 @@ type SubmitData = PetDto & { image?: File };
 const PetModal: FC<PetModalProps> = ({ pet, open, setOpen, onSuccess }) => {
     const [form] = Form.useForm();
     const [api, context] = notification.useNotification();
-    const { addPet, updatePet } = useMyPetsStore(state => state);
 
     const defaultFileList: UploadProps['fileList'] = pet?.image
         ? [
@@ -84,8 +82,7 @@ const PetModal: FC<PetModalProps> = ({ pet, open, setOpen, onSuccess }) => {
                 petData.image = null;
             }
 
-            updatePet(petData);
-            if (onSuccess) onSuccess(petData)
+            if (onSuccess) onSuccess(petData);
             setTimeout(() => setOpen(false), 500);
         }
     }
@@ -108,8 +105,7 @@ const PetModal: FC<PetModalProps> = ({ pet, open, setOpen, onSuccess }) => {
                 }
             }
 
-            addPet(petData);
-            if (onSuccess) onSuccess(petData)
+            if (onSuccess) onSuccess(petData);
             setTimeout(() => setOpen(false), 500);
         }
     }
