@@ -6,6 +6,7 @@ export enum Route {
     PetInfo = '/pet',
 
     Profile = '/profile',
+    MyPet = '/profile/pet',
     MyPets = '/profile/pets',
 
     OAuthGoogle = '/auth/google',

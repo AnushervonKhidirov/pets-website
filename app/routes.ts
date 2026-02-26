@@ -13,7 +13,8 @@ export default [
 
     layout('routes/private/layout.tsx', [
         route(Route.Profile, 'routes/private/profile.page.tsx'),
-        route(Route.MyPets, 'routes/private/my-pets.page.tsx'),
+        route(Route.MyPets, 'routes/private/my-pets/index.tsx'),
+        route(Route.MyPet + '/:petId', 'routes/private/my-pet.page.tsx'),
     ]),
 
     route(Route.OAuthGoogle, 'routes/oauth/oauth-google.page.tsx'),
