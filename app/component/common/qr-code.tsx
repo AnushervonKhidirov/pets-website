@@ -1,7 +1,10 @@
 import type { FC } from 'react';
 import type { QRCodeProps } from 'antd';
 
-import { Button, Space, QRCode as AntQR } from 'antd';
+import { useState } from 'react';
+
+import { QRCode as AntQR } from 'antd';
+import Background from './background';
 
 import logo_100 from 'src/images/logo/logo-100x100.png';
 
@@ -32,12 +35,28 @@ const downloadSvgQRCode = (name: string = 'QRCode') => {
 
 const QRCode: FC<QRCodeProps & { name?: string }> = ({
     type = 'canvas',
-    size = 250,
+    size = 300,
     name,
     ...props
 }) => {
+    const [showMessage, setShowMessage] = useState(false);
+
+    function download() {
+        type === 'canvas' ? downloadCanvasQRCode(name) : downloadSvgQRCode(name);
+    }
+
+    function showTip() {
+        setShowMessage(true);
+
+        setTimeout(() => setShowMessage(false), 3000);
+    }
+
     return (
-        <Space vertical>
+        <button
+            style={{ position: 'relative', width: 'max-content', cursor: 'pointer' }}
+            onDoubleClick={download}
+            onClick={showTip}
+        >
             <AntQR
                 id="qr-code"
                 type={type}
@@ -51,19 +70,27 @@ const QRCode: FC<QRCodeProps & { name?: string }> = ({
                 style={{ padding: 0, ...props.style }}
             />
 
-            <Button
-                block
-                color="cyan"
-                variant="solid"
-                onClick={
-                    type === 'canvas'
-                        ? downloadCanvasQRCode.bind(null, name)
-                        : downloadSvgQRCode.bind(null, name)
-                }
+            <Background
+                color="#000"
+                alpha={0.8}
+                style={{
+                    position: 'absolute',
+                    inset: 0,
+                    color: '#fff',
+                    borderRadius: 'var(--border-radius-lg)',
+                    pointerEvents: 'none',
+                    transition: 'opacity 0.3s',
+                    display: 'grid',
+                    alignItems: 'center',
+                    justifyItems: 'center',
+                    fontSize: '1.5rem',
+                    opacity: Number(showMessage),
+                }}
             >
-                Download
-            </Button>
-        </Space>
+                Нажмите 2 раза
+                <br /> чтобы скачать
+            </Background>
+        </button>
     );
 };
 
