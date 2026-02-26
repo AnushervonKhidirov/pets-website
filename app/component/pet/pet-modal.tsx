@@ -18,11 +18,12 @@ type PetModalProps = {
     open: boolean;
     setOpen: (state: boolean) => void;
     pet?: Pet | null;
+    onSuccess?: (pet: Pet) => void;
 };
 
 type SubmitData = PetDto & { image?: File };
 
-const PetModal: FC<PetModalProps> = ({ open, setOpen, pet }) => {
+const PetModal: FC<PetModalProps> = ({ pet, open, setOpen, onSuccess }) => {
     const [form] = Form.useForm();
     const [api, context] = notification.useNotification();
     const { addPet, updatePet } = useMyPetsStore(state => state);
@@ -67,7 +68,7 @@ const PetModal: FC<PetModalProps> = ({ open, setOpen, pet }) => {
         if (err) {
             api.error(alertError(err));
         } else {
-            const newPetData = { ...pet };
+            const petData = { ...pet };
 
             if (image) {
                 const [petImage, err] = await petService.setImage(image, pet.id);
@@ -75,16 +76,17 @@ const PetModal: FC<PetModalProps> = ({ open, setOpen, pet }) => {
                 if (err) {
                     api.error(alertError(err));
                 } else {
-                    newPetData.image = petImage.image;
+                    petData.image = petImage.image;
                 }
             } else if (image === null) {
                 const [, err] = await petService.deleteImage(pet.id);
                 if (err) api.error(alertError(err));
-                newPetData.image = null;
+                petData.image = null;
             }
 
-            updatePet(newPetData);
-            setTimeout(() => setOpen(false), 500)
+            updatePet(petData);
+            if (onSuccess) onSuccess(petData)
+            setTimeout(() => setOpen(false), 500);
         }
     }
 
@@ -94,7 +96,7 @@ const PetModal: FC<PetModalProps> = ({ open, setOpen, pet }) => {
         if (err) {
             api.error(alertError(err));
         } else {
-            const newPetData = { ...pet };
+            const petData = { ...pet };
 
             if (image) {
                 const [petImage, err] = await petService.setImage(image, pet.id);
@@ -102,12 +104,13 @@ const PetModal: FC<PetModalProps> = ({ open, setOpen, pet }) => {
                 if (err) {
                     api.error(alertError(err));
                 } else {
-                    newPetData.image = petImage.image;
+                    petData.image = petImage.image;
                 }
             }
 
-            addPet(newPetData);
-            setTimeout(() => setOpen(false), 500)
+            addPet(petData);
+            if (onSuccess) onSuccess(petData)
+            setTimeout(() => setOpen(false), 500);
         }
     }
 
