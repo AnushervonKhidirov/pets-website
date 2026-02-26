@@ -85,7 +85,7 @@ const PetInfoCard: FC<PetInfoCardProps> = ({
                         </div>
 
                         <Descriptions
-                            column={{ md: 2, lg: 2, xl: 2 }}
+                            column={{ md: 2, lg: 2, xl: 2, xxl: 2 }}
                             styles={{ label: { color: cyan[5], fontWeight: 500 } }}
                             items={infoItems}
                         />
