@@ -22,7 +22,6 @@ export function meta() {
 const { Title } = Typography;
 
 const MyPets: FC = () => {
-    // TODO: remove My Pets Store
     const { pets, setPets } = useMyPetsStore(state => state);
 
     const { isPending } = useQuery({
