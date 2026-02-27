@@ -17,24 +17,30 @@ import { alertError } from '~helper/alert-error';
 import { Route } from '~constant/route';
 
 export function meta() {
-    return [{ title: 'Pet' }];
+    return [{ title: 'My Pet' }];
 }
 
 const MyPet: FC = () => {
     const params = useParams<TRoute.LoaderArgs['params']>();
     const [api, context] = notification.useNotification();
 
-    const { isPending, isError, error, data: pet } = useQuery({
-        queryKey: ['my-pets'],
+    const {
+        isPending,
+        isError,
+        isSuccess,
+        error,
+        data: pet,
+    } = useQuery({
+        queryKey: ['my-pet'],
         queryFn: fetchMyPet,
     });
 
     async function fetchMyPet() {
-        if (!params.petId) return;
+        if (!params.petId) throw new Error('pet ID not found');
         const [pet, err] = await petService.getMyOne(Number.parseInt(params.petId));
 
         if (err) {
-            api.error(alertError(err));
+            if (err.statusCode !== 404) api.error(alertError(err));
             throw err;
         }
 
@@ -42,10 +48,10 @@ const MyPet: FC = () => {
     }
 
     if (isPending) return <Loader />;
-    if (isError) return <ErrorInfo error={error} />
+    if (isError) return <ErrorInfo error={error} />;
 
     return (
-        pet && (
+        isSuccess && (
             <Container section maxWidth={1000} style={{ minHeight: '100%' }}>
                 <PetCard pet={pet} />
 
