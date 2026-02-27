@@ -9,7 +9,7 @@ import { useQuery } from '@tanstack/react-query';
 import petService from '~service/pet.service';
 
 import { notification } from 'antd';
-import { Container, Loader } from '~component/common';
+import { Container, Loader, ErrorInfo } from '~component/common';
 import PetInfoCard from '~component/pet/pet-info-card';
 import { DeletePetButton, EditPetButton, LostPetButton } from '~component/pet/pet-action-buttons';
 
@@ -24,14 +24,14 @@ const MyPet: FC = () => {
     const params = useParams<TRoute.LoaderArgs['params']>();
     const [api, context] = notification.useNotification();
 
-    const { isPending, data: pet } = useQuery({
+    const { isPending, isError, error, data: pet } = useQuery({
         queryKey: ['my-pets'],
         queryFn: fetchMyPet,
     });
 
     async function fetchMyPet() {
         if (!params.petId) return;
-        const [pet, err] = await petService.getOne(Number.parseInt(params.petId));
+        const [pet, err] = await petService.getMyOne(Number.parseInt(params.petId));
 
         if (err) {
             api.error(alertError(err));
@@ -42,6 +42,7 @@ const MyPet: FC = () => {
     }
 
     if (isPending) return <Loader />;
+    if (isError) return <ErrorInfo error={error} />
 
     return (
         pet && (
