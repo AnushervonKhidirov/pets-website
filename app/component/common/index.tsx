@@ -7,8 +7,21 @@ import UserAvatar from './avatar';
 import GoogleMap from './google-map';
 import QRCode from './qr-code';
 import Loader from './loader';
+import ErrorInfo from './error-info';
 
 import Header from './header';
 
-export { Background, Card, Container, Grid, Logo, UserAvatar, GoogleMap, QRCode, Loader, Header };
+export {
+    Background,
+    Card,
+    Container,
+    Grid,
+    Logo,
+    UserAvatar,
+    GoogleMap,
+    QRCode,
+    ErrorInfo,
+    Loader,
+    Header,
+};
 export { PhoneLink, Contacts } from './user-contact';
