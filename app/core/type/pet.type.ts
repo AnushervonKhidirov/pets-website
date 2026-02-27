@@ -19,6 +19,8 @@ export type Pet = {
 
 export type PetWithUser = Pet & { user: Omit<User, 'authType'> };
 
+export type LostPet = Omit<PetWithUser, 'lostInfo'> & { lostInfo: LostInfo };
+
 export type PetType = {
     id: number;
     en: string;
