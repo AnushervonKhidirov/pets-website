@@ -1,4 +1,4 @@
-import type { FC } from 'react';
+import type { CSSProperties, FC } from 'react';
 import type { BackgroundProps } from '../background';
 
 import Background from '../background';
@@ -11,6 +11,7 @@ type ContainerProps = BackgroundProps<{
     section?: boolean;
     innerClassName?: string;
     maxWidth?: number;
+    styles?: { wrapper?: CSSProperties; content?: CSSProperties };
 }>;
 
 const Container: FC<ContainerProps> = ({
@@ -20,6 +21,7 @@ const Container: FC<ContainerProps> = ({
     maxWidth = 1200,
     children,
     color = lightGray,
+    styles = {},
     ...props
 }) => {
     return (
@@ -27,10 +29,14 @@ const Container: FC<ContainerProps> = ({
             className={classNames(classes.container, { [classes.section]: section }, className)}
             color={color}
             {...props}
+            style={{
+                ...props.style,
+                ...styles.wrapper,
+            }}
         >
             <div
                 className={classNames(classes.container_inner, innerClassName)}
-                style={{ maxWidth }}
+                style={{ maxWidth, ...styles.content }}
             >
                 {children}
             </div>
