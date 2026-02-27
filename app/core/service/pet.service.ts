@@ -1,9 +1,9 @@
-import type { ReturnWithErrPromise } from '~type/common.type';
-import type { Pet, PetWithUser, PetType, Breed, PetDto } from '~type/pet.type';
+import type { PaginationQuery, ReturnWithErrPromise } from '~type/common.type';
+import type { Pet, PetWithUser, PetType, Breed, PetDto, PetQuery } from '~type/pet.type';
 
 import dayjs from 'dayjs';
 import { apiClient, apiClientAuth } from '~api/api-client';
-import { errorHandler, isHttpException } from '~helper/error-handler';
+import { errorHandler, HttpException, isHttpException } from '~helper/error-handler';
 import { serverUrl } from '~constant/common';
 
 type PetResponse = Omit<Pet, 'birthday'> & { birthday: string | null };
@@ -13,7 +13,7 @@ class PetService {
     async getMyOne(id: number): ReturnWithErrPromise<Pet> {
         try {
             const pet = await apiClientAuth.get<PetResponse>(`/pet/my/${id}`);
-            if (isHttpException(pet.data)) throw pet.data;
+            if (isHttpException(pet.data)) throw new HttpException(pet.data);
             return [this.convertData(pet.data), null];
         } catch (err) {
             return errorHandler(err);
@@ -23,7 +23,7 @@ class PetService {
     async getMyMany(): ReturnWithErrPromise<Pet[]> {
         try {
             const pets = await apiClientAuth.get<PetResponse[]>('/pet/my');
-            if (isHttpException(pets.data)) throw pets.data;
+            if (isHttpException(pets.data)) throw new HttpException(pets.data);
             const convertedPets = pets.data.map(pet => this.convertData(pet));
             return [convertedPets, null];
         } catch (err) {
@@ -34,17 +34,17 @@ class PetService {
     async getOne(id: number): ReturnWithErrPromise<PetWithUser> {
         try {
             const pet = await apiClient.get<PetResponseWithUser>(`/pet/${id}`);
-            if (isHttpException(pet.data)) throw pet.data;
+            if (isHttpException(pet.data)) throw new HttpException(pet.data);
             return [this.convertData(pet.data), null];
         } catch (err) {
             return errorHandler(err);
         }
     }
 
-    async getAll(): ReturnWithErrPromise<Pet[]> {
+    async getAll(queryParams?: PetQuery & PaginationQuery): ReturnWithErrPromise<Pet[]> {
         try {
-            const pets = await apiClient.get<PetResponse[]>('/pet');
-            if (isHttpException(pets.data)) throw pets.data;
+            const pets = await apiClient.get<PetResponse[]>('/pet', { params: queryParams });
+            if (isHttpException(pets.data)) throw new HttpException(pets.data);
             const convertedPets = pets.data.map(pet => this.convertData(pet));
             return [convertedPets, null];
         } catch (err) {
@@ -55,7 +55,7 @@ class PetService {
     async getPetType(): ReturnWithErrPromise<PetType[]> {
         try {
             const petTypes = await apiClient.get<PetType[]>('/pet-type');
-            if (isHttpException(petTypes.data)) throw petTypes.data;
+            if (isHttpException(petTypes.data)) throw new HttpException(petTypes.data);
             return [petTypes.data, null];
         } catch (err) {
             return errorHandler(err);
@@ -65,7 +65,7 @@ class PetService {
     async getBreed({ petTypeId }: { petTypeId?: number } = {}): ReturnWithErrPromise<Breed[]> {
         try {
             const breeds = await apiClient.get<Breed[]>('/pet-breed', { params: { petTypeId } });
-            if (isHttpException(breeds.data)) throw breeds.data;
+            if (isHttpException(breeds.data)) throw new HttpException(breeds.data);
             return [breeds.data, null];
         } catch (err) {
             return errorHandler(err);
@@ -77,7 +77,7 @@ class PetService {
 
         try {
             const pet = await apiClientAuth.post<PetResponse>('/pet', convertedData);
-            if (isHttpException(pet.data)) throw pet.data;
+            if (isHttpException(pet.data)) throw new HttpException(pet.data);
             return [this.convertData(pet.data), null];
         } catch (err) {
             return errorHandler(err);
@@ -89,7 +89,7 @@ class PetService {
 
         try {
             const pet = await apiClientAuth.patch<PetResponse>(`/pet/${id}`, convertedData);
-            if (isHttpException(pet.data)) throw pet.data;
+            if (isHttpException(pet.data)) throw new HttpException(pet.data);
             return [this.convertData(pet.data), null];
         } catch (err) {
             return errorHandler(err);
@@ -99,7 +99,7 @@ class PetService {
     async delete(id: number): ReturnWithErrPromise<Pet> {
         try {
             const pet = await apiClientAuth.delete<PetResponse>(`/pet/${id}`);
-            if (isHttpException(pet.data)) throw pet.data;
+            if (isHttpException(pet.data)) throw new HttpException(pet.data);
             return [this.convertData(pet.data), null];
         } catch (err) {
             return errorHandler(err);
@@ -115,7 +115,7 @@ class PetService {
                 headers: { 'Content-Type': 'multipart/form-data' },
             });
 
-            if (isHttpException(pet.data)) throw pet.data;
+            if (isHttpException(pet.data)) throw new HttpException(pet.data);
             return [pet.data, null];
         } catch (err) {
             return errorHandler(err);
@@ -125,7 +125,7 @@ class PetService {
     async deleteImage(petId: number): ReturnWithErrPromise {
         try {
             const pet = await apiClientAuth.delete(`/pet/image/${petId}`);
-            if (isHttpException(pet.data)) throw pet.data;
+            if (isHttpException(pet.data)) throw new HttpException(pet.data);
             return [pet.data, null];
         } catch (err) {
             return errorHandler(err);
