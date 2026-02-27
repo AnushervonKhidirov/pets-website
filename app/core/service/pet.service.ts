@@ -10,10 +10,20 @@ type PetResponse = Omit<Pet, 'birthday'> & { birthday: string | null };
 type PetResponseWithUser = PetResponse & { user: PetWithUser['user'] };
 
 class PetService {
-    async getMy(): ReturnWithErrPromise<Pet[]> {
+    async getMyOne(id: number): ReturnWithErrPromise<Pet> {
+        try {
+            const pet = await apiClientAuth.get<PetResponse>(`/pet/my/${id}`);
+            if (isHttpException(pet.data)) throw pet.data;
+            return [this.convertData(pet.data), null];
+        } catch (err) {
+            return errorHandler(err);
+        }
+    }
+
+    async getMyMany(): ReturnWithErrPromise<Pet[]> {
         try {
             const pets = await apiClientAuth.get<PetResponse[]>('/pet/my');
-            if (isHttpException(pets.data)) throw pets.data;            
+            if (isHttpException(pets.data)) throw pets.data;
             const convertedPets = pets.data.map(pet => this.convertData(pet));
             return [convertedPets, null];
         } catch (err) {
