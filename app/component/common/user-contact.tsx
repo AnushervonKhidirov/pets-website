@@ -1,9 +1,10 @@
-import type { FC, ReactNode } from 'react';
+import type { CSSProperties, FC, ReactNode } from 'react';
 import type { ButtonProps } from 'antd';
 import type { User } from '~type/user.type';
 
 import { Link } from 'react-router';
 import { Typography, Button } from 'antd';
+import { PhoneIcon } from '~icons';
 
 import { parsePhoneNumberFromString } from 'libphonenumber-js';
 import { ContactLinks } from '~constant/contact-links';
@@ -15,6 +16,8 @@ type PhoneLinkProps = {
     returnValueIfEmpty?: ReactNode;
     asButton?: boolean | null;
     buttonProps?: ButtonProps;
+    includeIcon?: boolean;
+    style?: CSSProperties;
 };
 
 type ContactProps = {
@@ -27,7 +30,9 @@ export const PhoneLink: FC<PhoneLinkProps> = ({
     phone,
     returnValueIfEmpty = null,
     asButton,
+    includeIcon,
     buttonProps = {},
+    style,
 }) => {
     if (!phone) return returnValueIfEmpty;
     const phoneData = parsePhoneNumberFromString(phone, 'TJ');
@@ -35,12 +40,18 @@ export const PhoneLink: FC<PhoneLinkProps> = ({
 
     if (asButton)
         return (
-            <Link to={'tel:' + phoneData.number}>
-                <Button {...buttonProps}>{phoneData.nationalNumber}</Button>
+            <Link to={'tel:' + phoneData.number} style={style}>
+                <Button icon={includeIcon ? <PhoneIcon /> : undefined} {...buttonProps}>
+                    Позвонить
+                </Button>
             </Link>
         );
 
-    return <Link to={'tel:' + phoneData.number}>{phoneData.nationalNumber}</Link>;
+    return (
+        <Link to={'tel:' + phoneData.number} style={style}>
+            Позвонить
+        </Link>
+    );
 };
 
 export const Contacts: FC<ContactProps> = ({ contacts, email, returnValueIfEmpty = null }) => {
