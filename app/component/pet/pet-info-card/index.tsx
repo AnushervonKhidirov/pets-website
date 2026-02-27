@@ -117,26 +117,6 @@ const PetInfoCard: FC<PetInfoCardProps> = ({
 };
 
 export const LostPetInfoCard: FC<LostPetInfoCardProps> = ({ pet, style = {}, children }) => {
-    const lostInfoItems = pet.lostInfo
-        ? [
-              {
-                  key: pet.lostInfo.id + pet.lostInfo.petId + 'date',
-                  label: 'Дата',
-                  children: pet.lostInfo.lostAt.startOf('day').format('DD MMMM YYYY'),
-              },
-              {
-                  key: pet.lostInfo.id + pet.lostInfo.petId + 'place',
-                  label: 'Место',
-                  children: pet.lostInfo.address,
-              },
-              {
-                  key: pet.lostInfo.id + pet.lostInfo.petId + 'details',
-                  label: 'Обстоятельства',
-                  children: pet.lostInfo.details,
-              },
-          ].filter(item => item.children)
-        : [];
-
     return (
         <Card
             style={{ borderRadius: '1.25rem', ...style }}
