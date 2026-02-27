@@ -1,14 +1,14 @@
 import type { FC } from 'react';
 import type { Route } from './+types/pet-info.page';
-import type { PetWithUser } from '~type/pet.type';
 
-import { useState } from 'react';
 import { useParams } from 'react-router';
-import { useEffectOnce } from '~hook/use-effect-once';
+import { useQuery } from '@tanstack/react-query';
+import { notification } from 'antd';
 import petService from '~service/pet.service';
 
-import { Container } from '~component/common';
+import { Container, Loader, ErrorInfo } from '~component/common';
 import PetInfoCard from '~component/pet/pet-info-card';
+import { alertError } from '~helper/alert-error';
 
 export function meta() {
     return [{ title: 'Pet' }];
@@ -16,39 +16,42 @@ export function meta() {
 
 const PetInfo: FC = () => {
     const params = useParams<Route.LoaderArgs['params']>();
+    const [api, context] = notification.useNotification();
 
-    const [pet, setPet] = useState<PetWithUser | null>(null);
-    const [isError, setIsError] = useState(false);
-
-    async function fetchPet(petId: number) {
-        const [pet, err] = await petService.getOne(petId);
-        if (err) {
-            setIsError(true);
-        } else {
-            setPet(pet);
-        }
-    }
-
-    useEffectOnce(() => {
-        if (params.petId) {
-            const petId = Number.parseInt(params.petId);
-            if (!Number.isNaN(petId)) fetchPet(petId);
-        }
+    const {
+        isPending,
+        isError,
+        isSuccess,
+        error,
+        data: pet,
+    } = useQuery({
+        queryKey: ['pet'],
+        queryFn: fetchMyPet,
     });
 
-    if (isError) return <ErrorPage />;
+    async function fetchMyPet() {
+        if (!params.petId) throw new Error('pet ID not found');
+        const [pet, err] = await petService.getOne(Number.parseInt(params.petId));
+
+        if (err) {
+            if (err.statusCode !== 404) api.error(alertError(err));
+            throw err;
+        }
+
+        return pet;
+    }
+
+    if (isPending) return <Loader />;
+    if (isError) return <ErrorInfo error={error} />;
 
     return (
-        pet && (
+        isSuccess && (
             <Container section maxWidth={1000} style={{ minHeight: '100%' }}>
                 <PetInfoCard pet={pet} showOwner />
+                {context}
             </Container>
         )
     );
-};
-
-const ErrorPage = () => {
-    return <Container section>Пошел нахуй!</Container>;
 };
 
 export default PetInfo;
