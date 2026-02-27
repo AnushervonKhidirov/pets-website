@@ -10,6 +10,19 @@ type PetResponse = Omit<Pet, 'birthday'> & { birthday: string | null };
 type PetResponseWithUser = PetResponse & { user: PetWithUser['user'] };
 
 class PetService {
+    async count(queryParams?: PetQuery): ReturnWithErrPromise<{ total: number }> {
+        try {
+            const count = await apiClient.get<{ total: number }>('/pet/count', {
+                params: queryParams,
+            });
+
+            if (isHttpException(count.data)) throw new HttpException(count.data);
+            return [count.data, null];
+        } catch (err) {
+            return errorHandler(err);
+        }
+    }
+
     async getMyOne(id: number): ReturnWithErrPromise<Pet> {
         try {
             const pet = await apiClientAuth.get<PetResponse>(`/pet/my/${id}`);
