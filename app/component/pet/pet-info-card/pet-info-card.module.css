@@ -151,6 +151,31 @@
     gap: 0.75rem;
 }
 
+/* lost cart body */
+.lost_card_body {
+    display: grid;
+    grid-template-rows: 1fr max-content;
+    gap: 1rem;
+}
+
+.lost_card_info_list {
+    display: grid;
+    gap: 0.75rem;
+    grid-auto-rows: max-content;
+}
+
+.lost_card_info_item {
+    display: grid;
+    grid-auto-flow: column;
+    grid-auto-columns: max-content;
+    gap: 0.5em;
+}
+
+.lost_card_info_detail {
+    font-style: italic;
+    padding: 0;
+}
+
 @container card (width > 750px) {
     .card_body {
         grid-template-columns: 1fr minmax(max-content, 300px);

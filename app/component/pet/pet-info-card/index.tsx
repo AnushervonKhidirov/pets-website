@@ -1,16 +1,16 @@
 import type { CSSProperties, FC } from 'react';
 import type { DropdownProps, MenuProps } from 'antd';
 import type { WithAdditionalProps } from '~type/common.type';
-import type { Pet, PetWithUser } from '~type/pet.type';
+import type { LostPet, Pet, PetWithUser } from '~type/pet.type';
 import type { LostInfo } from '~type/lost-info.type';
 
 import { Dropdown, Tag, Typography, Descriptions } from 'antd';
 import { red } from '@ant-design/colors';
 import { Background, Card, UserAvatar, PhoneLink, Contacts, QRCode } from '~component/common';
 import { MoreOutlined } from '@ant-design/icons';
-import { TickIcon, WarningIcon, PhoneIcon } from '~icons';
+import { TickIcon, WarningIcon, ClockIcon, LocationIcon } from '~icons';
 
-import { cyan, gray } from '~/config/ant.config';
+import { cyan, orange, gray, light } from '~/config/ant.config';
 import { sex } from '~constant/pet';
 import { Route } from '~constant/route';
 import placeholder from 'src/images/pet-placeholder.png';
@@ -27,6 +27,12 @@ type PetInfoCardProps = WithAdditionalProps<{
     showQR?: boolean;
     showOwner?: boolean;
     actions?: MenuProps['items'];
+    style?: CSSProperties;
+}>;
+
+type LostPetInfoCardProps = WithAdditionalProps<{
+    pet: LostPet;
+    style?: CSSProperties;
 }>;
 
 const PetInfoCard: FC<PetInfoCardProps> = ({
@@ -37,6 +43,7 @@ const PetInfoCard: FC<PetInfoCardProps> = ({
     showOwner,
     actions,
     children,
+    style = {},
 }) => {
     const petProfilePage = `${Route.PetInfo}/${pet.id}`;
 
@@ -66,7 +73,7 @@ const PetInfoCard: FC<PetInfoCardProps> = ({
     return (
         <Card
             hoverable={hoverable}
-            style={{ borderRadius: '1.25rem' }}
+            style={{ borderRadius: '1.25rem', ...style }}
             classNames={{ root: classes.card }}
             innerClassName={classes.card_body}
             cover={<CardHeader pet={pet} actions={actions} />}
@@ -105,6 +112,68 @@ const PetInfoCard: FC<PetInfoCardProps> = ({
                     </div>
                 </>
             )}
+        </Card>
+    );
+};
+
+export const LostPetInfoCard: FC<LostPetInfoCardProps> = ({ pet, style = {}, children }) => {
+    const lostInfoItems = pet.lostInfo
+        ? [
+              {
+                  key: pet.lostInfo.id + pet.lostInfo.petId + 'date',
+                  label: 'Дата',
+                  children: pet.lostInfo.lostAt.startOf('day').format('DD MMMM YYYY'),
+              },
+              {
+                  key: pet.lostInfo.id + pet.lostInfo.petId + 'place',
+                  label: 'Место',
+                  children: pet.lostInfo.address,
+              },
+              {
+                  key: pet.lostInfo.id + pet.lostInfo.petId + 'details',
+                  label: 'Обстоятельства',
+                  children: pet.lostInfo.details,
+              },
+          ].filter(item => item.children)
+        : [];
+
+    return (
+        <Card
+            style={{ borderRadius: '1.25rem', ...style }}
+            classNames={{ root: classes.card }}
+            innerClassName={classes.lost_card_body}
+            cover={<CardHeader pet={pet} />}
+        >
+            <div className={classes.lost_card_info_list}>
+                <div className={classes.lost_card_info_item}>
+                    <ClockIcon style={{ color: cyan[5], fontSize: '1.2em' }} />
+                    <span style={{ color: gray[7] }}>
+                        {pet.lostInfo.lostAt.startOf('day').format('DD MMMM YYYY')}
+                    </span>
+                </div>
+
+                {pet.lostInfo.address && (
+                    <div className={classes.lost_card_info_item}>
+                        <LocationIcon style={{ color: orange[5], fontSize: '1.2em' }} />
+                        <span style={{ color: gray[7] }}>{pet.lostInfo.address}</span>
+                    </div>
+                )}
+
+                {pet.lostInfo.details && (
+                    <Card
+                        size="small"
+                        variant="outlined"
+                        innerClassName={classes.lost_card_info_detail}
+                        color={light}
+                    >
+                        <span style={{ color: gray[5], fontSize: '0.9em' }}>
+                            "{pet.lostInfo.details}"
+                        </span>
+                    </Card>
+                )}
+            </div>
+
+            {children}
         </Card>
     );
 };
@@ -223,11 +292,11 @@ const OwnerCard: FC<{ user: PetWithUser['user'] }> = ({ user }) => {
                     <PhoneLink
                         phone={user.phone}
                         asButton
+                        includeIcon
                         buttonProps={{
                             block: true,
                             color: 'default',
                             variant: 'solid',
-                            icon: <PhoneIcon />,
                         }}
                     />
 
