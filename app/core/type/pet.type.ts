@@ -35,6 +35,17 @@ export type Breed = {
 
 export type PetDto = Omit<Pet, 'id' | 'petType' | 'breed' | 'user' | 'image' | 'lostInfo'>;
 
+export type PetQuery = Partial<{
+    userId: number;
+    name: string;
+    sex: Sex;
+    birthday: string;
+    microchipId: string;
+    petTypeId: number;
+    breedId: number;
+    lost: boolean;
+}>;
+
 export enum Sex {
     Male = 'Male',
     Female = 'Female',
