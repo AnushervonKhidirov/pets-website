@@ -54,9 +54,9 @@ class PetService {
         }
     }
 
-    async getAll(queryParams?: PetQuery & PaginationQuery): ReturnWithErrPromise<Pet[]> {
+    async getAll(queryParams?: PetQuery & PaginationQuery): ReturnWithErrPromise<PetWithUser[]> {
         try {
-            const pets = await apiClient.get<PetResponse[]>('/pet', { params: queryParams });
+            const pets = await apiClient.get<PetResponseWithUser[]>('/pet', { params: queryParams });
             if (isHttpException(pets.data)) throw new HttpException(pets.data);
             const convertedPets = pets.data.map(pet => this.convertData(pet));
             return [convertedPets, null];
