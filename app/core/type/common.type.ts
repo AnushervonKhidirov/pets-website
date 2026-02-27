@@ -7,3 +7,8 @@ export type WithAdditionalProps<T = unknown> = PropsWithChildren<
 
 export type ReturnWithErr<T = null> = [T, null] | [null, HttpException];
 export type ReturnWithErrPromise<T = null> = Promise<ReturnWithErr<T>>;
+
+export type PaginationQuery = {
+    skip?: number;
+    take?: number;
+};
