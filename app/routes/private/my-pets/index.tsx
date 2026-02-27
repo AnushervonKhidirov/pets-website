@@ -14,7 +14,7 @@ import PetInfoCard from '~component/pet/pet-info-card';
 import PetModal from '~component/pet/pet-modal';
 
 import { Route } from '~constant/route';
-import empty from 'src/images/empty-pet-image.png';
+import funnyCat from 'src/images/funny-cat.png';
 import classes from './my-pets.module.css';
 
 export function meta() {
@@ -34,7 +34,7 @@ const MyPets: FC = () => {
     const [api, context] = notification.useNotification();
 
     async function fetchMyPets() {
-        const [myPets, err] = await petService.getMy();
+        const [myPets, err] = await petService.getMyMany();
 
         if (err) {
             api.error(alertError(err));
@@ -67,7 +67,7 @@ const MyPets: FC = () => {
                 </Grid>
             ) : (
                 <Empty
-                    image={empty}
+                    image={funnyCat}
                     description={<span>У вас пока нет питомцев.</span>}
                     styles={{
                         image: { height: '10rem', marginTop: '5rem', marginBottom: '1rem' },
