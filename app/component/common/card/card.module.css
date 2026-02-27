@@ -10,4 +10,8 @@
 .card_content {
     height: 100%;
     padding: var(--card-body-padding);
+
+    &.small_size {
+        padding: var(--card-body-padding-sm);
+    }
 }

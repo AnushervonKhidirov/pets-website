@@ -20,6 +20,8 @@ const Card: FC<CardProps> = ({
     contentStyles,
     ...props
 }) => {
+    const size = props.size ?? 'default';
+
     return (
         <AntCard
             variant="borderless"
@@ -36,7 +38,11 @@ const Card: FC<CardProps> = ({
                     alpha={alpha}
                     blur={blur}
                     style={contentStyles}
-                    className={classNames(classes.card_content, innerClassName)}
+                    className={classNames(
+                        classes.card_content,
+                        classes[size + '_size'],
+                        innerClassName,
+                    )}
                 >
                     {props.children}
                 </Background>
