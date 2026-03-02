@@ -1,7 +1,7 @@
 import type { FC } from 'react';
 import type { MapMouseEvent } from '@vis.gl/react-google-maps';
 import type { User, Contact, UpdateUserDto, UpdateUserFormData } from '~type/user.type';
-import type { Coordinate } from '~component/common/google-map';
+import type { Marker } from '~component/common/google-map';
 
 import { useState } from 'react';
 import useUserStore from '~store/user.store';
@@ -154,12 +154,12 @@ const MapSelection: FC<{ address: User['address'] }> = ({ address }) => {
             ? { lat: address.latitude, lng: address?.longitude }
             : undefined;
 
-    const [mark, setMark] = useState<Coordinate[] | undefined>(
+    const [mark, setMark] = useState<Marker[] | undefined>(
         coordinate ? [coordinate] : undefined,
     );
 
     function selectMark(e: MapMouseEvent) {
-        const coords: Coordinate = e.detail.latLng;
+        const coords: Marker = e.detail.latLng;
 
         setMark([coords]);
         form.setFieldsValue({ latitude: coords.lat, longitude: coords.lng });

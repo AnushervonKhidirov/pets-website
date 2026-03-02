@@ -1,32 +1,48 @@
 import type { FC } from 'react';
-import type { MapProps } from '@vis.gl/react-google-maps';
+import type { MapProps, MapMouseEvent } from '@vis.gl/react-google-maps';
 
-import { APIProvider, Map, Marker } from '@vis.gl/react-google-maps';
+import { APIProvider, Map, AdvancedMarker } from '@vis.gl/react-google-maps';
 
-const API_KEY = import.meta.env.VITE_GOOGLE_MAPS_API;
+const API_KEY = import.meta.env.VITE_GOOGLE_MAPS_API_KEY;
+const MAP_ID = import.meta.env.VITE_GOOGLE_MAPS_ID;
 
 // NOTE: center of Dushanbe
-const defaultPosition: Coordinate = {
+const defaultPosition: Marker = {
     lat: 38.58298869460847,
     lng: 68.78661795974861,
 };
 
-type GoogleMapProps = MapProps & { markers?: Coordinate[]; defaultCenter?: Coordinate };
-export type Coordinate = Record<'lat' | 'lng', number>;
+type GoogleMapProps = MapProps & {
+    markers?: Marker[];
+    defaultCenter?: Marker;
+    onMarkerClick?: (e: MapMouseEvent, marker: Marker) => void;
+};
 
-const GoogleMap: FC<GoogleMapProps> = ({ markers = [], ...props }) => {
+export type Marker = Record<string, unknown> & {
+    lat: number;
+    lng: number;
+};
+
+const GoogleMap: FC<GoogleMapProps> = ({ markers = [], onMarkerClick, ...props }) => {
     return (
         <APIProvider apiKey={API_KEY} language="ru">
             <Map
                 gestureHandling="greedy"
+                mapId={MAP_ID}
                 disableDefaultUI
                 {...props}
                 defaultCenter={props.defaultCenter ?? defaultPosition}
                 defaultZoom={props.defaultZoom ?? 13}
                 style={{ width: '100%', height: '100%', overflow: 'hidden', ...props.style }}
             >
-                {markers.map(({ lat, lng }) => (
-                    <Marker key={`${lat}-${lng}`} position={{ lat, lng }} />
+                {markers.map(marker => (
+                    <AdvancedMarker
+                        key={`${marker.lat}-${marker.lng}`}
+                        position={{ lat: marker.lat, lng: marker.lng }}
+                        onClick={e => {
+                            if (onMarkerClick) onMarkerClick(e, marker);
+                        }}
+                    />
                 ))}
             </Map>
         </APIProvider>

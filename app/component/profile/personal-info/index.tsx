@@ -1,7 +1,7 @@
 import type { FC } from 'react';
 import type { DescriptionsProps } from 'antd';
 import type { User } from '~type/user.type';
-import type { Coordinate } from '~component/common/google-map';
+import type { Marker } from '~component/common/google-map';
 
 import { useState } from 'react';
 import useUserStore from '~store/user.store';
@@ -66,7 +66,7 @@ const PersonalInfoSection: FC<{ user: User }> = ({ user }) => {
     ];
 
     if (user.address?.latitude && user.address?.longitude) {
-        const coordinate: Coordinate = { lat: user.address.latitude, lng: user.address?.longitude };
+        const marker: Marker = { lat: user.address.latitude, lng: user.address?.longitude };
 
         items.push({
             key: '6',
@@ -74,9 +74,9 @@ const PersonalInfoSection: FC<{ user: User }> = ({ user }) => {
             styles: { label: { paddingBottom: 10 } },
             children: (
                 <GoogleMap
-                    defaultCenter={coordinate}
+                    defaultCenter={marker}
                     defaultZoom={18}
-                    markers={[coordinate]}
+                    markers={[marker]}
                     style={{ height: 'auto', aspectRatio: '1/0.4', minHeight: 200 }}
                 />
             ),
