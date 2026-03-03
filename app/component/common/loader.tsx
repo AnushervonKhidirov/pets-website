@@ -8,12 +8,12 @@ const Loader = () => {
             section
             styles={{
                 wrapper: {
-                    height: '100%',
+                    minHeight: '100%',
+                    alignContent: 'center',
                 },
                 content: {
                     display: 'grid',
-                    alignContent: 'center',
-                    justifyItems: 'center',
+                    justifyContent: 'center',
                 },
             }}
         >
