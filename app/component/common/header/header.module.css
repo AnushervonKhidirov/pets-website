@@ -23,8 +23,8 @@
     grid-template-areas: 'nav';
     gap: 1rem;
 
-    &:has(.auth_btn, .profile_btn) {
-        grid-template-areas: 'nav' 'auth_btn';
+    &:has(.sign_in_btn, .profile_btn) {
+        grid-template-areas: 'nav' 'sign_in_btn';
     }
 }
 
@@ -49,9 +49,20 @@
     }
 }
 
-.auth_btn,
+.sign_in_btn,
 .profile_btn {
-    grid-area: auth_btn;
+    grid-area: sign_in_btn;
+}
+
+.sign_in_btn:not(.sign_in_btn_mobile) {
+    border-radius: 5em;
+}
+
+.sign_in_btn.sign_in_btn_mobile {
+    font-size: 1.25rem;
+    margin-bottom: 0.5rem;
+    padding-block: 0.75em;
+    height: auto;
 }
 
 .profile_btn_mobile {
@@ -68,8 +79,8 @@
         grid-template-areas: 'logo nav';
         grid-template-columns: max-content 1fr;
 
-        &:has(.auth_btn, .profile_btn) {
-            grid-template-areas: 'logo nav auth_btn';
+        &:has(.sign_in_btn, .profile_btn) {
+            grid-template-areas: 'logo nav sign_in_btn';
             grid-template-columns: max-content 1fr max-content;
         }
     }
@@ -85,10 +96,6 @@
         align-items: center;
     }
 
-    .auth_btn {
-        border-radius: 5em;
-    }
-
     .menu_icon,
     .profile_btn_mobile {
         display: none;
@@ -97,20 +104,8 @@
 
 @media screen and (max-width: 800px) {
     .header_inner {
-        grid-template-areas:
-            'logo . menu_icon profile_mobile'
-            'menu_wrapper menu_wrapper menu_wrapper menu_wrapper';
-        grid-template-columns: max-content 1fr max-content max-content;
-    }
-
-    .menu_wrapper {
-        height: 0;
-        overflow: hidden;
-        transition: height 0.5s;
-
-        &.opened {
-            height: var(--height);
-        }
+        grid-template-areas: 'logo . menu_icon';
+        grid-template-columns: max-content 1fr max-content;
     }
 
     .nav_bar {
@@ -121,21 +116,10 @@
 
     .nav_link {
         border-radius: 0.5em;
-        padding-inline: 0.5em;
+        padding-inline: 1em;
 
         &.active {
             background-color: rgba(212, 133, 74, 0.1);
         }
-    }
-
-    .auth_btn {
-        font-size: 1.25rem;
-        margin-bottom: 0.5rem;
-        padding-block: 0.75em;
-        height: auto;
-    }
-
-    .profile_btn {
-        display: none;
     }
 }
