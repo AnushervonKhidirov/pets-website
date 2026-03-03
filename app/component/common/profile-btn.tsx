@@ -1,5 +1,6 @@
 import type { FC } from 'react';
 import type { DropdownProps, MenuProps } from 'antd';
+import type { User } from '~type/user.type';
 
 import tokenService from '~service/token.service';
 import authService from '~service/auth.service';
@@ -14,8 +15,8 @@ import { Route } from '~constant/route';
 import { cyan } from '~/config/ant.config';
 import { isInPrivatePage } from '~helper/auth.helper';
 
-const ProfileButton: FC<{ className?: string }> = props => {
-    const { user, clearUserData } = useUserStore(state => state);
+const ProfileButton: FC<{ user: User, className?: string }> = ({user, className}) => {
+    const { clearUserData } = useUserStore(state => state);
 
     const items: MenuProps['items'] = [
         {
@@ -62,7 +63,7 @@ const ProfileButton: FC<{ className?: string }> = props => {
                 src={user?.avatar}
                 icon={<UserIcon />}
                 size="large"
-                className={props.className}
+                className={className}
                 style={{ backgroundColor: cyan[5], cursor: 'pointer' }}
             />
         </Dropdown>
