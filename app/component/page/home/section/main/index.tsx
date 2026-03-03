@@ -39,7 +39,7 @@ const MainSection = () => {
                 <img src={logo} alt="logo" />
             </div>
 
-            <Title className={classes.headline}>
+            <Title className={classes.headline} style={{ marginBottom: 0 }}>
                 <div>
                     Ваш питомец
                     <div className={classes.colored}>под надёжной защитой</div>
