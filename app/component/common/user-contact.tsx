@@ -13,6 +13,7 @@ const { Text } = Typography;
 
 type PhoneLinkProps = {
     phone: string | null;
+    showPhoneNumber?: boolean;
     returnValueIfEmpty?: ReactNode;
     asButton?: boolean | null;
     buttonProps?: ButtonProps;
@@ -28,6 +29,7 @@ type ContactProps = {
 
 export const PhoneLink: FC<PhoneLinkProps> = ({
     phone,
+    showPhoneNumber,
     returnValueIfEmpty = null,
     asButton,
     includeIcon,
@@ -42,20 +44,20 @@ export const PhoneLink: FC<PhoneLinkProps> = ({
         return (
             <Link to={'tel:' + phoneData.number} style={style}>
                 <Button icon={includeIcon ? <PhoneIcon /> : undefined} {...buttonProps}>
-                    Позвонить
+                    {showPhoneNumber ? phoneData.number : 'Позвонить'}
                 </Button>
             </Link>
         );
 
     return (
         <Link to={'tel:' + phoneData.number} style={style}>
-            Позвонить
+            {showPhoneNumber ? phoneData.number : 'Позвонить'}
         </Link>
     );
 };
 
 export const Contacts: FC<ContactProps> = ({ contacts, email, returnValueIfEmpty = null }) => {
-    if (!contacts) return returnValueIfEmpty;
+    contacts ??= [];
 
     const contactList = email ? [...contacts, { name: 'Email', value: email }] : contacts;
     if (contactList.length === 0) return returnValueIfEmpty;
