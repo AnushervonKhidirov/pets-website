@@ -6,7 +6,7 @@ export default [
     layout('routes/public/layout.tsx', [
         index('routes/public/home.page.tsx'),
         route(Route.Lost, 'routes/public/lost.page.tsx'),
-        route(Route.VetClinic, 'routes/public/vet.page.tsx'),
+        route(Route.VetClinic, 'routes/public/vet-clinic/index.tsx'),
         route(Route.ContactUs, 'routes/public/contact.page.tsx'),
         route(Route.PetInfo + '/:petId', 'routes/public/pet-info.page.tsx'),
     ]),
