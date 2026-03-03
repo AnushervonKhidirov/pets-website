@@ -2,10 +2,12 @@ import type { FC, PropsWithChildren } from 'react';
 import type { Route } from './+types/root';
 
 import { Meta, Outlet, Scripts, ScrollRestoration } from 'react-router';
-import { ConfigProvider } from 'antd';
-import { ErrorInfo } from '~component/common';
-import ruRU from 'antd/locale/ru_RU';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { APIProvider } from '@vis.gl/react-google-maps';
+import { ConfigProvider } from 'antd';
+import ruRU from 'antd/locale/ru_RU';
+
+import { ErrorInfo } from '~component/common';
 
 import { themeConfig } from './config/ant.config';
 import './config/dayjs.config';
@@ -17,6 +19,8 @@ const queryClient = new QueryClient({
     defaultOptions: { queries: { retry: 0, refetchOnWindowFocus: false } },
 });
 
+const API_KEY = import.meta.env.VITE_GOOGLE_MAPS_API_KEY;
+
 export const Layout: FC<PropsWithChildren> = ({ children }) => {
     return (
         <html lang="en">
@@ -27,7 +31,9 @@ export const Layout: FC<PropsWithChildren> = ({ children }) => {
             </head>
             <body className="custom-ant">
                 <ConfigProvider theme={themeConfig} locale={ruRU}>
-                    <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>
+                    <APIProvider apiKey={API_KEY} language="ru">
+                        <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>
+                    </APIProvider>
                 </ConfigProvider>
                 <ScrollRestoration />
                 <Scripts />
