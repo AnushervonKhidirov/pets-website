@@ -1,39 +1,83 @@
 import { Typography } from 'antd';
+import { QrcodeOutlined } from '@ant-design/icons';
 import { Container, Grid, Card, Background } from '~component/common';
-import { ShieldIcon, SearchIcon, HeartIcon } from '~icons';
+import { SearchIcon, UserIcon, PawIcon, PetPassportIcon } from '~icons';
 
-import { cyan, light } from '~/config/ant.config';
+import { cyan, orange } from '~/config/ant.config';
 import classes from './feature.module.css';
 
-const { Title, Text } = Typography;
+const { Title, Text, Paragraph } = Typography;
 
 const featureList = [
     {
-        Icon: ShieldIcon,
-        title: 'Регистрация питомца',
-        about: 'Создайте цифровой паспорт для вашего любимца. Храните данные о чипе, прививках и особых приметах в одном месте.',
+        Icon: UserIcon,
+        title: 'Создайте личный аккаунт',
+        about: (
+            <>
+                Зарегистрируйтесь на платформе за пару кликов. Это <b>полностью бесплатно</b> и
+                позволяет управлять профилями всех ваших животных в одном месте.
+            </>
+        ),
+    },
+    {
+        Icon: PawIcon,
+        title: 'Добавьте своего питомца',
+        about: 'Привяжите любимца к вашему аккаунту, заполнив базовую информацию. Вы можете создать неограниченное количество карточек для каждого своего подопечного.',
+    },
+    {
+        Icon: QrcodeOutlined,
+        title: 'QR-код на адреснике',
+        about: 'Каждый профиль получает уникальную ссылку и QR-код. Разместите его на ошейнике или адреснике — так любой человек, встретивший вашего питомца, сможет мгновенно открыть его страницу и связаться с вами.',
+    },
+    {
+        Icon: PetPassportIcon,
+        title: 'Цифровой паспорт',
+        about: (
+            <>
+                <Paragraph>
+                    Зарегистрируйтесь на платформе за пару кликов. Это <b>полностью бесплатно</b> и
+                    позволяет управлять профилями всех ваших животных в одном месте.
+                </Paragraph>
+
+                <Paragraph type="warning" italic>
+                    Важно: цифровой паспорт является вспомогательным инструментом и{' '}
+                    <b>не является официальным</b> ветеринарным или юридическим документом.
+                </Paragraph>
+            </>
+        ),
     },
     {
         Icon: SearchIcon,
-        title: 'Поиск потерянных',
-        about: 'Мгновенно публикуйте объявления о пропаже. Наше сообщество поможет вернуть друга домой как можно скорее.',
-    },
-    {
-        Icon: HeartIcon,
-        title: 'Сообщество',
-        about: 'Объединяем людей, неравнодушных к животным. Делитесь опытом, находите друзей и помогайте другим.',
+        title: 'Объявление о пропаже',
+        about: (
+            <>
+                <Paragraph>
+                    Если случилась беда, вы можете в один клик отправить анкету питомца в раздел
+                    «Потерянные».
+                </Paragraph>
+
+                <Paragraph>
+                    <b>Мы не занимаемся поиском</b> самостоятельно, но помогаем людям, нашедшим ваше
+                    животное, быстро вас идентифицировать
+                </Paragraph>
+            </>
+        ),
     },
 ];
 
 const FeatureSection = () => {
     return (
-        <Container innerClassName={classes.inner_section} section color="#fff">
-            <Text className={classes.sup_headline}>Возможности</Text>
-            <Title level={3}>Всё для безопасности вашего друга</Title>
+        <Container innerClassName={classes.inner_section} section>
+            <Title level={3} style={{ color: orange[5] }}>
+                Как работает
+            </Title>
+            <Title level={4} style={{ marginTop: 0 }}>
+                Помогаем вашим питомцам вернуться домой быстрее
+            </Title>
 
             <Grid className={classes.list}>
                 {featureList.map(({ Icon, title, about }) => (
-                    <Card key={title} innerClassName={classes.card} color={light}>
+                    <Card key={title} innerClassName={classes.card}>
                         <Background
                             style={{ width: '3rem', height: '3rem' }}
                             className={classes.icon}
@@ -43,13 +87,11 @@ const FeatureSection = () => {
                             <Icon />
                         </Background>
 
-                        <Text strong className={classes.title}>
+                        <Title level={5} className={classes.title}>
                             {title}
-                        </Text>
+                        </Title>
 
-                        <Text type="secondary" className={classes.about}>
-                            {about}
-                        </Text>
+                        <Text className={classes.about}>{about}</Text>
                     </Card>
                 ))}
             </Grid>

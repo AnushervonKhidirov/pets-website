@@ -1,7 +1,6 @@
 .inner_section {
     display: grid;
     justify-items: center;
-    gap: 0.5rem;
     text-align: center;
 }
 
@@ -12,13 +11,14 @@
 }
 
 .list {
-    margin-top: 3rem;
+    margin-top: 2rem;
 }
 
 .card {
     display: grid;
     gap: 0.75rem;
     text-align: left;
+    grid-auto-rows: max-content;
 }
 
 .icon {
