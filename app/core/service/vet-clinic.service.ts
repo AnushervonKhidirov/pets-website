@@ -1,19 +1,27 @@
 import type { ReturnWithErrPromise } from '~type/common.type';
+import type { VetClinic } from '~type/vet-clinic.type';
 
-import { errorHandler } from '~helper/error-handler';
+import { apiClient } from '~api/api-client';
+import { errorHandler, HttpException, isHttpException } from '~helper/error-handler';
 
 class VetClinicService {
-    async getOne(id: number): ReturnWithErrPromise {
+    private readonly endpoint = '/vet-clinic/';
+
+    async getOne(id: number): ReturnWithErrPromise<VetClinic> {
         try {
-            return [null, null];
+            const response = await apiClient.get<VetClinic>(this.endpoint + id);
+            if (isHttpException(response.data)) throw new HttpException(response.data);
+            return [response.data, null];
         } catch (err) {
             return errorHandler(err);
         }
     }
 
-    async getAll(): ReturnWithErrPromise {
+    async getAll(): ReturnWithErrPromise<VetClinic[]> {
         try {
-            return [null, null];
+            const response = await apiClient.get<VetClinic[]>(this.endpoint);
+            if (isHttpException(response.data)) throw new HttpException(response.data);
+            return [response.data, null];
         } catch (err) {
             return errorHandler(err);
         }
