@@ -75,6 +75,7 @@ const PersonalInfoSection: FC<{ user: User }> = ({ user }) => {
             children: (
                 <GoogleMap
                     defaultCenter={marker}
+                    disableDefaultUI
                     defaultZoom={18}
                     markers={[marker]}
                     style={{ height: 'auto', aspectRatio: '1/0.4', minHeight: 200 }}

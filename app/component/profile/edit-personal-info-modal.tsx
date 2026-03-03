@@ -183,9 +183,11 @@ const MapSelection: FC<{ address: User['address'] }> = ({ address }) => {
             <Row>
                 <GoogleMap
                     onClick={selectMark}
+                    disableDefaultUI
                     markers={mark}
                     defaultZoom={coordinate ? 18 : 12}
                     defaultCenter={coordinate}
+                    
                     style={{
                         height: 200,
                         marginBottom: 'var(--form-item-margin-bottom)',
