@@ -24,6 +24,34 @@ const Paw: FC<CustomIconProps> = ({ strokeWidth = 2 }) => {
     );
 };
 
+const PetPassport: FC<CustomIconProps> = ({ strokeWidth = 2 }) => {
+    return (
+        <svg
+            viewBox="0 0 98 126"
+            fill="none"
+            stroke="currentColor"
+            width="1em"
+            height="1em"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+        >
+            <rect x="5" y="5" width="88" height="116" rx="10" strokeWidth={strokeWidth * 3}></rect>
+
+            <line x1="25" y1="5" x2="25" y2="121" strokeWidth={strokeWidth * 3}></line>
+
+            <g transform="translate(35,22) scale(2)" strokeWidth={strokeWidth}>
+                <circle cx="11" cy="4" r="2"></circle>
+                <circle cx="18" cy="8" r="2"></circle>
+                <circle cx="20" cy="16" r="2"></circle>
+                <path d="M9 10a5 5 0 0 1 5 5v3.5a3.5 3.5 0 0 1-6.84 1.045Q6.52 17.48 4.46 16.84A3.5 3.5 0 0 1 5.5 10Z"></path>
+            </g>
+
+            <line x1="37" y1="89" x2="80" y2="89" strokeWidth={strokeWidth * 3}></line>
+            <line x1="37" y1="106" x2="70" y2="106" strokeWidth={strokeWidth * 3}></line>
+        </svg>
+    );
+};
+
 const User: FC<CustomIconProps> = ({ strokeWidth = 2 }) => {
     return (
         <svg
@@ -384,6 +412,9 @@ const Gender: FC<CustomIconProps> = ({ strokeWidth = 2 }) => {
 
 export const PawIcon: FC<IconProps> = props => (
     <Icon component={() => <Paw strokeWidth={props.strokeWidth} />} {...props} />
+);
+export const PetPassportIcon: FC<IconProps> = props => (
+    <Icon component={() => <PetPassport strokeWidth={props.strokeWidth} />} {...props} />
 );
 export const UserIcon: FC<IconProps> = props => (
     <Icon component={() => <User strokeWidth={props.strokeWidth} />} {...props} />
