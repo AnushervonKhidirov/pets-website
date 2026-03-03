@@ -35,11 +35,12 @@ const ErrorInfo: FC<ErrorInfoProps> = ({ error }) => {
             section
             styles={{
                 wrapper: {
+                    display: 'grid',
                     minHeight: '100%',
+                    alignContent: 'center',
                 },
                 content: {
                     display: 'grid',
-                    alignContent: 'center',
                     justifyContent: 'center',
                     gap: '1.5rem',
                 },
