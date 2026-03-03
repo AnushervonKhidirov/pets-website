@@ -6,12 +6,15 @@ const Loader = () => {
     return (
         <Container
             section
-            style={{
-                display: 'grid',
-                alignContent: 'center',
-                justifyContent: 'center',
-                height: '100%',
-                width: '100%',
+            styles={{
+                wrapper: {
+                    height: '100%',
+                },
+                content: {
+                    display: 'grid',
+                    alignContent: 'center',
+                    justifyItems: 'center',
+                },
             }}
         >
             <LoadingOutlined style={{ fontSize: '5rem', color: orange[5] }} />
