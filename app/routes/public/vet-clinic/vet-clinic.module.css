@@ -1,0 +1,28 @@
+.page {
+    display: grid;
+    height: 100%;
+    overflow: hidden;
+    grid-template-rows: max-content 1fr;
+}
+
+.carousel {
+    :global(.slick-arrow) {
+        color: #000;
+    }
+
+    :global(li.slick-active::after),
+    :global(ul.slick-dots button) {
+        --color-bg-container: #000;
+    }
+}
+
+.vet_slide {
+    padding: 2rem;
+    display: grid;
+    gap: 0.5em;
+    grid-auto-rows: max-content;
+    
+    .name {
+        margin-bottom: 0.5rem;
+    }
+}
