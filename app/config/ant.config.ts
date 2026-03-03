@@ -29,8 +29,6 @@ export const themeConfig: ThemeConfig = {
             lineHeightHeading4: 1,
             lineHeightHeading5: 1,
             lineHeight: 1.5,
-            titleMarginBottom: 0,
-            titleMarginTop: 0,
         },
 
         Modal: {
