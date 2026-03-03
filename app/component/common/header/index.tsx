@@ -25,7 +25,7 @@ const navLinkList = [
     },
     {
         to: Route.Lost,
-        name: 'Потеряшки',
+        name: 'Потерянные',
     },
     {
         to: Route.VetClinic,

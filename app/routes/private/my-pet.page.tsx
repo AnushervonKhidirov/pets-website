@@ -17,7 +17,7 @@ import { alertError } from '~helper/alert-error';
 import { Route } from '~constant/route';
 
 export function meta() {
-    return [{ title: 'My Pet' }];
+    return [{ title: 'Мой питомец' }];
 }
 
 const MyPet: FC = () => {

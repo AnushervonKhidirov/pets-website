@@ -15,7 +15,7 @@ import classes from './vet-clinic.module.css';
 import vetClinicService from '~service/vet-clinic.service';
 
 export function meta() {
-    return [{ title: 'Vet page' }];
+    return [{ title: 'Ветеринарные клиники' }];
 }
 
 const { Title } = Typography;

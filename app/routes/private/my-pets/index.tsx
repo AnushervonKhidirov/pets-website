@@ -18,7 +18,7 @@ import funnyCat from 'src/images/funny-cat.png';
 import classes from './my-pets.module.css';
 
 export function meta() {
-    return [{ title: 'My pets' }];
+    return [{ title: 'Мои питомцы' }];
 }
 
 const { Title } = Typography;

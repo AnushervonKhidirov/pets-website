@@ -11,7 +11,7 @@ import PetInfoCard from '~component/pet/pet-info-card';
 import { alertError } from '~helper/alert-error';
 
 export function meta() {
-    return [{ title: 'Pet' }];
+    return [{ title: 'О питомце' }];
 }
 
 const PetInfo: FC = () => {

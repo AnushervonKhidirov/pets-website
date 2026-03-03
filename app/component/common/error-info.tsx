@@ -15,15 +15,12 @@ type ErrorInfoProps = {
 };
 
 const ErrorInfo: FC<ErrorInfoProps> = ({ error }) => {
-    let message = 'Oops!';
-    let details = 'An unexpected error occurred.';
+    let message = 'Упс!';
+    let details = 'Произошла непредвиденная ошибка.';
 
     if (isRouteErrorResponse(error)) {
-        message = error.status === 404 ? '404' : 'Error';
-        details =
-            error.status === 404
-                ? 'The requested page could not be found.'
-                : error.statusText || details;
+        message = error.status === 404 ? '404' : 'Ошибка';
+        details = error.status === 404 ? 'Страница не найдена.' : error.statusText || details;
     }
 
     if (isHttpException(error)) {
@@ -39,12 +36,11 @@ const ErrorInfo: FC<ErrorInfoProps> = ({ error }) => {
             styles={{
                 wrapper: {
                     minHeight: '100%',
-                    display: 'grid',
-                    alignContent: 'center',
-                    justifyContent: 'center',
                 },
                 content: {
                     display: 'grid',
+                    alignContent: 'center',
+                    justifyContent: 'center',
                     gap: '1.5rem',
                 },
             }}

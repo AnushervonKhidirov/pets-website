@@ -13,7 +13,7 @@ import { Route } from '~constant/route';
 import { light } from '~/config/ant.config';
 
 export function meta() {
-    return [{ title: 'Lost pets' }];
+    return [{ title: 'Потерянные питомцы' }];
 }
 
 const pageSize = 12;

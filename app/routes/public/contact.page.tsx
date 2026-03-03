@@ -1,5 +1,5 @@
 export function meta() {
-    return [{ title: 'Contact page' }];
+    return [{ title: 'Связаться с нами' }];
 }
 
 const Contact = () => {

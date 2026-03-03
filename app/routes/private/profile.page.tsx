@@ -3,7 +3,7 @@ import useUserStore from '~store/user.store';
 import PersonalInfoSection from '~component/profile/personal-info';
 
 export function meta() {
-    return [{ title: 'Profile' }];
+    return [{ title: 'Профиль' }];
 }
 
 const Profile = () => {
