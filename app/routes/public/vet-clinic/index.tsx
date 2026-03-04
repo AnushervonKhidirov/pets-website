@@ -13,6 +13,7 @@ import { Container, Loader, ErrorInfo, GoogleMap } from '~component/common';
 
 import classes from './vet-clinic.module.css';
 import vetClinicService from '~service/vet-clinic.service';
+import markerVetIcon from 'src/images/map/marker-vet-icon.png';
 
 export function meta() {
     return [{ title: 'Ветеринарные клиники' }];
@@ -79,6 +80,7 @@ const Vet = () => {
                         index,
                         ...clinic,
                     }))}
+                    markerIcon={markerVetIcon}
                     defaultZoom={mapZoom}
                     defaultCenter={{ lat: curClinic.latitude, lng: curClinic.longitude }}
                     onMarkerClick={markerClickHandler}
@@ -150,7 +152,13 @@ const VetSlide: FC<{ clinic: VetClinic }> = ({ clinic }) => {
                 ))}
             </div>
 
-            <Link to={`https://www.google.com/maps/search/?api=1&query=${clinic.latitude},${clinic.longitude}`}><Button color='cyan' variant='solid'>Открыть в приложении</Button></Link>
+            <Link
+                to={`https://www.google.com/maps/search/?api=1&query=${clinic.latitude},${clinic.longitude}`}
+            >
+                <Button color="cyan" variant="solid">
+                    Открыть в приложении
+                </Button>
+            </Link>
         </div>
     );
 };
