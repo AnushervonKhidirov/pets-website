@@ -3,6 +3,8 @@ import type { MapProps, MapMouseEvent } from '@vis.gl/react-google-maps';
 
 import { Map, AdvancedMarker } from '@vis.gl/react-google-maps';
 
+import markerIconDefault from 'src/images/map/marker-icon.png';
+
 const MAP_ID = import.meta.env.VITE_GOOGLE_MAPS_ID;
 
 // NOTE: center of Dushanbe
@@ -13,6 +15,7 @@ const defaultPosition: Marker = {
 
 type GoogleMapProps = MapProps & {
     markers?: Marker[];
+    markerIcon?: string;
     defaultCenter?: Marker;
     onMarkerClick?: (e: MapMouseEvent, marker: Marker) => void;
 };
@@ -22,7 +25,7 @@ export type Marker = Record<string, unknown> & {
     lng: number;
 };
 
-const GoogleMap: FC<GoogleMapProps> = ({ markers = [], onMarkerClick, ...props }) => {
+const GoogleMap: FC<GoogleMapProps> = ({ markers = [], markerIcon, onMarkerClick, ...props }) => {
     return (
         <Map
             gestureHandling="greedy"
@@ -39,7 +42,9 @@ const GoogleMap: FC<GoogleMapProps> = ({ markers = [], onMarkerClick, ...props }
                     onClick={e => {
                         if (onMarkerClick) onMarkerClick(e, marker);
                     }}
-                />
+                >
+                    <img src={markerIcon ?? markerIconDefault} alt="map marker" width={31} />
+                </AdvancedMarker>
             ))}
         </Map>
     );
