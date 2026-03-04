@@ -22,15 +22,6 @@ export function meta() {
 const { Title } = Typography;
 const mapZoom = 19;
 
-const contentStyle: React.CSSProperties = {
-    margin: 0,
-    height: '160px',
-    color: '#fff',
-    lineHeight: '160px',
-    textAlign: 'center',
-    background: '#364d79',
-};
-
 const Vet = () => {
     const sliderRef = useRef<CarouselRef>(null);
     const [curClinic, setCurClinic] = useState<VetClinic>();
@@ -131,14 +122,14 @@ const VetSlide: FC<{ clinic: VetClinic }> = ({ clinic }) => {
             <div className={classes.address}>
                 <Title level={5}>Адрес:</Title>
 
-                <div>{clinic.address}</div>
+                <div style={{ lineHeight: 1 }}>{clinic.address}</div>
             </div>
 
             {clinic.about && (
                 <div className={classes.desc}>
                     <Title level={5}>Описание:</Title>
 
-                    <div>{clinic.about}</div>
+                    <div style={{ lineHeight: 1 }}>{clinic.about}</div>
                 </div>
             )}
 
