@@ -12,3 +12,9 @@ export type PaginationQuery = {
     skip?: number;
     take?: number;
 };
+
+export type MessageDataDto = {
+    topic: string;
+    phone: string;
+    message: string;
+};
