@@ -1,13 +1,16 @@
+import type { FC, ChangeEvent } from 'react';
 import type { LostPet } from '~type/pet.type';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
+import { debounce } from '@tanstack/pacer';
 import petService from '~service/pet.service';
 
 import { Link } from 'react-router';
-import { Typography, Pagination, Button } from 'antd';
-import { Container, ErrorInfo, Grid, Loader, PhoneLink } from '~component/common';
+import { Typography, Pagination, Button, Input } from 'antd';
+import { Card, Container, ErrorInfo, Grid, Loader, PhoneLink } from '~component/common';
 import { LostPetInfoCard } from '~component/pet/pet-info-card';
+import { SearchIcon } from '~icons';
 
 import { Route } from '~constant/route';
 import { light } from '~/config/ant.config';
@@ -19,6 +22,19 @@ export function meta() {
 const pageSize = 12;
 const { Title, Text } = Typography;
 
+async function fetchPets(page: number = 0, search?: string) {
+    const [pets, err] = await petService.getAll({
+        lost: true,
+        take: pageSize,
+        skip: page * pageSize,
+        name: search,
+        microchipId: search,
+    });
+
+    if (err) throw err;
+    return pets as LostPet[];
+}
+
 async function getTotalPets() {
     const [lostPetCount, err] = await petService.count({ lost: true });
     if (err) throw err;
@@ -27,6 +43,11 @@ async function getTotalPets() {
 
 const Lost = () => {
     const [currPage, setCurrPage] = useState(1);
+    const [searchValue, setSearchValue] = useState<string | undefined>(undefined);
+
+    useEffect(() => {
+        console.log(searchValue);
+    }, [searchValue]);
 
     const {
         isPending,
@@ -35,8 +56,8 @@ const Lost = () => {
         error,
         data: pets,
     } = useQuery({
-        queryKey: ['lost_pet', currPage],
-        queryFn: fetchPets.bind(null, currPage - 1),
+        queryKey: ['lost_pet', currPage, searchValue],
+        queryFn: fetchPets.bind(null, currPage - 1, searchValue),
     });
 
     const {
@@ -48,22 +69,6 @@ const Lost = () => {
         queryFn: getTotalPets,
     });
 
-    async function fetchPets(page: number = 0) {
-        const [pets, err] = await petService.getAll({
-            lost: true,
-            take: pageSize,
-            skip: page * pageSize,
-        });
-
-        if (err) throw err;
-        return pets as LostPet[];
-    }
-
-    function paginationHandler(page: number) {
-        setCurrPage(page);
-    }
-
-    if (isPending || isCountPending) return <Loader />;
     if (isError) return <ErrorInfo error={error} />;
 
     return (
@@ -76,7 +81,7 @@ const Lost = () => {
                     display: 'grid',
                     height: '100%',
                     gap: '2rem',
-                    gridTemplateRows: 'max-content auto max-content',
+                    gridTemplateRows: 'max-content max-content auto max-content',
                 },
             }}
         >
@@ -84,71 +89,116 @@ const Lost = () => {
                 <Title level={2} style={{ marginBottom: '0.75rem' }}>
                     Потерянные питомцы
                 </Title>
+
                 <Text>
                     Помогите найти пропавших животных. Если вы видели кого-то из них,
                     <br /> пожалуйста, свяжитесь с владельцем.
                 </Text>
             </div>
 
-            <div>
-                {(isPending || isCountPending) && <Loader />}
-                {isSuccess && (
-                    <Grid>
-                        {pets.map(pet => (
-                            <LostPetInfoCard
-                                pet={pet}
-                                style={{ height: '100%' }}
-                                key={'lost_pet' + pet.id}
-                            >
-                                <div
-                                    style={{
-                                        display: 'flex',
-                                        gap: '0.5rem 1rem',
-                                        flexWrap: 'wrap',
-                                    }}
-                                >
-                                    <Link
-                                        to={`${Route.PetInfo}/${pet.id}`}
-                                        target="_blank"
-                                        style={{ flexGrow: 1 }}
-                                    >
-                                        <Button color="default" variant="solid" block>
-                                            Подробнее
-                                        </Button>
-                                    </Link>
+            <FilterBlock setInputValue={setSearchValue} setCurrPage={setCurrPage} />
 
-                                    {pet.user.phone && (
-                                        <PhoneLink
-                                            phone={pet.user.phone}
-                                            asButton
-                                            includeIcon
-                                            style={{ flexGrow: 1 }}
-                                            buttonProps={{
-                                                color: 'orange',
-                                                variant: 'solid',
-                                                block: true,
-                                            }}
-                                        />
-                                    )}
-                                </div>
-                            </LostPetInfoCard>
-                        ))}
-                    </Grid>
-                )}
-            </div>
+            {isPending || (isCountPending && <Loader />)}
 
-            {isCountSuccess && (
-                <Pagination
-                    current={currPage}
-                    pageSize={pageSize}
-                    total={lostCount.total}
-                    hideOnSinglePage
-                    showSizeChanger={false}
-                    align="center"
-                    onChange={paginationHandler}
+            {isSuccess && isCountSuccess && (
+                <PetList
+                    pets={pets}
+                    totalPets={lostCount.total}
+                    currPage={currPage}
+                    paginationHandler={setCurrPage}
                 />
             )}
         </Container>
+    );
+};
+
+const PetList: FC<{
+    pets: LostPet[];
+    totalPets: number;
+    currPage: number;
+    paginationHandler: (page: number) => void;
+}> = ({ pets, totalPets, currPage, paginationHandler }) => {
+    return (
+        <>
+            <div>
+                <Grid>
+                    {pets.map(pet => (
+                        <LostPetInfoCard
+                            pet={pet}
+                            style={{ height: '100%' }}
+                            key={'lost_pet' + pet.id}
+                        >
+                            <div
+                                style={{
+                                    display: 'flex',
+                                    gap: '0.5rem 1rem',
+                                    flexWrap: 'wrap',
+                                }}
+                            >
+                                <Link
+                                    to={`${Route.PetInfo}/${pet.id}`}
+                                    target="_blank"
+                                    style={{ flexGrow: 1 }}
+                                >
+                                    <Button color="default" variant="solid" block>
+                                        Подробнее
+                                    </Button>
+                                </Link>
+
+                                {pet.user.phone && (
+                                    <PhoneLink
+                                        phone={pet.user.phone}
+                                        asButton
+                                        includeIcon
+                                        style={{ flexGrow: 1 }}
+                                        buttonProps={{
+                                            color: 'orange',
+                                            variant: 'solid',
+                                            block: true,
+                                        }}
+                                    />
+                                )}
+                            </div>
+                        </LostPetInfoCard>
+                    ))}
+                </Grid>
+            </div>
+
+            <Pagination
+                current={currPage}
+                pageSize={pageSize}
+                total={totalPets}
+                hideOnSinglePage
+                showSizeChanger={false}
+                align="center"
+                onChange={paginationHandler}
+            />
+        </>
+    );
+};
+
+const FilterBlock: FC<{
+    setInputValue: (value: string | undefined) => void;
+    setCurrPage: (page: number) => void;
+}> = ({ setInputValue, setCurrPage }) => {
+    const inputHandler = debounce(
+        async (e: ChangeEvent<HTMLInputElement>) => {
+            const value = e.target.value.trim() === '' ? undefined : e.target.value;
+            setInputValue(value);
+            setCurrPage(1);
+        },
+        { wait: 500 },
+    );
+
+    return (
+        <Card color="#fff" size="small">
+            <Input
+                size="large"
+                placeholder="Поиск по имени или чипу"
+                prefix={<SearchIcon style={{ marginRight: '0.25em' }} />}
+                onChange={inputHandler}
+            />
+        </Card>
     );
 };
 
