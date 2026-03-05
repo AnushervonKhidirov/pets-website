@@ -14,12 +14,13 @@ type AuthModalProps = {
     open: boolean;
     setOpen: (state: boolean) => void;
     contentType: AuthContent;
+    onSuccess?: () => void;
 };
 
 type AuthFooterProps = { content: AuthContent; setContent: (state: AuthContent) => void };
 export type AuthContent = 'sign_in' | 'sign_up';
 
-const AuthModal: FC<AuthModalProps> = ({ open, setOpen, contentType }) => {
+const AuthModal: FC<AuthModalProps> = ({ open, setOpen, contentType, onSuccess }) => {
     const { setUser } = useUserStore(state => state);
     const [content, setContent] = useState<AuthContent>(contentType);
 
@@ -37,6 +38,7 @@ const AuthModal: FC<AuthModalProps> = ({ open, setOpen, contentType }) => {
     async function closeModal(shouldFetch?: boolean) {
         if (shouldFetch) await fetchUserData();
         setOpen(false);
+        if (onSuccess) onSuccess();
     }
 
     async function fetchUserData() {

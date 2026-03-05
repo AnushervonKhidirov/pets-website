@@ -9,9 +9,10 @@ import AuthModal from './auth-modal';
 
 type AuthButtonProps = ButtonProps & {
     contentType?: AuthContent;
+    onSuccess?: () => void;
 };
 
-const AuthButton: FC<AuthButtonProps> = ({ contentType = 'sign_in', ...props }) => {
+const AuthButton: FC<AuthButtonProps> = ({ contentType = 'sign_in', onSuccess, ...props }) => {
     const [open, setOpen] = useState(false);
     const btnText = contentType === 'sign_in' ? 'Войти' : 'Зарегистрироваться';
 
@@ -21,7 +22,12 @@ const AuthButton: FC<AuthButtonProps> = ({ contentType = 'sign_in', ...props }) 
                 {btnText}
             </Button>
 
-            <AuthModal open={open} setOpen={setOpen} contentType={contentType} />
+            <AuthModal
+                open={open}
+                setOpen={setOpen}
+                contentType={contentType}
+                onSuccess={onSuccess}
+            />
         </>
     );
 };
