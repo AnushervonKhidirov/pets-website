@@ -90,7 +90,7 @@ const Header = () => {
                                 ))}
                             </nav>
 
-                            <DrawerFooter user={user} />
+                            <DrawerFooter user={user} closeDrawer={closeDrawer} />
                         </div>
                     </div>
                 )}
@@ -111,7 +111,7 @@ const Header = () => {
                 destroyOnHidden
                 open={menuOpened}
                 onClose={closeOnBack}
-                footer={<DrawerFooter user={user} isMobile />}
+                footer={<DrawerFooter user={user} isMobile closeDrawer={closeDrawer} />}
                 extra={user && <ProfileButton user={user} />}
                 size={300}
                 styles={{
@@ -135,10 +135,11 @@ const Header = () => {
     );
 };
 
-const DrawerFooter: FC<{ user: User | null; isMobile?: boolean }> = ({
-    user,
-    isMobile = false,
-}) => {
+const DrawerFooter: FC<{
+    user: User | null;
+    isMobile?: boolean;
+    closeDrawer: (back?: boolean) => void;
+}> = ({ user, isMobile = false, closeDrawer }) => {
     const { clearUserData } = useUserStore(state => state);
     const isLogged = isAuthorized() || user;
 
@@ -156,21 +157,22 @@ const DrawerFooter: FC<{ user: User | null; isMobile?: boolean }> = ({
         if (token) await authService.signOut({ refreshToken: token.refreshToken }, allDevices);
         tokenService.removeToken();
         clearUserData();
+        closeDrawer();
         if (isInPrivatePage()) globalThis.location.replace('/');
     }
 
-    if (!user || !isLogged) return <AuthButton {...signInProps} />;
+    if (!user || !isLogged) return <AuthButton onSuccess={closeDrawer} {...signInProps} />;
     if (user && !isMobile) return <ProfileButton user={user} className={classes.profile_btn} />;
 
     return (
         <div style={{ display: 'grid', gap: '0.5rem', marginBlock: '1rem 2rem' }}>
-            <Link to={Route.Profile}>
+            <Link to={Route.Profile} onClick={closeDrawer.bind(null, false)}>
                 <Button color="cyan" variant="filled" block icon={<UserIcon />}>
                     Профиль
                 </Button>
             </Link>
 
-            <Link to={Route.MyPets}>
+            <Link to={Route.MyPets} onClick={closeDrawer.bind(null, false)}>
                 <Button color="cyan" variant="filled" block icon={<PawIcon />}>
                     Мои питомцы
                 </Button>
