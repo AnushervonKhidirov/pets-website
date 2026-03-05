@@ -8,6 +8,7 @@ import GoogleMap from './google-map';
 import QRCode from './qr-code';
 import Loader from './loader';
 import ErrorInfo from './error-info';
+import Empty from './empty';
 
 import Header from './header';
 
@@ -21,6 +22,7 @@ export {
     GoogleMap,
     QRCode,
     ErrorInfo,
+    Empty,
     Loader,
     Header,
 };

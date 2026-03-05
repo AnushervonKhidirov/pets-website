@@ -6,15 +6,14 @@ import { useQuery } from '@tanstack/react-query';
 import petService from '~service/pet.service';
 
 import { Link } from 'react-router';
-import { Empty, Typography, Button, notification } from 'antd';
+import { Typography, Button, notification } from 'antd';
 import { PlusOutlined } from '@ant-design/icons';
-import { Container, Grid, Loader } from '~component/common';
+import { Container, Grid, Loader, Empty } from '~component/common';
 import { alertError } from '~helper/alert-error';
 import PetInfoCard from '~component/pet/pet-info-card';
 import PetModal from '~component/pet/pet-modal';
 
 import { Route } from '~constant/route';
-import funnyCat from 'src/images/funny-cat.png';
 import classes from './my-pets.module.css';
 
 export function meta() {
@@ -66,13 +65,7 @@ const MyPets: FC = () => {
                     ))}
                 </Grid>
             ) : (
-                <Empty
-                    image={funnyCat}
-                    description={<span>У вас пока нет питомцев.</span>}
-                    styles={{
-                        image: { height: '10rem', marginTop: '5rem', marginBottom: '1rem' },
-                    }}
-                />
+                <Empty description="У вас пока нет питомцев" />
             )}
 
             {context}

@@ -8,7 +8,7 @@ import petService from '~service/pet.service';
 
 import { Link } from 'react-router';
 import { Typography, Pagination, Button, Input } from 'antd';
-import { Card, Container, ErrorInfo, Grid, Loader, PhoneLink } from '~component/common';
+import { Card, Container, ErrorInfo, Grid, Loader, PhoneLink, Empty } from '~component/common';
 import { LostPetInfoCard } from '~component/pet/pet-info-card';
 import { SearchIcon } from '~icons';
 
@@ -118,7 +118,7 @@ const PetList: FC<{
     currPage: number;
     paginationHandler: (page: number) => void;
 }> = ({ pets, totalPets, currPage, paginationHandler }) => {
-    return (
+    return pets.length > 0 ? (
         <>
             <div>
                 <Grid>
@@ -174,6 +174,8 @@ const PetList: FC<{
                 onChange={paginationHandler}
             />
         </>
+    ) : (
+        <Empty />
     );
 };
 
