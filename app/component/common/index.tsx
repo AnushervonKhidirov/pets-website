@@ -1,3 +1,4 @@
+import Image from './image';
 import Background from './background';
 import Card from './card';
 import Container from './container';
@@ -13,6 +14,7 @@ import Empty from './empty';
 import Header from './header';
 
 export {
+    Image,
     Background,
     Card,
     Container,
