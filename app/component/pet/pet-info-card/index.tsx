@@ -6,7 +6,15 @@ import type { LostInfo } from '~type/lost-info.type';
 
 import { Dropdown, Tag, Typography, Descriptions } from 'antd';
 import { red } from '@ant-design/colors';
-import { Background, Card, UserAvatar, PhoneLink, Contacts, QRCode } from '~component/common';
+import {
+    Background,
+    Card,
+    UserAvatar,
+    PhoneLink,
+    Contacts,
+    QRCode,
+    Image,
+} from '~component/common';
 import { MoreOutlined } from '@ant-design/icons';
 import { TickIcon, WarningIcon, ClockIcon, LocationIcon, HashIcon } from '~icons';
 
@@ -179,7 +187,7 @@ const CardHeader: FC<{ pet: Pet; actions?: MenuProps['items'] }> = ({ pet, actio
             color={gray[2]}
             style={{ aspectRatio: '1/0.5', display: 'grid' }}
         >
-            <img
+            <Image
                 src={pet.image ?? placeholder}
                 alt={pet.name}
                 className={classNames(classes.image, { [classes.placeholder]: !pet.image })}
