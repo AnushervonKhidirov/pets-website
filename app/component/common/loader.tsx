@@ -6,6 +6,7 @@ const Loader = () => {
     return (
         <Container
             section
+            alpha={0}
             styles={{
                 wrapper: {
                     minHeight: '100%',
