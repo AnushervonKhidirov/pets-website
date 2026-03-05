@@ -1,8 +1,12 @@
-import { useState } from 'react';
+import type { MessageDataDto } from '~type/common.type';
 
-import { Form, Input, Select, Button, Typography } from 'antd';
+import { useState } from 'react';
+import messageService from '~service/message.service';
+
+import { Form, Input, Select, Button, Typography, notification } from 'antd';
 import { Container, Card } from '~component/common';
 import { isValidPhoneNumber } from 'libphonenumber-js';
+import { alertError } from '~helper/alert-error';
 
 export function meta() {
     return [{ title: 'Связаться с нами' }];
@@ -34,12 +38,18 @@ const topics = [
 ];
 
 const Contact = () => {
+    const [api, context] = notification.useNotification();
     const [loading, setLoading] = useState(false);
 
-    function submit(data: Record<string, string>) {
+    async function submit(data: MessageDataDto) {
         setLoading(true);
 
-        console.log(data);
+        const [, err] = await messageService.send(data);
+        if (err) {
+            api.error(alertError(err))
+        } else {
+            api.success({ title: 'Сообщение', description: 'Успешно доставлено' })
+        }
 
         setLoading(false);
     }
@@ -113,6 +123,8 @@ const Contact = () => {
                     </Button>
                 </Form>
             </Card>
+
+            {context}
         </Container>
     );
 };
