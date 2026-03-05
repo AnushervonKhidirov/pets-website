@@ -8,7 +8,7 @@ import { Dropdown, Tag, Typography, Descriptions } from 'antd';
 import { red } from '@ant-design/colors';
 import { Background, Card, UserAvatar, PhoneLink, Contacts, QRCode } from '~component/common';
 import { MoreOutlined } from '@ant-design/icons';
-import { TickIcon, WarningIcon, ClockIcon, LocationIcon } from '~icons';
+import { TickIcon, WarningIcon, ClockIcon, LocationIcon, HashIcon } from '~icons';
 
 import { cyan, orange, gray, light } from '~/config/ant.config';
 import { sex } from '~constant/pet';
@@ -136,6 +136,13 @@ export const LostPetInfoCard: FC<LostPetInfoCardProps> = ({ pet, style = {}, chi
                     <div className={classes.lost_card_info_item}>
                         <LocationIcon style={{ color: orange[5], fontSize: '1.2em' }} />
                         <span style={{ color: gray[7] }}>{pet.lostInfo.address}</span>
+                    </div>
+                )}
+
+                {pet.microchipId && (
+                    <div className={classes.lost_card_info_item}>
+                        <HashIcon style={{ color: cyan[5], fontSize: '1.2em' }} />
+                        <span style={{ color: gray[7] }}>{pet.microchipId}</span>
                     </div>
                 )}
 
