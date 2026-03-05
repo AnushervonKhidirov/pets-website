@@ -1,3 +1,3 @@
 export function join(...paths: (string | number)[]): string {
-    return paths.join('').replaceAll(/\/+/g, '/');
+    return paths.join('/').replaceAll(/\/+/g, '/');
 }
