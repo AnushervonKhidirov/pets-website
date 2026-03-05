@@ -160,7 +160,9 @@ class PetService {
     private convertData<T extends PetResponse | PetResponseWithUser>(pet: T) {
         const birthday = dayjs(pet.birthday).isValid() ? dayjs(pet.birthday) : null;
         const lostAt = dayjs(pet.lostInfo?.lostAt);
-        const image = pet.image ? join(serverUrl, this.petEndpoint, 'image', pet.image) : null;
+        const image = pet.image
+            ? new URL(join(this.petEndpoint, 'image', pet.image), serverUrl).href
+            : null;
 
         const lostInfo: Pet['lostInfo'] = pet.lostInfo
             ? {
