@@ -14,6 +14,7 @@ type AuthFormProps = {
 };
 
 export const SignInForm: FC<AuthFormProps> = ({ onSuccess }) => {
+    const [form] = Form.useForm();
     const [loading, setLoading] = useState(false);
     const [api, context] = notification.useNotification();
 
@@ -25,6 +26,7 @@ export const SignInForm: FC<AuthFormProps> = ({ onSuccess }) => {
 
         if (tokens) {
             tokenService.setToken(tokens);
+            form.resetFields();
             if (typeof onSuccess === 'function') await onSuccess();
         }
 
@@ -33,7 +35,7 @@ export const SignInForm: FC<AuthFormProps> = ({ onSuccess }) => {
 
     return (
         <>
-            <Form onFinish={submit}>
+            <Form form={form} onFinish={submit}>
                 <Form.Item name="email" rules={[{ required: true, message: 'Введите почту' }]}>
                     <Input size="large" placeholder="Почта" type="email" />
                 </Form.Item>
@@ -53,9 +55,9 @@ export const SignInForm: FC<AuthFormProps> = ({ onSuccess }) => {
 };
 
 export const SignUpForm: FC<AuthFormProps> = ({ onSuccess }) => {
+    const [form] = Form.useForm();
     const [loading, setLoading] = useState(false);
     const [api, context] = notification.useNotification();
-    const [form] = Form.useForm();
 
     async function submit({ repeatPassword, ...data }: SignUpDto & { repeatPassword: string }) {
         setLoading(true);
@@ -65,6 +67,7 @@ export const SignUpForm: FC<AuthFormProps> = ({ onSuccess }) => {
 
         if (tokens) {
             tokenService.setToken(tokens);
+            form.resetFields();
             if (typeof onSuccess === 'function') onSuccess();
         }
 
@@ -73,7 +76,7 @@ export const SignUpForm: FC<AuthFormProps> = ({ onSuccess }) => {
 
     return (
         <>
-            <Form onFinish={submit} form={form}>
+            <Form form={form} onFinish={submit}>
                 <Form.Item name="firstName" rules={[{ required: true, message: 'Введите имя' }]}>
                     <Input size="large" placeholder="Имя" />
                 </Form.Item>

@@ -49,6 +49,7 @@ const EditPersonalInfoModal: FC<EditPersonalInfoModalProps> = ({ user, open, set
         if (err) {
             api.error(alertError(err));
         } else {
+            form.resetFields();
             setUser(newUserData);
             setOpen(false);
         }
@@ -66,7 +67,7 @@ const EditPersonalInfoModal: FC<EditPersonalInfoModalProps> = ({ user, open, set
                 footer={null}
                 destroyOnHidden
             >
-                <Form onFinish={submit} form={form} preserve>
+                <Form form={form} onFinish={submit} preserve>
                     <Form.Item
                         name="firstName"
                         rules={[{ required: true }]}
@@ -154,9 +155,7 @@ const MapSelection: FC<{ address: User['address'] }> = ({ address }) => {
             ? { lat: address.latitude, lng: address?.longitude }
             : undefined;
 
-    const [mark, setMark] = useState<Marker[] | undefined>(
-        coordinate ? [coordinate] : undefined,
-    );
+    const [mark, setMark] = useState<Marker[] | undefined>(coordinate ? [coordinate] : undefined);
 
     function selectMark(e: MapMouseEvent) {
         const coords: Marker = e.detail.latLng;
@@ -187,7 +186,6 @@ const MapSelection: FC<{ address: User['address'] }> = ({ address }) => {
                     markers={mark}
                     defaultZoom={coordinate ? 18 : 12}
                     defaultCenter={coordinate}
-                    
                     style={{
                         height: 200,
                         marginBottom: 'var(--form-item-margin-bottom)',

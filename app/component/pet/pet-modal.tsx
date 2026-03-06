@@ -82,6 +82,7 @@ const PetModal: FC<PetModalProps> = ({ pet, open, setOpen, onSuccess }) => {
                 petData.image = null;
             }
 
+            form.resetFields();
             if (onSuccess) onSuccess(petData);
             setTimeout(() => setOpen(false), 500);
         }
@@ -105,6 +106,7 @@ const PetModal: FC<PetModalProps> = ({ pet, open, setOpen, onSuccess }) => {
                 }
             }
 
+            form.resetFields();
             if (onSuccess) onSuccess(petData);
             setTimeout(() => setOpen(false), 500);
         }
@@ -153,7 +155,7 @@ const PetModal: FC<PetModalProps> = ({ pet, open, setOpen, onSuccess }) => {
                 destroyOnHidden
                 afterOpenChange={openChangeHandler}
             >
-                <Form onFinish={submit} form={form} preserve>
+                <Form form={form} onFinish={submit} preserve>
                     <Form.Item
                         name="name"
                         rules={[{ required: true, message: 'Введите кличку питомца' }]}

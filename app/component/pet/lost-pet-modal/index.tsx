@@ -40,8 +40,9 @@ const LostInfoModal: FC<EditPersonalInfoModalProps> = ({
 
         if (err) {
             api.error(alertError(err));
-        } else if (onSuccess) {
-            onSuccess({ ...pet, lostInfo: lostInfo });
+        } else {
+            form.resetFields();
+            if (onSuccess) onSuccess({ ...pet, lostInfo: lostInfo });
         }
 
         setLoading(false);
@@ -82,7 +83,7 @@ const LostInfoModal: FC<EditPersonalInfoModalProps> = ({
                 footer={null}
                 destroyOnHidden
             >
-                <Form onFinish={submit} form={form} preserve>
+                <Form form={form} onFinish={submit} preserve>
                     <Form.Item name="address" initialValue={lostInfo?.address ?? null}>
                         <Input placeholder="Адрес" />
                     </Form.Item>

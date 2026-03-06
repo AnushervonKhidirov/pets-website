@@ -38,6 +38,7 @@ const topics = [
 ];
 
 const Contact = () => {
+    const [form] = Form.useForm();
     const [api, context] = notification.useNotification();
     const [loading, setLoading] = useState(false);
 
@@ -46,9 +47,10 @@ const Contact = () => {
 
         const [, err] = await messageService.send(data);
         if (err) {
-            api.error(alertError(err))
+            api.error(alertError(err));
         } else {
-            api.success({ title: 'Сообщение', description: 'Успешно доставлено' })
+            form.resetFields();
+            api.success({ title: 'Сообщение', description: 'Успешно доставлено' });
         }
 
         setLoading(false);
@@ -85,7 +87,7 @@ const Contact = () => {
                     ветеринарным или юридическим документом.
                 </Paragraph>
 
-                <Form onFinish={submit}>
+                <Form form={form} onFinish={submit}>
                     <Form.Item name="topic" rules={[{ required: true, message: 'Выберите тему' }]}>
                         <Select size="large" placeholder="Тема" options={topics} allowClear />
                     </Form.Item>
