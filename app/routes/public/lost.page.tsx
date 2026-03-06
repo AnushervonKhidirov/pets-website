@@ -1,7 +1,7 @@
 import type { FC, ChangeEvent } from 'react';
 import type { LostPet } from '~type/pet.type';
 
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { debounce } from '@tanstack/pacer';
 import petService from '~service/pet.service';
@@ -44,10 +44,6 @@ async function getTotalPets() {
 const Lost = () => {
     const [currPage, setCurrPage] = useState(1);
     const [searchValue, setSearchValue] = useState<string | undefined>(undefined);
-
-    useEffect(() => {
-        console.log(searchValue);
-    }, [searchValue]);
 
     const {
         isPending,
