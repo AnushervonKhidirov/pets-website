@@ -148,6 +148,7 @@ const VetSlide: FC<{ clinic: VetClinic }> = ({ clinic }) => {
             <Link
                 to={`https://www.google.com/maps/search/?api=1&query=${clinic.latitude},${clinic.longitude}`}
                 target="_blank"
+                style={{ width: 'max-content' }}
             >
                 <Button color="cyan" variant="solid">
                     Открыть в приложении
