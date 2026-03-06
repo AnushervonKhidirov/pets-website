@@ -41,7 +41,7 @@ const ErrorInfo: FC<ErrorInfoProps> = ({ error }) => {
                 },
                 content: {
                     display: 'grid',
-                    justifyContent: 'center',
+                    justifyItems: 'center',
                     gap: '1.5rem',
                 },
             }}
