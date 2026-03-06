@@ -8,7 +8,7 @@ import { useRef, useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { useMap } from '@vis.gl/react-google-maps';
 import { Link } from 'react-router';
-import { Typography, Carousel, Button } from 'antd';
+import { Typography, Carousel, Button, Space } from 'antd';
 import { Container, Loader, ErrorInfo, GoogleMap } from '~component/common';
 
 import classes from './vet-clinic.module.css';
@@ -136,11 +136,13 @@ const VetSlide: FC<{ clinic: VetClinic }> = ({ clinic }) => {
             <div className={classes.contacts}>
                 <Title level={5}>Контакты:</Title>
 
-                {clinic.contacts.map(contact => (
-                    <Link key={clinic.name + contact} to={'tel:' + contact}>
-                        {contact}
-                    </Link>
-                ))}
+                <Space separator={'|'}>
+                    {clinic.contacts.map(contact => (
+                        <Link key={clinic.name + contact} to={'tel:' + contact}>
+                            {contact}
+                        </Link>
+                    ))}
+                </Space>
             </div>
 
             <Link
