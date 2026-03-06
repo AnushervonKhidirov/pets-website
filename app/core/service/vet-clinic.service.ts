@@ -10,7 +10,7 @@ class VetClinicService {
 
     async getOne(id: number): ReturnWithErrPromise<VetClinic> {
         try {
-            const response = await apiClient.get<VetClinic>(join(this.endpoint + id));
+            const response = await apiClient.get<VetClinic>(join(this.endpoint, id));
             if (isHttpException(response.data)) throw new HttpException(response.data);
             return [response.data, null];
         } catch (err) {
