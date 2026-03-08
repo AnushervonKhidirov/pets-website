@@ -6,6 +6,7 @@ import { HttpException, isHttpException } from '~helper/error-handler';
 import { isInPrivatePage } from '~helper/auth.helper';
 
 import { serverUrl } from '~constant/common';
+import { Route } from '~constant/route';
 
 export const apiClient = axios.create({
     baseURL: serverUrl,
@@ -42,7 +43,7 @@ apiClientAuth.interceptors.response.use(async response => {
 
         if (isHttpException(responseRefreshed.data)) {
             tokenService.removeToken();
-            if (isInPrivatePage()) globalThis.location.replace('/');
+            if (isInPrivatePage()) globalThis.location.replace(Route.SignIn);
             throw new HttpException(responseRefreshed.data);
         }
 

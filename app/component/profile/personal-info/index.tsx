@@ -4,6 +4,7 @@ import type { User } from '~type/user.type';
 import type { Marker } from '~component/common/google-map';
 
 import { useState } from 'react';
+import { useMutation } from '@tanstack/react-query';
 import useUserStore from '~store/user.store';
 import tokenService from '~service/token.service';
 import authService from '~service/auth.service';
@@ -12,24 +13,17 @@ import { Typography, Descriptions, Button } from 'antd';
 import { EditOutlined } from '@ant-design/icons';
 import { Container, GoogleMap, Contacts } from '~component/common';
 import EditPersonalInfoModal from '~component/profile/edit-personal-info-modal';
+import { Route } from '~constant/route';
 
 import classes from './personal-info.module.css';
 
 const { Title } = Typography;
 
+const signOut = authService.signOut.bind(authService);
+
 const PersonalInfoSection: FC<{ user: User }> = ({ user }) => {
-    const { clearUserData } = useUserStore(state => state);
+    const { setUser } = useUserStore(state => state);
     const [open, setOpen] = useState(false);
-
-    async function logOut(allDevices: boolean = false) {
-        const token = tokenService.getToken();
-
-        if (token) await authService.signOut({ refreshToken: token.refreshToken }, allDevices);
-        tokenService.removeToken();
-        clearUserData();
-
-        globalThis.location.replace('/');
-    }
 
     const items: DescriptionsProps['items'] = [
         {
@@ -84,12 +78,23 @@ const PersonalInfoSection: FC<{ user: User }> = ({ user }) => {
         });
     }
 
+    const { mutate } = useMutation({
+        mutationKey: ['log_out'],
+        mutationFn: signOut,
+        onMutate: () => {},
+        onSettled: () => {
+            tokenService.removeToken();
+            setUser(null);
+            globalThis.location.replace(Route.SignIn);
+        },
+    });
+
     return (
         user && (
             <Container innerClassName={classes.section} style={{ minHeight: '100%' }} section>
                 <Descriptions
                     title={
-                        <Title level={3}>
+                        <Title level={3} style={{ marginBottom: 0 }}>
                             <span className={classes.headline}>Персональные данные</span>
                         </Title>
                     }
@@ -104,11 +109,20 @@ const PersonalInfoSection: FC<{ user: User }> = ({ user }) => {
                 />
 
                 <div className={classes.buttons}>
-                    <Button danger type="primary" onClick={() => logOut()}>
+                    <Button danger type="primary" onClick={() => mutate(tokenService.getToken())}>
                         Выйти
                     </Button>
 
-                    <Button danger type="primary" onClick={() => logOut(true)}>
+                    <Button
+                        danger
+                        type="primary"
+                        onClick={() =>
+                            mutate({
+                                ...tokenService.getToken(),
+                                allDevices: true,
+                            })
+                        }
+                    >
                         Выйти со всех устройств
                     </Button>
                 </div>

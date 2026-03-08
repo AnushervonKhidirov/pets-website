@@ -23,22 +23,13 @@ const pageSize = 12;
 const { Title, Text } = Typography;
 
 async function fetchPets(page: number = 0, search?: string) {
-    const [pets, err] = await petService.getAll({
+    return (await petService.getAll({
         lost: true,
         take: pageSize,
         skip: page * pageSize,
         name: search,
         microchipId: search,
-    });
-
-    if (err) throw err;
-    return pets as LostPet[];
-}
-
-async function getTotalPets() {
-    const [lostPetCount, err] = await petService.count({ lost: true });
-    if (err) throw err;
-    return lostPetCount;
+    })) as LostPet[];
 }
 
 const Lost = () => {
@@ -62,7 +53,7 @@ const Lost = () => {
         data: lostCount,
     } = useQuery({
         queryKey: ['lost_pet_count'],
-        queryFn: getTotalPets,
+        queryFn: petService.count.bind(petService, { lost: true }),
     });
 
     if (isError) return <ErrorInfo error={error} />;

@@ -3,7 +3,6 @@ import CountUp from 'react-countup';
 import { Typography, Button } from 'antd';
 
 import { Container, Card } from '~component/common';
-import AuthButton from '~component/auth/auth-button';
 
 import { Route } from '~constant/route';
 import { PawIcon, SearchIcon, UsersIcon } from '~icons';
@@ -52,7 +51,11 @@ const MainSection = () => {
             </Text>
 
             <div className={classes.buttons}>
-                <AuthButton color="orange" variant="solid" size="large" contentType="sign_up" />
+                <Link to={Route.SignUp}>
+                    <Button color="orange" variant="solid" size="large">
+                        Зарегистрироваться
+                    </Button>
+                </Link>
 
                 <Link to={Route.Lost}>
                     <Button color="cyan" variant="outlined" size="large">

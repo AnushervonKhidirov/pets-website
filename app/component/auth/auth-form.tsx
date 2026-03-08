@@ -23,7 +23,7 @@ export const SignInForm: FC<AuthFormProps> = ({ onSuccess }) => {
     const [form] = Form.useForm();
     const [api, context] = notification.useNotification();
 
-    const { mutate: signInMutate, isPending: isSignInPending } = useMutation({
+    const { mutate, isPending } = useMutation({
         mutationKey: ['sign_in'],
         mutationFn: signIn,
         onSuccess: tokens => {
@@ -38,7 +38,7 @@ export const SignInForm: FC<AuthFormProps> = ({ onSuccess }) => {
 
     return (
         <>
-            <Form form={form} onFinish={signInMutate}>
+            <Form form={form} onFinish={mutate}>
                 <Form.Item name="email" rules={[{ required: true, message: 'Введите почту' }]}>
                     <Input size="large" placeholder="Почта" type="email" />
                 </Form.Item>
@@ -47,13 +47,7 @@ export const SignInForm: FC<AuthFormProps> = ({ onSuccess }) => {
                     <Input.Password size="large" placeholder="Пароль" />
                 </Form.Item>
 
-                <Button
-                    block
-                    color="cyan"
-                    variant="solid"
-                    htmlType="submit"
-                    loading={isSignInPending}
-                >
+                <Button block color="cyan" variant="solid" htmlType="submit" loading={isPending}>
                     Войти
                 </Button>
             </Form>

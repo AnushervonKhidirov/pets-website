@@ -22,8 +22,3 @@ export function isHttpException(err: unknown): err is HttpException {
 
     return false;
 }
-
-export function errorHandler(err: unknown): [null, HttpException] {
-    if (err instanceof HttpException) return [null, err];
-    return [null, new HttpException()];
-}

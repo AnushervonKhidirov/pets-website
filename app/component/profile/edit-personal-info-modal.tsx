@@ -4,6 +4,7 @@ import type { User, Contact, UpdateUserDto, UpdateUserFormData } from '~type/use
 import type { Marker } from '~component/common/google-map';
 
 import { useState } from 'react';
+import { useMutation } from '@tanstack/react-query';
 import useUserStore from '~store/user.store';
 import userService from '~service/user.service';
 
@@ -11,7 +12,6 @@ import { Modal, Form, Input, Button, notification, Select, Row } from 'antd';
 import { GoogleMap } from '~component/common';
 import { isValidPhoneNumber } from 'libphonenumber-js';
 import { ContactName } from '~constant/contact-links';
-import { alertError } from '~helper/alert-error';
 
 type EditPersonalInfoModalProps = {
     user: User;
@@ -21,11 +21,12 @@ type EditPersonalInfoModalProps = {
 
 type AdditionalContactOption = { label: string; value: string };
 
+const updateUserInfo = userService.update.bind(userService);
+
 const EditPersonalInfoModal: FC<EditPersonalInfoModalProps> = ({ user, open, setOpen }) => {
     const [form] = Form.useForm();
     const { setUser } = useUserStore(state => state);
 
-    const [loading, setLoading] = useState(false);
     const [additionalContacts, setAdditionalContacts] = useState(
         user.contacts?.map(contact => contact.name) ?? [],
     );
@@ -36,25 +37,26 @@ const EditPersonalInfoModal: FC<EditPersonalInfoModalProps> = ({ user, open, set
         name => ({ label: name, value: name }) as AdditionalContactOption,
     );
 
+    const { mutate, isPending } = useMutation({
+        mutationKey: ['update_user_info'],
+        mutationFn: updateUserInfo,
+        onSuccess: user => {
+            form.resetFields();
+            setUser(user);
+            setOpen(false);
+        },
+        onError: err => {
+            api.error({ description: err.message });
+        },
+    });
+
     function onChangeContacts(data: string[]) {
         setAdditionalContacts(data);
     }
 
     async function submit(data: UpdateUserFormData) {
-        setLoading(true);
-
         const updatedUserData = convertUserData(data);
-        const [newUserData, err] = await userService.update(updatedUserData);
-
-        if (err) {
-            api.error(alertError(err));
-        } else {
-            form.resetFields();
-            setUser(newUserData);
-            setOpen(false);
-        }
-
-        setLoading(false);
+        mutate(updatedUserData);
     }
 
     return (
@@ -136,7 +138,13 @@ const EditPersonalInfoModal: FC<EditPersonalInfoModalProps> = ({ user, open, set
 
                     <MapSelection address={user.address} />
 
-                    <Button block color="cyan" variant="solid" htmlType="submit" loading={loading}>
+                    <Button
+                        block
+                        color="cyan"
+                        variant="solid"
+                        htmlType="submit"
+                        loading={isPending}
+                    >
                         Сохранить
                     </Button>
                 </Form>

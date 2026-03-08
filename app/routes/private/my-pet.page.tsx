@@ -8,12 +8,10 @@ import { useParams, useNavigate } from 'react-router';
 import { useQuery } from '@tanstack/react-query';
 import petService from '~service/pet.service';
 
-import { notification } from 'antd';
 import { Container, Loader, ErrorInfo } from '~component/common';
 import PetInfoCard from '~component/pet/pet-info-card';
 import { DeletePetButton, EditPetButton, LostPetButton } from '~component/pet/pet-action-buttons';
 
-import { alertError } from '~helper/alert-error';
 import { Route } from '~constant/route';
 
 export function meta() {
@@ -21,8 +19,7 @@ export function meta() {
 }
 
 const MyPet: FC = () => {
-    const params = useParams<TRoute.LoaderArgs['params']>();
-    const [api, context] = notification.useNotification();
+    const params = Number.parseInt(useParams<TRoute.LoaderArgs['params']>().petId!);
 
     const {
         isPending,
@@ -31,21 +28,9 @@ const MyPet: FC = () => {
         error,
         data: pet,
     } = useQuery({
-        queryKey: ['my-pet'],
-        queryFn: fetchMyPet,
+        queryKey: ['pet'],
+        queryFn: petService.getOne.bind(petService, params),
     });
-
-    async function fetchMyPet() {
-        if (!params.petId) throw new Error('pet ID not found');
-        const [pet, err] = await petService.getMyOne(Number.parseInt(params.petId));
-
-        if (err) {
-            if (err.statusCode !== 404) api.error(alertError(err));
-            throw err;
-        }
-
-        return pet;
-    }
 
     if (isPending) return <Loader />;
     if (isError) return <ErrorInfo error={error} />;
@@ -54,8 +39,6 @@ const MyPet: FC = () => {
         isSuccess && (
             <Container section maxWidth={1000} style={{ minHeight: '100%' }}>
                 <PetCard pet={pet} />
-
-                {context}
             </Container>
         )
     );

@@ -1,9 +1,8 @@
-import type { SignInDto, SignUpDto, RefreshTokenDto, Token } from '~type/auth.type';
-import type { ReturnWithErrPromise } from '~type/common.type';
+import type { SignInDto, SignUpDto, Token } from '~type/auth.type';
 
 import { join } from '~helper/path.helper';
 import { apiClient } from '~api/api-client';
-import { HttpException, errorHandler, isHttpException } from '~helper/error-handler';
+import { HttpException, isHttpException } from '~helper/error-handler';
 
 class AuthService {
     private readonly endpoint = 'auth';
@@ -30,15 +29,10 @@ class AuthService {
         return response.data;
     }
 
-    async signOut(data: RefreshTokenDto, allDevices?: boolean): ReturnWithErrPromise {
-        try {
-            const signOutType = allDevices ? 'sign-out-everywhere' : 'sign-out';
-            const response = await apiClient.post(join(this.endpoint, signOutType), data);
-            if (isHttpException(response.data)) throw new HttpException(response.data);
-            return [null, null];
-        } catch (err) {
-            return errorHandler(err);
-        }
+    async signOut({ refreshToken, allDevices }: { refreshToken: string; allDevices?: boolean }) {
+        const signOutType = allDevices ? 'sign-out-everywhere' : 'sign-out';
+        const response = await apiClient.post(join(this.endpoint, signOutType), { refreshToken });
+        if (isHttpException(response.data)) throw new HttpException(response.data);
     }
 }
 

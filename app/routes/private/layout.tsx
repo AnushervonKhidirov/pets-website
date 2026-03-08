@@ -1,28 +1,32 @@
-import { useEffect } from 'react';
+import { useLayoutEffect } from 'react';
 import { Outlet, useNavigate } from 'react-router';
+import { useMutation } from '@tanstack/react-query';
 import { useAuth } from '~hook/use-auth';
 import useUserStore from '~store/user.store';
 import userService from '~service/user.service';
 
 import { Header } from '~component/common';
 import { isAuthorized } from '~helper/auth.helper';
+import { Route } from '~constant/route';
+
+const getUserInfo = userService.getMe.bind(userService);
 
 export const Layout = () => {
     const navigate = useNavigate();
     const { user, setUser } = useUserStore(state => state);
 
-    async function fetchUserData() {
-        const [user, err] = await userService.getMe();
-        if (err) return;
-        setUser(user);
-    }
+    const { mutate } = useMutation({
+        mutationKey: ['get_user_info_private'],
+        mutationFn: getUserInfo,
+        onSuccess: setUser,
+    });
 
-    useEffect(() => {
-        if (!isAuthorized()) navigate('/');
+    useLayoutEffect(() => {
+        if (!isAuthorized()) navigate(Route.SignIn);
     }, []);
 
     useAuth(() => {
-        if (!user) fetchUserData();
+        if (!user) mutate();
     });
 
     return (

@@ -4,14 +4,12 @@ import { create } from 'zustand';
 type UserState = { user: User | null };
 
 type UserActions = {
-    setUser: (user: User) => void;
-    clearUserData: () => void;
+    setUser: (user: User | null) => void;
 };
 
 const useUserStore = create<UserState & UserActions>()(set => ({
     user: null,
     setUser: user => set({ user }),
-    clearUserData: () => set({ user: null }),
 }));
 
 export default useUserStore;

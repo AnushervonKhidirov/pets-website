@@ -34,17 +34,13 @@ button {
     cursor: pointer;
 }
 
-@media screen and (min-width: 1025px) {
-}
+.carousel-black-nav {
+    .slick-arrow {
+        color: #000;
+    }
 
-@media screen and (min-width: 769px) and (max-width: 1024px) {
-}
-
-@media screen and (min-width: 769px) {
-}
-
-@media screen and (min-width: 426px) and (max-width: 768px) {
-}
-
-@media screen and (max-width: 425px) {
+    li.slick-active::after,
+    ul.slick-dots button {
+        --color-bg-container: #000;
+    }
 }

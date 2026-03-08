@@ -35,7 +35,9 @@ export type Breed = {
     petType: PetType;
 };
 
-export type PetDto = Omit<Pet, 'id' | 'petType' | 'breed' | 'user' | 'image' | 'lostInfo'>;
+export type PetDto = Omit<Pet, 'id' | 'petType' | 'breed' | 'user' | 'image' | 'lostInfo'> & {
+    image?: File;
+};
 
 export type PetQuery = Partial<{
     userId: number;

@@ -1,43 +1,41 @@
 import type { FC } from 'react';
 import type { ButtonProps } from 'antd';
 
-import { useState } from 'react';
+import { useMutation } from '@tanstack/react-query';
 import { googleOAuthService } from '~service/oauth.service';
 
 import { ConfigProvider, Button, notification } from 'antd';
 import { GoogleOutlined } from '@ant-design/icons';
-import { alertError } from '~helper/alert-error';
 
 import { BroadcastChannelName } from '~constant/broadcast-channel';
+import { Route } from '~constant/route';
+
+const getOAuthUrl = googleOAuthService.getUrl.bind(googleOAuthService);
 
 export const GoogleOAuthButton: FC<ButtonProps> = props => {
-    const [loading, setLoading] = useState(false);
     const [api, context] = notification.useNotification();
 
-    async function redirect() {
-        setLoading(true);
-
-        const [url, err] = await googleOAuthService.getUrl();
-
-        if (err) {
-            api.error(alertError(err));
-        } else {
+    const { mutate, isPending } = useMutation({
+        mutationKey: ['google_oauth_url'],
+        mutationFn: getOAuthUrl,
+        onSuccess: url => {
             globalThis.open(url, '_blank');
 
             const bc = new BroadcastChannel(BroadcastChannelName.AuthBroadcast);
 
             bc.onmessage = event => {
                 if (event.data === 'success') {
-                    globalThis.location.reload();
                     bc.close();
+                    globalThis.location.replace(Route.Home);
                 }
 
                 if (event.data === 'error') bc.close();
             };
-        }
-
-        setLoading(false);
-    }
+        },
+        onError: err => {
+            api.error({ description: err.message });
+        },
+    });
 
     return (
         <ConfigProvider theme={{ token: { red: '#d0463b' } }}>
@@ -46,8 +44,8 @@ export const GoogleOAuthButton: FC<ButtonProps> = props => {
                 color="red"
                 variant="solid"
                 icon={<GoogleOutlined />}
-                onClick={redirect}
-                loading={loading}
+                onClick={() => mutate()}
+                loading={isPending}
             >
                 Войти с помощью Google
             </Button>

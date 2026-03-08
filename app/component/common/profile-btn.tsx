@@ -2,6 +2,7 @@ import type { FC } from 'react';
 import type { DropdownProps, MenuProps } from 'antd';
 import type { User } from '~type/user.type';
 
+import { useMutation } from '@tanstack/react-query';
 import tokenService from '~service/token.service';
 import authService from '~service/auth.service';
 import useUserStore from '~store/user.store';
@@ -15,8 +16,10 @@ import { Route } from '~constant/route';
 import { cyan } from '~/config/ant.config';
 import { isInPrivatePage } from '~helper/auth.helper';
 
-const ProfileButton: FC<{ user: User, className?: string }> = ({user, className}) => {
-    const { clearUserData } = useUserStore(state => state);
+const signOut = authService.signOut.bind(authService);
+
+const ProfileButton: FC<{ user: User; className?: string }> = ({ user, className }) => {
+    const { setUser } = useUserStore(state => state);
 
     const items: MenuProps['items'] = [
         {
@@ -37,7 +40,7 @@ const ProfileButton: FC<{ user: User, className?: string }> = ({user, className}
             label: 'Выйти',
             icon: <LogoutOutlined />,
             danger: true,
-            onClick: () => logOut(),
+            onClick: () => mutate(tokenService.getToken()),
         },
     ];
 
@@ -48,14 +51,16 @@ const ProfileButton: FC<{ user: User, className?: string }> = ({user, className}
         styles: { item: { fontSize: '1em' } },
     };
 
-    async function logOut(allDevices: boolean = false) {
-        const token = tokenService.getToken();
-
-        if (token) await authService.signOut({ refreshToken: token.refreshToken }, allDevices);
-        tokenService.removeToken();
-        clearUserData();
-        if (isInPrivatePage()) globalThis.location.replace('/');
-    }
+    const { mutate } = useMutation({
+        mutationKey: ['log_out'],
+        mutationFn: signOut,
+        onMutate: () => {},
+        onSettled: () => {
+            tokenService.removeToken();
+            setUser(null);
+            if (isInPrivatePage()) globalThis.location.replace(Route.SignIn);
+        },
+    });
 
     return (
         <Dropdown {...sharedProps}>

@@ -10,6 +10,10 @@ export enum Route {
     MyPets = '/profile/pets',
 
     OAuthGoogle = '/auth/google',
+
+    SignIn = '/sign-in',
+    SignUp = '/sign-up',
+    ResetPassword = '/reset-password',
 }
 
 export const PrivateRoutes = [Route.Profile];

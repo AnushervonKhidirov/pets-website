@@ -2,11 +2,9 @@ import type { Token } from '~type/auth.type';
 import { TokenName } from '~constant/token';
 
 class TokenService {
-    getToken(): Token | null {
-        const accessToken = localStorage.getItem(TokenName.Access);
-        const refreshToken = localStorage.getItem(TokenName.Refresh);
-
-        if (!accessToken || !refreshToken) return null;
+    getToken(): Token {
+        const accessToken = localStorage.getItem(TokenName.Access) ?? '';
+        const refreshToken = localStorage.getItem(TokenName.Refresh) ?? '';
         return { accessToken, refreshToken };
     }
 

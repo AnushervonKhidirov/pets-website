@@ -4,6 +4,7 @@ import type { ButtonProps } from 'antd';
 import type { User } from '~type/user.type';
 
 import { useState, useEffect } from 'react';
+import { useMutation } from '@tanstack/react-query';
 import { Link, NavLink } from 'react-router';
 import useUserStore from '~store/user.store';
 import { isAuthorized, isInPrivatePage } from '~helper/auth.helper';
@@ -15,7 +16,6 @@ import { Button, Drawer } from 'antd';
 import { LogoutOutlined, MenuOutlined } from '@ant-design/icons';
 import { PawIcon, UserIcon } from '~icons';
 import { Container, Logo } from '~component/common';
-import AuthButton from '~component/auth/auth-button';
 import ProfileButton from '../profile-btn';
 
 import { isMobile, isTablet } from 'mobile-device-detect';
@@ -23,6 +23,8 @@ import { Route } from '~constant/route';
 import { light } from '~/config/ant.config';
 import classNames from 'classnames';
 import classes from './header.module.css';
+
+const signOut = authService.signOut.bind(authService);
 
 const navLinkList = [
     {
@@ -140,7 +142,7 @@ const DrawerFooter: FC<{
     isMobile?: boolean;
     closeDrawer: (back?: boolean) => void;
 }> = ({ user, isMobile = false, closeDrawer }) => {
-    const { clearUserData } = useUserStore(state => state);
+    const { setUser } = useUserStore(state => state);
     const isLogged = isAuthorized() || user;
 
     const signInProps: ButtonProps = {
@@ -151,17 +153,24 @@ const DrawerFooter: FC<{
         color: 'cyan',
     };
 
-    async function logOut(allDevices: boolean = false) {
-        const token = tokenService.getToken();
+    const { mutate } = useMutation({
+        mutationKey: ['log_out'],
+        mutationFn: signOut,
+        onMutate: () => {},
+        onSettled: () => {
+            tokenService.removeToken();
+            setUser(null);
+            closeDrawer();
+            if (isInPrivatePage()) globalThis.location.replace(Route.SignIn);
+        },
+    });
 
-        if (token) await authService.signOut({ refreshToken: token.refreshToken }, allDevices);
-        tokenService.removeToken();
-        clearUserData();
-        closeDrawer();
-        if (isInPrivatePage()) globalThis.location.replace('/');
-    }
-
-    if (!user || !isLogged) return <AuthButton onSuccess={closeDrawer} {...signInProps} />;
+    if (!user || !isLogged)
+        return (
+            <Link to={Route.SignIn} onClick={closeDrawer.bind(null, false)}>
+                <Button {...signInProps}>Войти</Button>
+            </Link>
+        );
     if (user && !isMobile) return <ProfileButton user={user} className={classes.profile_btn} />;
 
     return (
@@ -178,7 +187,13 @@ const DrawerFooter: FC<{
                 </Button>
             </Link>
 
-            <Button type="primary" danger block icon={<LogoutOutlined />} onClick={() => logOut()}>
+            <Button
+                type="primary"
+                danger
+                block
+                icon={<LogoutOutlined />}
+                onClick={() => mutate(tokenService.getToken())}
+            >
                 Выйти
             </Button>
         </div>

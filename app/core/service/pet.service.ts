@@ -1,10 +1,10 @@
-import type { PaginationQuery, ReturnWithErrPromise } from '~type/common.type';
+import type { PaginationQuery } from '~type/common.type';
 import type { Pet, PetWithUser, PetType, Breed, PetDto, PetQuery } from '~type/pet.type';
 
 import dayjs from 'dayjs';
 import { join } from '~helper/path.helper';
 import { apiClient, apiClientAuth } from '~api/api-client';
-import { errorHandler, HttpException, isHttpException } from '~helper/error-handler';
+import { HttpException, isHttpException } from '~helper/error-handler';
 import { serverUrl } from '~constant/common';
 
 type PetResponse = Omit<Pet, 'birthday'> & { birthday: string | null };
@@ -15,146 +15,97 @@ class PetService {
     private readonly petTypeEndpoint = 'pet-type';
     private readonly petBreedEndpoint = 'pet-breed';
 
-    async count(queryParams?: PetQuery): ReturnWithErrPromise<{ total: number }> {
-        try {
-            const count = await apiClient.get<{ total: number }>(join(this.petEndpoint, 'count'), {
-                params: queryParams,
-            });
+    async count(queryParams?: PetQuery): Promise<{ total: number }> {
+        const count = await apiClient.get<{ total: number }>(join(this.petEndpoint, 'count'), {
+            params: queryParams,
+        });
 
-            if (isHttpException(count.data)) throw new HttpException(count.data);
-            return [count.data, null];
-        } catch (err) {
-            return errorHandler(err);
-        }
+        if (isHttpException(count.data)) throw new HttpException(count.data);
+        return count.data;
     }
 
-    async getMyOne(id: number): ReturnWithErrPromise<Pet> {
-        try {
-            const pet = await apiClientAuth.get<PetResponse>(join(this.petEndpoint, 'my', id));
-            if (isHttpException(pet.data)) throw new HttpException(pet.data);
-            return [this.convertData(pet.data), null];
-        } catch (err) {
-            return errorHandler(err);
-        }
+    async getMyOne(id: number): Promise<Pet> {
+        const pet = await apiClientAuth.get<PetResponse>(join(this.petEndpoint, 'my', id));
+        if (isHttpException(pet.data)) throw new HttpException(pet.data);
+        return this.convertData(pet.data);
     }
 
-    async getMyMany(): ReturnWithErrPromise<Pet[]> {
-        try {
-            const pets = await apiClientAuth.get<PetResponse[]>(join(this.petEndpoint, 'my'));
-            if (isHttpException(pets.data)) throw new HttpException(pets.data);
-            const convertedPets = pets.data.map(pet => this.convertData(pet));
-            return [convertedPets, null];
-        } catch (err) {
-            return errorHandler(err);
-        }
+    async getMyMany(): Promise<Pet[]> {
+        const pets = await apiClientAuth.get<PetResponse[]>(join(this.petEndpoint, 'my'));
+        if (isHttpException(pets.data)) throw new HttpException(pets.data);
+        const convertedPets = pets.data.map(pet => this.convertData(pet));
+        return convertedPets;
     }
 
-    async getOne(id: number): ReturnWithErrPromise<PetWithUser> {
-        try {
-            const pet = await apiClient.get<PetResponseWithUser>(join(this.petEndpoint, id));
-            if (isHttpException(pet.data)) throw new HttpException(pet.data);
-            return [this.convertData(pet.data), null];
-        } catch (err) {
-            return errorHandler(err);
-        }
+    async getOne(id: number): Promise<PetWithUser> {
+        const pet = await apiClient.get<PetResponseWithUser>(join(this.petEndpoint, id));
+        if (isHttpException(pet.data)) throw new HttpException(pet.data);
+        return this.convertData(pet.data);
     }
 
-    async getAll(queryParams?: PetQuery & PaginationQuery): ReturnWithErrPromise<PetWithUser[]> {
-        try {
-            const pets = await apiClient.get<PetResponseWithUser[]>(this.petEndpoint, {
-                params: queryParams,
-            });
-            if (isHttpException(pets.data)) throw new HttpException(pets.data);
-            const convertedPets = pets.data.map(pet => this.convertData(pet));
-            return [convertedPets, null];
-        } catch (err) {
-            return errorHandler(err);
-        }
+    async getAll(queryParams?: PetQuery & PaginationQuery): Promise<PetWithUser[]> {
+        const pets = await apiClient.get<PetResponseWithUser[]>(this.petEndpoint, {
+            params: queryParams,
+        });
+        if (isHttpException(pets.data)) throw new HttpException(pets.data);
+        const convertedPets = pets.data.map(pet => this.convertData(pet));
+        return convertedPets as any[];
     }
 
-    async getPetType(): ReturnWithErrPromise<PetType[]> {
-        try {
-            const petTypes = await apiClient.get<PetType[]>(this.petTypeEndpoint);
-            if (isHttpException(petTypes.data)) throw new HttpException(petTypes.data);
-            return [petTypes.data, null];
-        } catch (err) {
-            return errorHandler(err);
-        }
+    async getPetType(): Promise<PetType[]> {
+        const petTypes = await apiClient.get<PetType[]>(this.petTypeEndpoint);
+        if (isHttpException(petTypes.data)) throw new HttpException(petTypes.data);
+        return petTypes.data;
     }
 
-    async getBreed({ petTypeId }: { petTypeId?: number } = {}): ReturnWithErrPromise<Breed[]> {
-        try {
-            const breeds = await apiClient.get<Breed[]>(this.petBreedEndpoint, {
-                params: { petTypeId },
-            });
-            if (isHttpException(breeds.data)) throw new HttpException(breeds.data);
-            return [breeds.data, null];
-        } catch (err) {
-            return errorHandler(err);
-        }
+    async getBreed({ petTypeId }: { petTypeId?: number } = {}): Promise<Breed[]> {
+        const breeds = await apiClient.get<Breed[]>(this.petBreedEndpoint, {
+            params: { petTypeId },
+        });
+        if (isHttpException(breeds.data)) throw new HttpException(breeds.data);
+        return breeds.data;
     }
 
-    async create(data: PetDto): ReturnWithErrPromise<Pet> {
+    async create(data: PetDto): Promise<Pet> {
         const convertedData = this.prepareDataToPush(data);
 
-        try {
-            const pet = await apiClientAuth.post<PetResponse>(this.petEndpoint, convertedData);
-            if (isHttpException(pet.data)) throw new HttpException(pet.data);
-            return [this.convertData(pet.data), null];
-        } catch (err) {
-            return errorHandler(err);
-        }
+        const pet = await apiClientAuth.post<PetResponse>(this.petEndpoint, convertedData);
+        if (isHttpException(pet.data)) throw new HttpException(pet.data);
+        return this.convertData(pet.data);
     }
 
-    async update(id: number, data: PetDto): ReturnWithErrPromise<Pet> {
+    async update({ id, data }: { id: number; data: PetDto }): Promise<Pet> {
         const convertedData = this.prepareDataToPush(data);
 
-        try {
-            const pet = await apiClientAuth.patch<PetResponse>(
-                join(this.petEndpoint, id),
-                convertedData,
-            );
-            if (isHttpException(pet.data)) throw new HttpException(pet.data);
-            return [this.convertData(pet.data), null];
-        } catch (err) {
-            return errorHandler(err);
-        }
+        const pet = await apiClientAuth.patch<PetResponse>(
+            join(this.petEndpoint, id),
+            convertedData,
+        );
+        if (isHttpException(pet.data)) throw new HttpException(pet.data);
+        return this.convertData(pet.data);
     }
 
-    async delete(id: number): ReturnWithErrPromise<Pet> {
-        try {
-            const pet = await apiClientAuth.delete<PetResponse>(join(this.petEndpoint, id));
-            if (isHttpException(pet.data)) throw new HttpException(pet.data);
-            return [this.convertData(pet.data), null];
-        } catch (err) {
-            return errorHandler(err);
-        }
+    async delete(id: number): Promise<Pet> {
+        const pet = await apiClientAuth.delete<PetResponse>(join(this.petEndpoint, id));
+        if (isHttpException(pet.data)) throw new HttpException(pet.data);
+        return this.convertData(pet.data);
     }
 
-    async setImage(file: File, petId: number): ReturnWithErrPromise<{ image: string }> {
-        try {
-            const formData = new FormData();
-            formData.append('image', file);
+    async setImage({ file, petId }: { file: File; petId: number }): Promise<{ image: string }> {
+        const formData = new FormData();
+        formData.append('image', file);
 
-            const pet = await apiClientAuth.post(this.petEndpoint + 'image/' + petId, formData, {
-                headers: { 'Content-Type': 'multipart/form-data' },
-            });
+        const pet = await apiClientAuth.post(join(this.petEndpoint, 'image', petId), formData, {
+            headers: { 'Content-Type': 'multipart/form-data' },
+        });
 
-            if (isHttpException(pet.data)) throw new HttpException(pet.data);
-            return [pet.data, null];
-        } catch (err) {
-            return errorHandler(err);
-        }
+        if (isHttpException(pet.data)) throw new HttpException(pet.data);
+        return pet.data;
     }
 
-    async deleteImage(petId: number): ReturnWithErrPromise {
-        try {
-            const pet = await apiClientAuth.delete(this.petEndpoint + 'image/' + petId);
-            if (isHttpException(pet.data)) throw new HttpException(pet.data);
-            return [pet.data, null];
-        } catch (err) {
-            return errorHandler(err);
-        }
+    async deleteImage(petId: number) {
+        const pet = await apiClientAuth.delete(join(this.petEndpoint, 'image', petId));
+        if (isHttpException(pet.data)) throw new HttpException(pet.data);
     }
 
     private convertData<T extends PetResponse | PetResponseWithUser>(pet: T) {
@@ -174,13 +125,11 @@ class PetService {
         return { ...pet, birthday, image, lostInfo };
     }
 
-    private prepareDataToPush({ birthday, ...data }: PetDto) {
-        const convertedData: Record<keyof PetDto, string | number | null> = {
+    private prepareDataToPush({ birthday, image, ...data }: PetDto) {
+        const convertedData: Record<keyof Omit<PetDto, 'image'>, string | number | null> = {
             ...data,
             birthday: birthday?.startOf('date').toString() ?? null,
         };
-
-        if ('image' in convertedData) delete convertedData.image;
 
         for (const key in convertedData) {
             const k = key as keyof typeof convertedData;

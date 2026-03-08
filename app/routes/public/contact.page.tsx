@@ -1,18 +1,17 @@
-import type { MessageDataDto } from '~type/common.type';
-
-import { useState } from 'react';
+import { useMutation } from '@tanstack/react-query';
 import messageService from '~service/message.service';
 
 import { Form, Input, Select, Button, Typography, notification } from 'antd';
 import { Container, Card } from '~component/common';
 import { isValidPhoneNumber } from 'libphonenumber-js';
-import { alertError } from '~helper/alert-error';
 
 export function meta() {
     return [{ title: 'Связаться с нами' }];
 }
 
 const { Title, Paragraph } = Typography;
+
+const sentMessage = messageService.send.bind(messageService);
 
 const topics = [
     {
@@ -40,21 +39,18 @@ const topics = [
 const Contact = () => {
     const [form] = Form.useForm();
     const [api, context] = notification.useNotification();
-    const [loading, setLoading] = useState(false);
 
-    async function submit(data: MessageDataDto) {
-        setLoading(true);
-
-        const [, err] = await messageService.send(data);
-        if (err) {
-            api.error(alertError(err));
-        } else {
+    const { mutate, isPending } = useMutation({
+        mutationKey: ['sent_message'],
+        mutationFn: sentMessage,
+        onSuccess: () => {
             form.resetFields();
-            api.success({ title: 'Сообщение', description: 'Успешно доставлено' });
-        }
-
-        setLoading(false);
-    }
+            api.success({ description: 'Сообщение успешно доставлено' });
+        },
+        onError: error => {
+            api.error({ description: error.message });
+        },
+    });
 
     return (
         <Container
@@ -87,7 +83,7 @@ const Contact = () => {
                     ветеринарным или юридическим документом.
                 </Paragraph>
 
-                <Form form={form} onFinish={submit}>
+                <Form form={form} onFinish={mutate}>
                     <Form.Item name="topic" rules={[{ required: true, message: 'Выберите тему' }]}>
                         <Select size="large" placeholder="Тема" options={topics} allowClear />
                     </Form.Item>
@@ -120,7 +116,7 @@ const Contact = () => {
                         />
                     </Form.Item>
 
-                    <Button htmlType="submit" color="cyan" variant="solid" loading={loading}>
+                    <Button htmlType="submit" color="cyan" variant="solid" loading={isPending}>
                         Отправить
                     </Button>
                 </Form>

@@ -1,5 +1,5 @@
-import { useEffectOnce } from '~hook/use-effect-once';
 import { useSearchParams } from 'react-router';
+import { useQuery } from '@tanstack/react-query';
 import { BroadcastChannelName } from '~constant/broadcast-channel';
 
 import { googleOAuthService } from '~service/oauth.service';
@@ -10,30 +10,40 @@ export function meta() {
 }
 
 export default function GoogleOAuth() {
+    const bc = new BroadcastChannel(BroadcastChannelName.AuthBroadcast);
     const [searchParams] = useSearchParams();
-    const code = searchParams.get('code');
-    const error = searchParams.get('error');
 
-    useEffectOnce(() => {
-        if (error || !code) return globalThis.close();
-        handleAuth(code);
+    const params = {
+        code: searchParams.get('code'),
+        error: searchParams.get('error'),
+    };
+
+    const { isError, isSuccess, isFetched, error, data } = useQuery({
+        queryKey: ['google_oauth'],
+        queryFn: async () => {
+            if (params.error || !params.code) {
+                globalThis.close();
+                throw new Error(params.error ?? 'Unknown error!');
+            }
+            return await googleOAuthService.signIn(params.code);
+        },
     });
 
-    return null;
-}
-
-async function handleAuth(code: string) {
-    const bc = new BroadcastChannel(BroadcastChannelName.AuthBroadcast);
-    const [token, err] = await googleOAuthService.signIn(code);
-
-    if (err) {
+    if (isError) {
+        console.log('error', error);
         bc.postMessage('error');
         tokenService.removeToken();
-    } else {
-        tokenService.setToken(token);
+    }
+
+    if (isSuccess) {
+        console.log('data', data);
+        tokenService.setToken(data);
         bc.postMessage('success');
     }
 
-    bc.close();
-    globalThis.close();
+    if (isFetched) {
+        console.log('isFetched');
+        bc.close();
+        globalThis.close();
+    }
 }

@@ -2,14 +2,13 @@ import type { FC } from 'react';
 import type { Pet } from '~type/pet.type';
 
 import { useState } from 'react';
-import { useQuery } from '@tanstack/react-query';
+import { useQuery, useQueryClient } from '@tanstack/react-query';
 import petService from '~service/pet.service';
 
 import { Link } from 'react-router';
-import { Typography, Button, notification } from 'antd';
+import { Typography, Button } from 'antd';
 import { PlusOutlined } from '@ant-design/icons';
-import { Container, Grid, Loader, Empty } from '~component/common';
-import { alertError } from '~helper/alert-error';
+import { Container, Grid, Loader, Empty, ErrorInfo } from '~component/common';
 import PetInfoCard from '~component/pet/pet-info-card';
 import PetModal from '~component/pet/pet-modal';
 
@@ -23,28 +22,26 @@ export function meta() {
 const { Title } = Typography;
 
 const MyPets: FC = () => {
-    const [pets, setPets] = useState<Pet[]>([]);
+    const queryClient = useQueryClient();
 
-    const { isPending } = useQuery({
-        queryKey: ['my-pets'],
-        queryFn: fetchMyPets,
+    const {
+        isPending,
+        isError,
+        error,
+        data: pets,
+    } = useQuery({
+        queryKey: ['my_pets'],
+        queryFn: petService.getMyMany.bind(petService),
     });
 
-    const [api, context] = notification.useNotification();
-
-    async function fetchMyPets() {
-        const [myPets, err] = await petService.getMyMany();
-
-        if (err) {
-            api.error(alertError(err));
-            throw err;
-        }
-
-        setPets(myPets);
-        return myPets;
+    function addPet(pet: Pet) {
+        queryClient.setQueryData<Pet[]>(['my_pets'], (pets = []) => {
+            return [...pets, pet];
+        });
     }
 
     if (isPending) return <Loader />;
+    if (isError) return <ErrorInfo error={error} />;
 
     return (
         <Container section style={{ minHeight: '100%' }}>
@@ -53,7 +50,7 @@ const MyPets: FC = () => {
                     <span className={classes.headline}>Ваши питомцы</span>
                 </Title>
 
-                <AddPetButton onSuccess={pet => setPets(pets => [...pets, pet])} />
+                <AddPetButton onSuccess={addPet} />
             </div>
 
             {pets.length > 0 ? (
@@ -67,8 +64,6 @@ const MyPets: FC = () => {
             ) : (
                 <Empty description="У вас пока нет питомцев" />
             )}
-
-            {context}
         </Container>
     );
 };

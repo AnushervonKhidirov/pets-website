@@ -11,10 +11,6 @@ export type SignUpDto = {
     password: string;
 };
 
-export type RefreshTokenDto = {
-    refreshToken: string;
-};
-
 export type Token = {
     accessToken: string;
     refreshToken: string;

@@ -1,15 +1,12 @@
 import type { FC } from 'react';
-import type { LostInfo, LostInfoDto } from '~type/lost-info.type';
+import type { LostInfo } from '~type/lost-info.type';
 import type { Pet } from '~type/pet.type';
 
-import { useState } from 'react';
+import { useMutation } from '@tanstack/react-query';
 import lostInfoService from '~service/lost-info.service';
 
-import { Modal, Form, Input, Button, DatePicker, notification } from 'antd';
+import { Modal, Form, Input, Button, DatePicker, Space, notification } from 'antd';
 import dayjs from 'dayjs';
-import { alertError } from '~helper/alert-error';
-
-import classes from './lost-pet-modal.module.css';
 
 type EditPersonalInfoModalProps = {
     pet: Pet;
@@ -18,6 +15,9 @@ type EditPersonalInfoModalProps = {
     setOpen: (state: boolean) => void;
     onSuccess?: (pet: Pet) => void;
 };
+
+const setLost = lostInfoService.set.bind(lostInfoService);
+const deleteLost = lostInfoService.delete.bind(lostInfoService);
 
 const LostInfoModal: FC<EditPersonalInfoModalProps> = ({
     pet,
@@ -28,50 +28,31 @@ const LostInfoModal: FC<EditPersonalInfoModalProps> = ({
 }) => {
     const [form] = Form.useForm();
 
-    const [loading, setLoading] = useState(false);
-    const [loadingRemove, setLoadingRemove] = useState(false);
-
     const [api, context] = notification.useNotification();
 
-    async function submit(data: LostInfoDto) {
-        setLoading(true);
+    const { mutate: setMutate, isPending: isSetPending } = useMutation({
+        mutationKey: ['set_lost'],
+        mutationFn: setLost,
+        onSuccess: lostInfo => {
+            if (onSuccess) onSuccess({ ...pet, lostInfo });
+            setOpen(false);
+        },
+        onError: error => {
+            api.error({ description: error.message });
+        },
+    });
 
-        const [lostInfo, err] = await lostInfoHandler(pet.id, data);
-
-        if (err) {
-            api.error(alertError(err));
-        } else {
-            form.resetFields();
-            if (onSuccess) onSuccess({ ...pet, lostInfo: lostInfo });
-        }
-
-        setLoading(false);
-
-        setTimeout(() => setOpen(false), 500);
-    }
-
-    async function remove() {
-        setLoadingRemove(true);
-
-        const [, err] = await lostInfoService.delete(pet.id);
-
-        if (err) {
-            api.error(alertError(err));
-        } else if (onSuccess) {
-            onSuccess({ ...pet, lostInfo: null });
-        }
-
-        setLoadingRemove(false);
-        setTimeout(() => setOpen(false), 500);
-    }
-
-    async function lostInfoHandler(petId: number, data: LostInfoDto) {
-        if (lostInfo) {
-            return await lostInfoService.update(petId, data);
-        } else {
-            return await lostInfoService.create(petId, data);
-        }
-    }
+    const { mutate: removeMutate, isPending: isRemovePending } = useMutation({
+        mutationKey: ['delete_leo'],
+        mutationFn: deleteLost,
+        onSuccess: () => {
+            if (onSuccess) onSuccess({ ...pet, lostInfo: null });
+            setOpen(false);
+        },
+        onError: error => {
+            api.error({ description: error.message });
+        },
+    });
 
     return (
         <>
@@ -83,7 +64,7 @@ const LostInfoModal: FC<EditPersonalInfoModalProps> = ({
                 footer={null}
                 destroyOnHidden
             >
-                <Form form={form} onFinish={submit} preserve>
+                <Form form={form} onFinish={data => setMutate({ petId: pet.id, data })} preserve>
                     <Form.Item name="address" initialValue={lostInfo?.address ?? null}>
                         <Input placeholder="Адрес" />
                     </Form.Item>
@@ -105,17 +86,29 @@ const LostInfoModal: FC<EditPersonalInfoModalProps> = ({
                         />
                     </Form.Item>
 
-                    <div className={classes.buttons}>
+                    <Space styles={{ root: { width: '100%' }, item: { flexGrow: 1 } }} wrap>
                         {lostInfo && (
-                            <Button danger type="primary" loading={loadingRemove} onClick={remove}>
+                            <Button
+                                block
+                                danger
+                                type="primary"
+                                loading={isRemovePending}
+                                onClick={() => removeMutate(pet.id)}
+                            >
                                 Удалить объявление
                             </Button>
                         )}
 
-                        <Button color="cyan" variant="solid" htmlType="submit" loading={loading}>
+                        <Button
+                            block
+                            color="cyan"
+                            variant="solid"
+                            htmlType="submit"
+                            loading={isSetPending}
+                        >
                             {lostInfo ? 'Сохранить объявление' : 'Создать объявление'}
                         </Button>
-                    </div>
+                    </Space>
                 </Form>
             </Modal>
 
