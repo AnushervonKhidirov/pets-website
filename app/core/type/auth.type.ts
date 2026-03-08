@@ -4,6 +4,7 @@ export type SignInDto = {
 };
 
 export type SignUpDto = {
+    code: string;
     firstName: string;
     lastName?: string;
     email: string;
