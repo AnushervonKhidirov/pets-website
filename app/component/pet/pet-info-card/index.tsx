@@ -230,17 +230,17 @@ const StatusTag: FC<{ lost: boolean }> = ({ lost }) => {
 const LostInfoCard: FC<{ lostInfo: LostInfo; style?: CSSProperties }> = ({ lostInfo, style }) => {
     const lostInfoItems = [
         {
-            key: lostInfo.id + lostInfo.petId + 'date',
+            key: lostInfo.petId + 'date-lost',
             label: 'Дата',
             children: lostInfo.lostAt.startOf('day').format('DD MMMM YYYY'),
         },
         {
-            key: lostInfo.id + lostInfo.petId + 'place',
+            key: lostInfo.petId + 'place-lost',
             label: 'Место',
             children: lostInfo.address,
         },
         {
-            key: lostInfo.id + lostInfo.petId + 'details',
+            key: lostInfo.petId + 'details-lost',
             label: 'Обстоятельства',
             children: lostInfo.details,
         },
