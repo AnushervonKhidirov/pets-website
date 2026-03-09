@@ -1,4 +1,4 @@
-import type { UpdateUserDto, User } from '~type/user.type';
+import type { ChangePasswordDto, UpdateUserDto, User } from '~type/user.type';
 
 import { join } from '~helper/path.helper';
 import { apiClient, apiClientAuth } from '~api/api-client';
@@ -29,6 +29,15 @@ class UserService {
         const response = await apiClientAuth.patch<User>(this.endpoint, data);
         if (isHttpException(response.data)) throw new HttpException(response.data);
         return response.data;
+    }
+
+    async changePassword(data: ChangePasswordDto) {
+        const response = await apiClientAuth.patch<User>(
+            join(this.endpoint, 'change-password'),
+            data,
+        );
+
+        if (isHttpException(response.data)) throw new HttpException(response.data);
     }
 }
 

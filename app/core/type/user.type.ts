@@ -43,3 +43,8 @@ export type UpdateUserFormData = Record<string, string> & {
     latitude?: Address['latitude'];
     longitude?: Address['longitude'];
 };
+
+export type ChangePasswordDto = {
+    oldPassword: string;
+    newPassword: string;
+};
