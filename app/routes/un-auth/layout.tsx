@@ -10,13 +10,13 @@ export const Layout = () => {
     const { query } = useUserInfo();
 
     useLayoutEffect(() => {
-        if (query.isError) navigate(Route.SignIn);
+        if (query.isSuccess) navigate(Route.Home);
     }, [query]);
 
     return (
-        query.isSuccess && (
+        !query.isSuccess && (
             <>
-                <Header />
+                <Header showAuthBtn={false} />
                 <main>
                     <Outlet />
                 </main>

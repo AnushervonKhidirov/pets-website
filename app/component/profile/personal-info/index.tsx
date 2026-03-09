@@ -5,7 +5,7 @@ import type { Marker } from '~component/common/google-map';
 
 import { useState } from 'react';
 import { useMutation } from '@tanstack/react-query';
-import useUserStore from '~store/user.store';
+import { useUserInfo } from '~hook/use-user-info';
 import tokenService from '~service/token.service';
 import authService from '~service/auth.service';
 
@@ -22,7 +22,7 @@ const { Title } = Typography;
 const signOut = authService.signOut.bind(authService);
 
 const PersonalInfoSection: FC<{ user: User }> = ({ user }) => {
-    const { setUser } = useUserStore(state => state);
+    const { setData: setUser } = useUserInfo();
     const [open, setOpen] = useState(false);
 
     const items: DescriptionsProps['items'] = [
@@ -109,7 +109,13 @@ const PersonalInfoSection: FC<{ user: User }> = ({ user }) => {
                 />
 
                 <div className={classes.buttons}>
-                    <Button danger type="primary" onClick={() => mutate(tokenService.getToken())}>
+                    <Button
+                        danger
+                        type="primary"
+                        onClick={() =>
+                            mutate({ refreshToken: tokenService.getToken()?.refreshToken ?? null })
+                        }
+                    >
                         Выйти
                     </Button>
 
@@ -118,7 +124,7 @@ const PersonalInfoSection: FC<{ user: User }> = ({ user }) => {
                         type="primary"
                         onClick={() =>
                             mutate({
-                                ...tokenService.getToken(),
+                                refreshToken: tokenService.getToken()?.refreshToken ?? null,
                                 allDevices: true,
                             })
                         }

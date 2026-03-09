@@ -5,9 +5,9 @@ import type { User } from '~type/user.type';
 
 import { useState, useEffect } from 'react';
 import { useMutation } from '@tanstack/react-query';
+import { useUserInfo } from '~hook/use-user-info';
 import { Link, NavLink } from 'react-router';
-import useUserStore from '~store/user.store';
-import { isAuthorized, isInPrivatePage } from '~helper/auth.helper';
+import { isInPrivatePage } from '~helper/auth.helper';
 
 import tokenService from '~service/token.service';
 import authService from '~service/auth.service';
@@ -48,8 +48,8 @@ const navLinkList = [
 const isMobileDevice = isMobile || isTablet;
 const closeModalAction = 'close-modal';
 
-const Header = () => {
-    const { user } = useUserStore(state => state);
+const Header = ({ showAuthBtn = true }: { showAuthBtn?: boolean }) => {
+    const { query } = useUserInfo();
     const [menuOpened, setMenuOpened] = useState(false);
 
     function openDrawer() {
@@ -92,7 +92,9 @@ const Header = () => {
                                 ))}
                             </nav>
 
-                            <DrawerFooter user={user} closeDrawer={closeDrawer} />
+                            {showAuthBtn && (
+                                <DrawerFooter user={query.data} closeDrawer={closeDrawer} />
+                            )}
                         </div>
                     </div>
                 )}
@@ -113,8 +115,8 @@ const Header = () => {
                 destroyOnHidden
                 open={menuOpened}
                 onClose={closeOnBack}
-                footer={<DrawerFooter user={user} isMobile closeDrawer={closeDrawer} />}
-                extra={user && <ProfileButton user={user} />}
+                footer={<DrawerFooter user={query.data} isMobile closeDrawer={closeDrawer} />}
+                extra={query.data && <ProfileButton user={query.data} />}
                 size={300}
                 styles={{
                     section: { backgroundColor: light },
@@ -138,12 +140,11 @@ const Header = () => {
 };
 
 const DrawerFooter: FC<{
-    user: User | null;
+    user?: User | null;
     isMobile?: boolean;
     closeDrawer: (back?: boolean) => void;
 }> = ({ user, isMobile = false, closeDrawer }) => {
-    const { setUser } = useUserStore(state => state);
-    const isLogged = isAuthorized() || user;
+    const { setData } = useUserInfo();
 
     const signInProps: ButtonProps = {
         className: classNames(classes.sign_in_btn, { [classes.sign_in_btn_mobile]: isMobile }),
@@ -159,13 +160,13 @@ const DrawerFooter: FC<{
         onMutate: () => {},
         onSettled: () => {
             tokenService.removeToken();
-            setUser(null);
+            setData(null);
             closeDrawer();
             if (isInPrivatePage()) globalThis.location.replace(Route.SignIn);
         },
     });
 
-    if (!user || !isLogged)
+    if (!user)
         return (
             <Link to={Route.SignIn} onClick={closeDrawer.bind(null, false)}>
                 <Button {...signInProps}>Войти</Button>
@@ -192,7 +193,9 @@ const DrawerFooter: FC<{
                 danger
                 block
                 icon={<LogoutOutlined />}
-                onClick={() => mutate(tokenService.getToken())}
+                onClick={() =>
+                    mutate({ refreshToken: tokenService.getToken()?.refreshToken ?? null })
+                }
             >
                 Выйти
             </Button>

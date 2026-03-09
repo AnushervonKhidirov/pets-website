@@ -9,9 +9,11 @@ export default [
         route(Route.VetClinic, 'routes/public/vet-clinic.page.tsx'),
         route(Route.ContactUs, 'routes/public/contact.page.tsx'),
         route(Route.PetInfo + '/:petId', 'routes/public/pet-info.page.tsx'),
+    ]),
 
-        route(Route.SignIn, 'routes/public/sign-in.page.tsx'),
-        route(Route.SignUp, 'routes/public/sign-up.page.tsx'),
+    layout('routes/un-auth/layout.tsx', [
+        route(Route.SignIn, 'routes/un-auth/sign-in.page.tsx'),
+        route(Route.SignUp, 'routes/un-auth/sign-up.page.tsx'),
     ]),
 
     layout('routes/private/layout.tsx', [

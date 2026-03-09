@@ -3,9 +3,9 @@ import type { DropdownProps, MenuProps } from 'antd';
 import type { User } from '~type/user.type';
 
 import { useMutation } from '@tanstack/react-query';
+import { useUserInfo } from '~hook/use-user-info';
 import tokenService from '~service/token.service';
 import authService from '~service/auth.service';
-import useUserStore from '~store/user.store';
 
 import { Link } from 'react-router';
 import { Dropdown, Avatar } from 'antd';
@@ -19,7 +19,7 @@ import { isInPrivatePage } from '~helper/auth.helper';
 const signOut = authService.signOut.bind(authService);
 
 const ProfileButton: FC<{ user: User; className?: string }> = ({ user, className }) => {
-    const { setUser } = useUserStore(state => state);
+    const { setData: setUser } = useUserInfo();
 
     const items: MenuProps['items'] = [
         {
@@ -40,7 +40,7 @@ const ProfileButton: FC<{ user: User; className?: string }> = ({ user, className
             label: 'Выйти',
             icon: <LogoutOutlined />,
             danger: true,
-            onClick: () => mutate(tokenService.getToken()),
+            onClick: () => mutate({ refreshToken: tokenService.getToken()?.refreshToken ?? null }),
         },
     ];
 

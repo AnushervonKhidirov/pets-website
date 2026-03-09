@@ -29,7 +29,7 @@ class AuthService {
         return response.data;
     }
 
-    async signOut({ refreshToken, allDevices }: { refreshToken: string; allDevices?: boolean }) {
+    async signOut({ refreshToken, allDevices }: { refreshToken: string | null; allDevices?: boolean }) {
         const signOutType = allDevices ? 'sign-out-everywhere' : 'sign-out';
         const response = await apiClient.post(join(this.endpoint, signOutType), { refreshToken });
         if (isHttpException(response.data)) throw new HttpException(response.data);

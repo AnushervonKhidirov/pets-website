@@ -1,13 +1,9 @@
-import { useMutation } from '@tanstack/react-query';
-import userService from '~service/user.service';
-
 import { Link, useNavigate } from 'react-router';
 import { Button, Typography } from 'antd';
 import { Container, Card } from '~component/common';
 import { SignInForm } from '~component/auth/auth-form';
 import { GoogleOAuthButton } from '~component/auth/oauth-button';
 import { Route } from '~constant/route';
-import useUserStore from '~store/user.store';
 
 import { light } from '~/config/ant.config';
 
@@ -17,20 +13,8 @@ export function meta() {
 
 const { Title } = Typography;
 
-const getUserInfo = userService.getMe.bind(userService);
-
 export const SignInPage = () => {
     const navigate = useNavigate();
-    const { setUser } = useUserStore(state => state);
-
-    const { mutate } = useMutation({
-        mutationKey: ['get_user_info_sign_in_page'],
-        mutationFn: getUserInfo,
-        onSuccess: setUser,
-        onSettled: () => {
-            navigate(Route.Home);
-        },
-    });
 
     return (
         <Container
@@ -43,7 +27,7 @@ export const SignInPage = () => {
             <Card>
                 <Title level={2}>Вход</Title>
 
-                <SignInForm onSuccess={mutate} />
+                <SignInForm onSuccess={() => navigate(Route.Home)} />
 
                 <GoogleOAuthButton style={{ marginTop: '1em' }} block />
 

@@ -1,4 +1,4 @@
-import useUserStore from '~store/user.store';
+import { useUserInfo } from '~hook/use-user-info';
 
 import PersonalInfoSection from '~component/profile/personal-info';
 
@@ -7,9 +7,8 @@ export function meta() {
 }
 
 const Profile = () => {
-    const { user } = useUserStore(state => state);
-
-    return user && <PersonalInfoSection user={user} />;
+    const { query } = useUserInfo();
+    return query.isSuccess && <PersonalInfoSection user={query.data} />;
 };
 
 export default Profile;

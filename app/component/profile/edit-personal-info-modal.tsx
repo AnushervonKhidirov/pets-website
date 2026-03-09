@@ -5,7 +5,7 @@ import type { Marker } from '~component/common/google-map';
 
 import { useState } from 'react';
 import { useMutation } from '@tanstack/react-query';
-import useUserStore from '~store/user.store';
+import { useUserInfo } from '~hook/use-user-info';
 import userService from '~service/user.service';
 
 import { Modal, Form, Input, Button, notification, Select, Row } from 'antd';
@@ -25,7 +25,7 @@ const updateUserInfo = userService.update.bind(userService);
 
 const EditPersonalInfoModal: FC<EditPersonalInfoModalProps> = ({ user, open, setOpen }) => {
     const [form] = Form.useForm();
-    const { setUser } = useUserStore(state => state);
+    const { setData: setUser } = useUserInfo();
 
     const [additionalContacts, setAdditionalContacts] = useState(
         user.contacts?.map(contact => contact.name) ?? [],
