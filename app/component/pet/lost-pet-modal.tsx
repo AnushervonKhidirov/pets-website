@@ -6,6 +6,7 @@ import { useMutation } from '@tanstack/react-query';
 import lostInfoService from '~service/lost-info.service';
 
 import { Modal, Form, Input, Button, DatePicker, Space, notification } from 'antd';
+import { Card } from '~component/common';
 import dayjs from 'dayjs';
 
 type EditPersonalInfoModalProps = {
@@ -64,52 +65,58 @@ const LostInfoModal: FC<EditPersonalInfoModalProps> = ({
                 footer={null}
                 destroyOnHidden
             >
-                <Form form={form} onFinish={data => setMutate({ petId: pet.id, data })} preserve>
-                    <Form.Item name="address" initialValue={lostInfo?.address ?? null}>
-                        <Input placeholder="Адрес" />
-                    </Form.Item>
-
-                    <Form.Item name="details" initialValue={lostInfo?.details ?? null}>
-                        <Input placeholder="Подробности" />
-                    </Form.Item>
-
-                    <Form.Item
-                        name="lostAt"
-                        initialValue={lostInfo?.lostAt ?? dayjs()}
-                        rules={[{ required: true, message: 'Укажите дату пропажи' }]}
+                <Card>
+                    <Form
+                        form={form}
+                        onFinish={data => setMutate({ petId: pet.id, data })}
+                        variant="underlined"
                     >
-                        <DatePicker
-                            format={{ format: 'DD/MM/YYYY' }}
-                            placeholder="День пропажи (день/месяц/год)"
-                            allowClear
-                            style={{ width: '100%' }}
-                        />
-                    </Form.Item>
+                        <Form.Item name="address" initialValue={lostInfo?.address ?? null}>
+                            <Input placeholder="Адрес" />
+                        </Form.Item>
 
-                    <Space styles={{ root: { width: '100%' }, item: { flexGrow: 1 } }} wrap>
-                        {lostInfo && (
+                        <Form.Item name="details" initialValue={lostInfo?.details ?? null}>
+                            <Input placeholder="Подробности" />
+                        </Form.Item>
+
+                        <Form.Item
+                            name="lostAt"
+                            initialValue={lostInfo?.lostAt ?? dayjs()}
+                            rules={[{ required: true, message: 'Укажите дату пропажи' }]}
+                        >
+                            <DatePicker
+                                format={{ format: 'DD/MM/YYYY' }}
+                                placeholder="День пропажи (день/месяц/год)"
+                                allowClear
+                                style={{ width: '100%' }}
+                            />
+                        </Form.Item>
+
+                        <Space styles={{ root: { width: '100%' }, item: { flexGrow: 1 } }} wrap>
+                            {lostInfo && (
+                                <Button
+                                    block
+                                    danger
+                                    type="primary"
+                                    loading={isRemovePending}
+                                    onClick={() => removeMutate(pet.id)}
+                                >
+                                    Удалить объявление
+                                </Button>
+                            )}
+
                             <Button
                                 block
-                                danger
-                                type="primary"
-                                loading={isRemovePending}
-                                onClick={() => removeMutate(pet.id)}
+                                color="cyan"
+                                variant="solid"
+                                htmlType="submit"
+                                loading={isSetPending}
                             >
-                                Удалить объявление
+                                {lostInfo ? 'Сохранить объявление' : 'Создать объявление'}
                             </Button>
-                        )}
-
-                        <Button
-                            block
-                            color="cyan"
-                            variant="solid"
-                            htmlType="submit"
-                            loading={isSetPending}
-                        >
-                            {lostInfo ? 'Сохранить объявление' : 'Создать объявление'}
-                        </Button>
-                    </Space>
-                </Form>
+                        </Space>
+                    </Form>
+                </Card>
             </Modal>
 
             {context}

@@ -7,6 +7,7 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 import petService from '~service/pet.service';
 
 import { Modal, Form, Input, Select, DatePicker, Upload, Button, notification } from 'antd';
+import { Card } from '~component/common';
 import ImgCrop from 'antd-img-crop';
 
 import { Sex } from '~type/pet.type';
@@ -165,123 +166,128 @@ const PetModal: FC<PetModalProps> = ({ pet, open, setOpen, onSuccess }) => {
                     centered
                     footer={null}
                 >
-                    <Form form={form} onFinish={submit} clearOnDestroy>
-                        <Form.Item
-                            name="name"
-                            rules={[{ required: true, message: 'Введите кличку питомца' }]}
-                            initialValue={pet?.name ?? null}
-                        >
-                            <Input placeholder="Кличка" />
-                        </Form.Item>
-
-                        <Form.Item
-                            name="petTypeId"
-                            rules={[{ required: true, message: 'Выберите вид животное' }]}
-                            initialValue={pet?.petTypeId ?? null}
-                        >
-                            <Select
-                                placeholder="Вид"
-                                options={petTypes.map(({ id, ru }) => ({ value: id, label: ru }))}
-                                allowClear
-                                onChange={id => {
-                                    form.setFieldValue('breedId', null);
-
-                                    const filteredBreeds = id
-                                        ? breeds.filter(breed => breed.petTypeId === id)
-                                        : breeds;
-
-                                    setBreedsFiltered(filteredBreeds);
-                                }}
-                            />
-                        </Form.Item>
-
-                        <Form.Item name="breedId" initialValue={pet?.breedId ?? null}>
-                            <Select
-                                placeholder="Порода"
-                                options={breedsFiltered.map(({ id, ru }) => ({
-                                    value: id,
-                                    label: ru,
-                                }))}
-                                allowClear
-                                showSearch={{
-                                    filterOption: (inputValue, option) =>
-                                        option?.label
-                                            .toUpperCase()
-                                            .indexOf(inputValue.toUpperCase()) !== -1,
-                                }}
-                            />
-                        </Form.Item>
-
-                        <Form.Item name="sex" initialValue={pet?.sex ?? null}>
-                            <Select placeholder="Пол" options={sexOptions} allowClear />
-                        </Form.Item>
-
-                        <Form.Item name="birthday" initialValue={pet?.birthday ?? null}>
-                            <DatePicker
-                                format={{ format: 'DD/MM/YYYY' }}
-                                placeholder="День рождение (день/месяц/год)"
-                                allowClear
-                                style={{ width: '100%' }}
-                            />
-                        </Form.Item>
-
-                        <Form.Item name="microchipId" initialValue={pet?.microchipId ?? null}>
-                            <Input placeholder="Номер чипа" />
-                        </Form.Item>
-
-                        <Form.Item name="about" initialValue={pet?.about ?? null}>
-                            <Input.TextArea
-                                placeholder="Описание"
-                                autoSize={{ minRows: 2, maxRows: 3 }}
-                            />
-                        </Form.Item>
-
-                        <Form.Item name="image" hidden>
-                            <Input />
-                        </Form.Item>
-
-                        <Form.Item>
-                            <ImgCrop
-                                aspect={1 / 0.55}
-                                quality={1}
-                                modalTitle="Обрезка изображения"
-                                showGrid
-                                modalOk="Обрезать"
-                                modalCancel="Закрыть"
-                                modalProps={{ centered: true }}
+                    <Card>
+                        <Form form={form} onFinish={submit} variant="underlined" clearOnDestroy>
+                            <Form.Item
+                                name="name"
+                                rules={[{ required: true, message: 'Введите кличку питомца' }]}
+                                initialValue={pet?.name ?? null}
                             >
-                                <Upload
-                                    beforeUpload={async file => {
-                                        return (await reduceSize(file)) as File;
-                                    }}
-                                    customRequest={({ file, onSuccess }) => {
-                                        form.setFieldValue('image', file);
-                                        onSuccess!('ok');
-                                    }}
-                                    onRemove={() => {
-                                        form.setFieldValue('image', null);
-                                    }}
-                                    name="image"
-                                    listType="picture-card"
-                                    maxCount={1}
-                                    accept="image/png, image/jpeg, image/jpg"
-                                    defaultFileList={defaultFileList}
-                                >
-                                    Загрузить фотографию
-                                </Upload>
-                            </ImgCrop>
-                        </Form.Item>
+                                <Input placeholder="Кличка" />
+                            </Form.Item>
 
-                        <Button
-                            block
-                            color="cyan"
-                            variant="solid"
-                            onClick={() => form.submit()}
-                            loading={isCreatePending || isUpdatePending}
-                        >
-                            Сохранить
-                        </Button>
-                    </Form>
+                            <Form.Item
+                                name="petTypeId"
+                                rules={[{ required: true, message: 'Выберите вид животное' }]}
+                                initialValue={pet?.petTypeId ?? null}
+                            >
+                                <Select
+                                    placeholder="Вид"
+                                    options={petTypes.map(({ id, ru }) => ({
+                                        value: id,
+                                        label: ru,
+                                    }))}
+                                    allowClear
+                                    onChange={id => {
+                                        form.setFieldValue('breedId', null);
+
+                                        const filteredBreeds = id
+                                            ? breeds.filter(breed => breed.petTypeId === id)
+                                            : breeds;
+
+                                        setBreedsFiltered(filteredBreeds);
+                                    }}
+                                />
+                            </Form.Item>
+
+                            <Form.Item name="breedId" initialValue={pet?.breedId ?? null}>
+                                <Select
+                                    placeholder="Порода"
+                                    options={breedsFiltered.map(({ id, ru }) => ({
+                                        value: id,
+                                        label: ru,
+                                    }))}
+                                    allowClear
+                                    showSearch={{
+                                        filterOption: (inputValue, option) =>
+                                            option?.label
+                                                .toUpperCase()
+                                                .indexOf(inputValue.toUpperCase()) !== -1,
+                                    }}
+                                />
+                            </Form.Item>
+
+                            <Form.Item name="sex" initialValue={pet?.sex ?? null}>
+                                <Select placeholder="Пол" options={sexOptions} allowClear />
+                            </Form.Item>
+
+                            <Form.Item name="birthday" initialValue={pet?.birthday ?? null}>
+                                <DatePicker
+                                    format={{ format: 'DD/MM/YYYY' }}
+                                    placeholder="День рождение (день/месяц/год)"
+                                    allowClear
+                                    style={{ width: '100%' }}
+                                />
+                            </Form.Item>
+
+                            <Form.Item name="microchipId" initialValue={pet?.microchipId ?? null}>
+                                <Input placeholder="Номер чипа" />
+                            </Form.Item>
+
+                            <Form.Item name="about" initialValue={pet?.about ?? null}>
+                                <Input.TextArea
+                                    placeholder="Описание"
+                                    autoSize={{ minRows: 1, maxRows: 3 }}
+                                />
+                            </Form.Item>
+
+                            <Form.Item name="image" hidden>
+                                <Input />
+                            </Form.Item>
+
+                            <Form.Item>
+                                <ImgCrop
+                                    aspect={1 / 0.55}
+                                    quality={1}
+                                    modalTitle="Обрезка изображения"
+                                    showGrid
+                                    modalOk="Обрезать"
+                                    modalCancel="Закрыть"
+                                    modalProps={{ centered: true }}
+                                >
+                                    <Upload
+                                        beforeUpload={async file => {
+                                            return (await reduceSize(file)) as File;
+                                        }}
+                                        customRequest={({ file, onSuccess }) => {
+                                            form.setFieldValue('image', file);
+                                            onSuccess!('ok');
+                                        }}
+                                        onRemove={() => {
+                                            form.setFieldValue('image', null);
+                                        }}
+                                        name="image"
+                                        listType="picture-card"
+                                        maxCount={1}
+                                        accept="image/png, image/jpeg, image/jpg"
+                                        defaultFileList={defaultFileList}
+                                    >
+                                        Загрузить фотографию
+                                    </Upload>
+                                </ImgCrop>
+                            </Form.Item>
+
+                            <Button
+                                block
+                                color="cyan"
+                                variant="solid"
+                                onClick={() => form.submit()}
+                                loading={isCreatePending || isUpdatePending}
+                            >
+                                Сохранить
+                            </Button>
+                        </Form>
+                    </Card>
                 </Modal>
                 {context}
             </>
