@@ -7,10 +7,11 @@ import userService from '~service/user.service';
 
 import { Button, Modal, Form, Input, notification } from 'antd';
 import { Card } from '~component/common';
+import ForgetPasswordBtn from './forget-password-btn';
 
 const changePassword = userService.changePassword.bind(userService);
 
-const ChangePasswordBtn: FC<ButtonProps> = props => {
+const ChangePasswordBtn: FC<ButtonProps> = ({ children, ...props }) => {
     const [form] = Form.useForm();
     const [api, context] = notification.useNotification();
 
@@ -31,7 +32,7 @@ const ChangePasswordBtn: FC<ButtonProps> = props => {
     return (
         <>
             <Button color="orange" variant="solid" {...props} onClick={() => setOpen(true)}>
-                Поменять пароль
+                {children ?? 'Поменять пароль'}
             </Button>
 
             <Modal
@@ -40,7 +41,7 @@ const ChangePasswordBtn: FC<ButtonProps> = props => {
                 onCancel={() => setOpen(false)}
                 centered
                 destroyOnHidden
-                footer={null}
+                footer={<ForgetPasswordBtn />}
             >
                 <Card>
                     <Form form={form} onFinish={mutate} variant="underlined" clearOnDestroy>
@@ -48,14 +49,14 @@ const ChangePasswordBtn: FC<ButtonProps> = props => {
                             name="oldPassword"
                             rules={[{ required: true, message: 'Введите текущий пароль' }]}
                         >
-                            <Input.Password size="large" placeholder="Текущий пароль" />
+                            <Input.Password placeholder="Текущий пароль" />
                         </Form.Item>
 
                         <Form.Item
                             name="newPassword"
                             rules={[{ required: true, message: 'Введите новый пароль' }]}
                         >
-                            <Input.Password size="large" placeholder="Пароль" />
+                            <Input.Password placeholder="Пароль" />
                         </Form.Item>
 
                         <Form.Item
@@ -75,7 +76,7 @@ const ChangePasswordBtn: FC<ButtonProps> = props => {
                                 },
                             ]}
                         >
-                            <Input.Password size="large" placeholder="Повторите пароль" />
+                            <Input.Password placeholder="Повторите пароль" />
                         </Form.Item>
 
                         <Button block color="cyan" variant="solid" htmlType="submit">
