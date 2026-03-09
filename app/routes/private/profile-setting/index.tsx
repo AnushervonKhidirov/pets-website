@@ -10,10 +10,11 @@ import userService from '~service/user.service';
 
 import { Form, Input, Button, notification, Select, Space, Typography } from 'antd';
 import { Container, GoogleMap } from '~component/common';
-import { isValidPhoneNumber } from 'libphonenumber-js';
+import ChangePasswordBtn from '~component/profile/change-password-btn';
 
 import { AuthType } from '~type/user.type';
 import { ContactName } from '~constant/contact-links';
+import { isValidPhoneNumber } from 'libphonenumber-js';
 
 import classes from './profile-setting.module.css';
 
@@ -179,11 +180,7 @@ const Profile = () => {
                         </Space>
 
                         <Space styles={{ root: { width: '100%', justifyContent: 'end' } }}>
-                            {query.data.authType === AuthType.Local && (
-                                <Button color="orange" variant="solid">
-                                    Поменять пароль
-                                </Button>
-                            )}
+                            {query.data.authType === AuthType.Local && <ChangePasswordBtn />}
                         </Space>
                     </Space>
                 </Form>
