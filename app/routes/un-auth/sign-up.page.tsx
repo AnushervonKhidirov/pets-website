@@ -5,8 +5,6 @@ import { SignUpForm } from '~component/auth/auth-form';
 import { GoogleOAuthButton } from '~component/auth/oauth-button';
 import { Route } from '~constant/route';
 
-import { light } from '~/config/ant.config';
-
 export function meta() {
     return [{ title: 'Sign In' }];
 }
@@ -18,7 +16,6 @@ export const SignInPage = () => {
 
     return (
         <Container
-            color={light}
             maxWidth={600}
             styles={{
                 wrapper: { minHeight: '100%', alignContent: 'center' },
