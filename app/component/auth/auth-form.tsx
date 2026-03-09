@@ -28,7 +28,6 @@ export const SignInForm: FC<AuthFormProps> = ({ onSuccess }) => {
         mutationFn: signIn,
         onSuccess: tokens => {
             tokenService.setToken(tokens);
-            form.resetFields();
             if (typeof onSuccess === 'function') onSuccess();
         },
         onError: err => {
@@ -38,7 +37,7 @@ export const SignInForm: FC<AuthFormProps> = ({ onSuccess }) => {
 
     return (
         <>
-            <Form form={form} onFinish={mutate}>
+            <Form form={form} onFinish={mutate} clearOnDestroy>
                 <Form.Item name="email" rules={[{ required: true, message: 'Введите почту' }]}>
                     <Input size="large" placeholder="Почта" type="email" />
                 </Form.Item>
@@ -98,7 +97,6 @@ export const SignUpForm: FC<AuthFormProps> = ({ onSuccess }) => {
         mutationFn: signUp,
         onSuccess: tokens => {
             tokenService.setToken(tokens);
-            form.resetFields();
             if (typeof onSuccess === 'function') onSuccess();
         },
         onError: err => {
@@ -133,7 +131,11 @@ export const SignUpForm: FC<AuthFormProps> = ({ onSuccess }) => {
     return (
         <>
             <Carousel ref={formSliderRef} dots={false} infinite={false} fade>
-                <Form form={form} onFinish={() => checkEmail(form.getFieldValue('email'))}>
+                <Form
+                    form={form}
+                    onFinish={() => checkEmail(form.getFieldValue('email'))}
+                    clearOnDestroy
+                >
                     <Form.Item
                         name="firstName"
                         rules={[{ required: true, message: 'Введите имя' }]}
@@ -187,7 +189,7 @@ export const SignUpForm: FC<AuthFormProps> = ({ onSuccess }) => {
                     </Button>
                 </Form>
 
-                <Form onFinish={submit}>
+                <Form onFinish={submit} clearOnDestroy>
                     <Button
                         type="text"
                         style={{ paddingInline: 0, marginBottom: '1em' }}
