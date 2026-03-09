@@ -46,6 +46,8 @@ const GoogleMap: FC<GoogleMapProps> = ({ markers = [], markerIcon, onMarkerClick
                     <img src={markerIcon ?? markerIconDefault} alt="map marker" width={31} />
                 </AdvancedMarker>
             ))}
+
+            {props.children}
         </Map>
     );
 };

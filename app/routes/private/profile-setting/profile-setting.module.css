@@ -1,0 +1,12 @@
+@media screen and (min-width: 769px) {
+    .inputs {
+        gap: 0 var(--padding);
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .contacts {
+        grid-column: 2/3;
+        grid-row: 2/4;
+    }
+}

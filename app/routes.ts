@@ -9,6 +9,7 @@ export default [
         route(Route.VetClinic, 'routes/public/vet-clinic.page.tsx'),
         route(Route.ContactUs, 'routes/public/contact.page.tsx'),
         route(Route.PetInfo + '/:petId', 'routes/public/pet-info.page.tsx'),
+        route(Route.ResetPassword + '/:passwordId', 'routes/public/reset-password.page.tsx'),
     ]),
 
     layout('routes/un-auth/layout.tsx', [
@@ -17,7 +18,8 @@ export default [
     ]),
 
     layout('routes/private/layout.tsx', [
-        route(Route.Profile, 'routes/private/profile.page.tsx'),
+        route(Route.Profile, 'routes/private/profile/index.tsx'),
+        route(Route.ProfileSetting, 'routes/private/profile-setting/index.tsx'),
         route(Route.MyPets, 'routes/private/my-pets/index.tsx'),
         route(Route.MyPet + '/:petId', 'routes/private/my-pet.page.tsx'),
     ]),
