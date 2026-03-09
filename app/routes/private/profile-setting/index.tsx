@@ -44,10 +44,7 @@ const Profile = () => {
     const { mutate, isPending } = useMutation({
         mutationKey: ['update_user_info'],
         mutationFn: updateUserInfo,
-        onSuccess: user => {
-            form.resetFields();
-            setUser(user);
-        },
+        onSuccess: setUser,
         onError: err => {
             api.error({ description: err.message });
         },

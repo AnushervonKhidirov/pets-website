@@ -11,7 +11,6 @@ export type User = {
 };
 
 export type Address = {
-    id: number;
     address: string | null;
     latitude: number | null;
     longitude: number | null;
@@ -33,7 +32,7 @@ export type UpdateUserDto = {
     lastName: User['lastName'];
     phone: User['phone'];
     contacts: User['contacts'];
-    address: Omit<Address, 'id'> | null;
+    address: Address | null;
 };
 
 export type UpdateUserFormData = Record<string, string> & {
