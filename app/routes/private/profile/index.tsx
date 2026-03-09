@@ -9,7 +9,7 @@ import authService from '~service/auth.service';
 import { Link } from 'react-router';
 import { Typography, Descriptions, Button } from 'antd';
 import { SettingOutlined } from '@ant-design/icons';
-import { Container, GoogleMap, Contacts, ErrorInfo } from '~component/common';
+import { Container, GoogleMap, Contacts } from '~component/common';
 import { Route } from '~constant/route';
 
 import classes from './personal-info.module.css';
@@ -25,7 +25,7 @@ const signOut = authService.signOut.bind(authService);
 const ProfilePage = () => {
     const { query, setData: setUser } = useUserInfo();
 
-    if (!query.isSuccess) return <ErrorInfo error={query.error} />;
+    if (!query.isSuccess) return null;
 
     const items: DescriptionsProps['items'] = [
         {
