@@ -52,13 +52,13 @@ const MainSection = () => {
 
             <div className={classes.buttons}>
                 <Link to={Route.SignUp}>
-                    <Button color="orange" variant="solid" size="large">
+                    <Button block color="orange" variant="solid" size="large">
                         Зарегистрироваться
                     </Button>
                 </Link>
 
                 <Link to={Route.Lost}>
-                    <Button color="cyan" variant="outlined" size="large">
+                    <Button block color="cyan" variant="outlined" size="large">
                         Потерянные питомцы
                     </Button>
                 </Link>
