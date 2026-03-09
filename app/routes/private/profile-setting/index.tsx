@@ -9,7 +9,7 @@ import { useUserInfo } from '~hook/use-user-info';
 import userService from '~service/user.service';
 
 import { Form, Input, Button, notification, Select, Space, Typography } from 'antd';
-import { Container, GoogleMap } from '~component/common';
+import { Container, Card, GoogleMap } from '~component/common';
 import ChangePasswordBtn from '~component/profile/change-password-btn';
 
 import { AuthType } from '~type/user.type';
@@ -70,93 +70,101 @@ const Profile = () => {
                     requiredMark={false}
                     onFinish={submit}
                     layout="vertical"
+                    variant="underlined"
                     className={classes.form}
                 >
                     <Space size="middle" vertical styles={{ root: { width: '100%' } }}>
-                        <div className={classes.inputs}>
-                            <Form.Item
-                                name="firstName"
-                                rules={[{ required: true }]}
-                                initialValue={query.data.firstName}
-                                label="Имя"
-                            >
-                                <Input />
-                            </Form.Item>
+                        <Card>
+                            <div className={classes.inputs}>
+                                <Form.Item
+                                    name="firstName"
+                                    rules={[{ required: true }]}
+                                    initialValue={query.data.firstName}
+                                    label="Имя"
+                                >
+                                    <Input />
+                                </Form.Item>
 
-                            <Form.Item
-                                name="lastName"
-                                initialValue={query.data.lastName}
-                                label="Фамилия"
-                            >
-                                <Input />
-                            </Form.Item>
+                                <Form.Item
+                                    name="lastName"
+                                    initialValue={query.data.lastName}
+                                    label="Фамилия"
+                                >
+                                    <Input />
+                                </Form.Item>
 
-                            <Form.Item
-                                name="phone"
-                                label="Номер телефона"
-                                initialValue={query.data.phone}
-                                rules={[
-                                    {
-                                        validator: async (_, value) => {
-                                            if (value && !isValidPhoneNumber(value, 'TJ')) {
-                                                throw new Error('Wrong phone format');
-                                            }
+                                <Form.Item
+                                    name="phone"
+                                    label="Номер телефона"
+                                    initialValue={query.data.phone}
+                                    rules={[
+                                        {
+                                            validator: async (_, value) => {
+                                                if (value && !isValidPhoneNumber(value, 'TJ')) {
+                                                    throw new Error('Wrong phone format');
+                                                }
+                                            },
+                                            message: 'Неправильный формат номера',
                                         },
-                                        message: 'Неправильный формат номера',
-                                    },
-                                ]}
-                            >
-                                <Input />
-                            </Form.Item>
+                                    ]}
+                                >
+                                    <Input />
+                                </Form.Item>
 
-                            <Form.Item
-                                name="address"
-                                initialValue={query.data.address?.address}
-                                label="Адрес"
-                            >
-                                <Input />
-                            </Form.Item>
+                                <Form.Item
+                                    name="address"
+                                    initialValue={query.data.address?.address}
+                                    label="Адрес"
+                                >
+                                    <Input />
+                                </Form.Item>
 
-                            <Form.Item label="Доплнительные контакты" className={classes.contacts}>
-                                <Select
-                                    mode="multiple"
-                                    placeholder="Выберите дополнительные контакты"
-                                    defaultValue={query.data.contacts?.map(contact => contact.name)}
-                                    options={contactOptions}
-                                    onChange={onChangeContacts}
-                                    style={{
-                                        width: '100%',
-                                        marginBottom: 'var(--form-item-margin-bottom)',
-                                    }}
-                                />
+                                <Form.Item
+                                    label="Доплнительные контакты"
+                                    className={classes.contacts}
+                                >
+                                    <Select
+                                        mode="multiple"
+                                        placeholder="Выберите дополнительные контакты"
+                                        defaultValue={query.data.contacts?.map(
+                                            contact => contact.name,
+                                        )}
+                                        options={contactOptions}
+                                        onChange={onChangeContacts}
+                                        style={{
+                                            width: '100%',
+                                            marginBottom: 'var(--form-item-margin-bottom)',
+                                        }}
+                                    />
 
-                                {additionalContacts.map(name => {
-                                    return (
-                                        <Form.Item
-                                            name={`contacts;${name}`}
-                                            initialValue={
-                                                query.data.contacts?.find(
-                                                    contact => contact.name === name,
-                                                )?.value
-                                            }
-                                            rules={[
-                                                {
-                                                    required: true,
-                                                    message: `Введите имя пользователя ${name}`,
-                                                },
-                                            ]}
-                                            key={name}
-                                        >
-                                            <Input
-                                                placeholder={name}
-                                                prefix="@"
-                                                styles={{ prefix: { margin: 0 } }}
-                                            />
-                                        </Form.Item>
-                                    );
-                                })}
-                            </Form.Item>
-                        </div>
+                                    {additionalContacts.map(name => {
+                                        return (
+                                            <Form.Item
+                                                name={`contacts;${name}`}
+                                                initialValue={
+                                                    query.data.contacts?.find(
+                                                        contact => contact.name === name,
+                                                    )?.value
+                                                }
+                                                rules={[
+                                                    {
+                                                        required: true,
+                                                        message: `Введите имя пользователя ${name}`,
+                                                    },
+                                                ]}
+                                                key={name}
+                                            >
+                                                <Input
+                                                    placeholder={name}
+                                                    prefix="@"
+                                                    styles={{ prefix: { margin: 0 } }}
+                                                />
+                                            </Form.Item>
+                                        );
+                                    })}
+                                </Form.Item>
+                            </div>
+                        </Card>
 
                         <MapSelection address={query.data.address} />
 
@@ -246,7 +254,7 @@ const MapSelection: FC<{ address: User['address'] }> = ({ address }) => {
                 defaultCenter={coordinate}
                 style={{
                     height: 'auto',
-                    aspectRatio: '1/0.35',
+                    aspectRatio: '1/0.3',
                     minHeight: 200,
                     border: '1px solid var(--color-border)',
                     borderRadius: 'var(--border-radius)',
