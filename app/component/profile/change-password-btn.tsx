@@ -1,5 +1,7 @@
-import { useState } from 'react';
+import type { FC } from 'react';
+import type { ButtonProps } from 'antd';
 
+import { useState } from 'react';
 import { useMutation } from '@tanstack/react-query';
 import userService from '~service/user.service';
 
@@ -8,7 +10,7 @@ import { Card } from '~component/common';
 
 const changePassword = userService.changePassword.bind(userService);
 
-const ChangePasswordBtn = () => {
+const ChangePasswordBtn: FC<ButtonProps> = props => {
     const [form] = Form.useForm();
     const [api, context] = notification.useNotification();
 
@@ -28,7 +30,7 @@ const ChangePasswordBtn = () => {
 
     return (
         <>
-            <Button color="orange" variant="solid" onClick={() => setOpen(true)}>
+            <Button color="orange" variant="solid" {...props} onClick={() => setOpen(true)}>
                 Поменять пароль
             </Button>
 
