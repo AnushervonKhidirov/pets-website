@@ -3,12 +3,12 @@ import type { ButtonProps } from 'antd';
 
 import { useState } from 'react';
 import { useMutation } from '@tanstack/react-query';
-import userService from '~service/user.service';
+import resetPasswordService from '~service/reset-password.service';
 
 import { Button, Modal, Form, Input, notification } from 'antd';
 import { Card } from '~component/common';
 
-const getResetPasswordUrl = userService.getResetPasswordUrl.bind(userService);
+const getResetPasswordUrl = resetPasswordService.sendUrl.bind(resetPasswordService);
 
 const ForgetPasswordBtn: FC<ButtonProps> = ({ children, ...props }) => {
     const [form] = Form.useForm();
@@ -16,7 +16,7 @@ const ForgetPasswordBtn: FC<ButtonProps> = ({ children, ...props }) => {
 
     const [open, setOpen] = useState(false);
 
-    const { mutate } = useMutation({
+    const { mutate, isPending } = useMutation({
         mutationKey: ['reset_password_url'],
         mutationFn: getResetPasswordUrl,
         onSuccess: (data, { email }) => {
@@ -58,7 +58,13 @@ const ForgetPasswordBtn: FC<ButtonProps> = ({ children, ...props }) => {
                             <Input placeholder="Почта" type="email" />
                         </Form.Item>
 
-                        <Button block color="cyan" variant="solid" htmlType="submit">
+                        <Button
+                            block
+                            color="cyan"
+                            variant="solid"
+                            htmlType="submit"
+                            loading={isPending}
+                        >
                             Отправить
                         </Button>
                     </Form>
