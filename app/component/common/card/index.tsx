@@ -30,7 +30,7 @@ const Card: FC<CardProps> = ({
                 body: { padding: 0, overflow: 'hidden' },
                 root: { overflow: 'hidden' },
             }}
-            className={classes.card_wrapper}
+            className={classNames(classes.card_wrapper, props.className)}
         >
             {props.children ? (
                 <Background
