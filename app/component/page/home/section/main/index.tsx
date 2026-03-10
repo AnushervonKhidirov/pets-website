@@ -2,14 +2,12 @@ import { Link } from 'react-router';
 import CountUp from 'react-countup';
 import { Typography, Button } from 'antd';
 
-import { Container, Card } from '~component/common';
-
-import { Route } from '~constant/route';
+import { Container, Card, Logo } from '~component/common';
 import { PawIcon, SearchIcon, UsersIcon } from '~icons';
 
-import logo from 'src/images/logo/logo-200x200.png';
-import classes from './main.module.css';
+import { Route } from '~constant/route';
 import { light } from '~/config/ant.config';
+import classes from './main.module.css';
 
 const { Title, Text } = Typography;
 
@@ -34,9 +32,7 @@ const detailList = [
 const MainSection = () => {
     return (
         <Container innerClassName={classes.inner_section} section color={light}>
-            <div className={classes.logo}>
-                <img src={logo} alt="logo" />
-            </div>
+            <Logo className={classes.logo} />
 
             <Title className={classes.headline} style={{ marginBottom: 0 }}>
                 <div>

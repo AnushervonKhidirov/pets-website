@@ -76,7 +76,7 @@ const Header = ({ showAuthBtn = true }: { showAuthBtn?: boolean }) => {
     return (
         <header className={classes.header}>
             <Container innerClassName={classes.header_inner} color={light} alpha={0.8} blur={8}>
-                <Logo className={classes.logo} />
+                <Logo size="small" className={classes.logo} style={{ width: '4em' }} />
 
                 {!isMobileDevice && (
                     <div
