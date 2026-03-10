@@ -18,7 +18,7 @@ export default function GoogleOAuth() {
         error: searchParams.get('error'),
     };
 
-    const { isError, isSuccess, isFetched, error, data } = useQuery({
+    const { isError, isSuccess, isFetched, data } = useQuery({
         queryKey: ['google_oauth'],
         queryFn: async () => {
             if (params.error || !params.code) {
@@ -30,19 +30,16 @@ export default function GoogleOAuth() {
     });
 
     if (isError) {
-        console.log('error', error);
         bc.postMessage('error');
         tokenService.removeToken();
     }
 
     if (isSuccess) {
-        console.log('data', data);
         tokenService.setToken(data);
         bc.postMessage('success');
     }
 
     if (isFetched) {
-        console.log('isFetched');
         bc.close();
         globalThis.close();
     }
