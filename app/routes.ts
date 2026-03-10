@@ -12,7 +12,7 @@ export default [
     ]),
 
     layout('routes/private/layout.tsx', [
-        route(Route.Profile, 'routes/private/profile/index.tsx'),
+        route(Route.Profile, 'routes/private/profile.page.tsx'),
         route(Route.ProfileSetting, 'routes/private/profile-setting/index.tsx'),
         route(Route.MyPets, 'routes/private/my-pets.page.tsx'),
         route(Route.MyPet + '/:petId', 'routes/private/my-pet.page.tsx'),

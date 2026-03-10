@@ -7,12 +7,10 @@ import tokenService from '~service/token.service';
 import authService from '~service/auth.service';
 
 import { Link } from 'react-router';
-import { Typography, Descriptions, Button } from 'antd';
+import { Typography, Descriptions, Button, Space } from 'antd';
 import { SettingOutlined } from '@ant-design/icons';
 import { Container, GoogleMap, Contacts } from '~component/common';
 import { Route } from '~constant/route';
-
-import classes from './personal-info.module.css';
 
 export function meta() {
     return [{ title: 'Профиль' }];
@@ -100,49 +98,55 @@ const ProfilePage = () => {
     });
 
     return (
-        <Container innerClassName={classes.section} style={{ minHeight: '100%' }} section>
-            <Descriptions
-                title={
-                    <Title level={3} style={{ marginBottom: 0 }}>
-                        <span className={classes.headline}>Персональные данные</span>
-                    </Title>
-                }
-                layout="vertical"
-                items={items}
-                column={{ sm: 2, md: 3 }}
-                extra={
-                    <Link to={Route.ProfileSetting}>
-                        <Button color="cyan" variant="solid">
-                            <SettingOutlined style={{ fontSize: '1.25em' }} />
-                        </Button>
-                    </Link>
-                }
-            />
-
-            <div className={classes.buttons}>
-                <Button
-                    danger
-                    type="primary"
-                    onClick={() =>
-                        mutate({ refreshToken: tokenService.getToken()?.refreshToken ?? null })
+        <Container section style={{ minHeight: '100%' }}>
+            <Space size="middle" vertical>
+                <Descriptions
+                    title={
+                        <Title level={3} style={{ marginBottom: 0 }}>
+                            Персональные данные
+                        </Title>
                     }
-                >
-                    Выйти
-                </Button>
-
-                <Button
-                    danger
-                    type="primary"
-                    onClick={() =>
-                        mutate({
-                            refreshToken: tokenService.getToken()?.refreshToken ?? null,
-                            allDevices: true,
-                        })
+                    layout="vertical"
+                    items={items}
+                    column={{ sm: 2, md: 3 }}
+                    extra={
+                        <Link to={Route.ProfileSetting}>
+                            <Button
+                                color="cyan"
+                                variant="solid"
+                                styles={{ root: { paddingInline: '0.5em' } }}
+                            >
+                                <SettingOutlined style={{ fontSize: '1.25em' }} />
+                            </Button>
+                        </Link>
                     }
-                >
-                    Выйти со всех устройств
-                </Button>
-            </div>
+                />
+
+                <Space styles={{ root: { width: '100%', justifyContent: 'end' } }}>
+                    <Button
+                        danger
+                        type="primary"
+                        onClick={() =>
+                            mutate({ refreshToken: tokenService.getToken()?.refreshToken ?? null })
+                        }
+                    >
+                        Выйти
+                    </Button>
+
+                    <Button
+                        danger
+                        type="primary"
+                        onClick={() =>
+                            mutate({
+                                refreshToken: tokenService.getToken()?.refreshToken ?? null,
+                                allDevices: true,
+                            })
+                        }
+                    >
+                        Выйти со всех устройств
+                    </Button>
+                </Space>
+            </Space>
         </Container>
     );
 };
