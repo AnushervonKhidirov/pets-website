@@ -58,6 +58,7 @@ const Header = ({ showAuthBtn = true }: { showAuthBtn?: boolean }) => {
     }
 
     function closeDrawer(back: boolean = false) {
+        if (!menuOpened) return;
         if (back && history.state.action === closeModalAction) history.back();
         setMenuOpened(false);
     }
