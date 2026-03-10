@@ -39,31 +39,6 @@ class UserService {
 
         if (isHttpException(response.data)) throw new HttpException(response.data);
     }
-
-    async getResetPasswordUrl({ email }: { email: string }) {
-        const response = await apiClientAuth.post<User>(join(this.endpoint, 'reset-password-url'), {
-            email,
-        });
-
-        if (isHttpException(response.data)) throw new HttpException(response.data);
-    }
-
-    async checkResetPasswordUrl(urlId: string) {
-        const response = await apiClientAuth.post<User>(
-            join(this.endpoint, 'check-reset-password-url'),
-            { urlId },
-        );
-
-        if (isHttpException(response.data)) throw new HttpException(response.data);
-    }
-
-    async resetPassword(password: string) {
-        const response = await apiClientAuth.post<User>(join(this.endpoint, 'reset-password'), {
-            password,
-        });
-
-        if (isHttpException(response.data)) throw new HttpException(response.data);
-    }
 }
 
 export default new UserService();
