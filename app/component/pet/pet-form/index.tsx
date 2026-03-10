@@ -32,7 +32,6 @@ import classNames from 'classnames';
 
 type PetFormProps = {
     pet?: Pet | null;
-    onSuccess?: (pet: Pet) => void;
 };
 
 const { Text } = Typography;
@@ -45,7 +44,7 @@ const deleteImage = petService.deleteImage.bind(petService);
 const getPetType = petService.getPetType.bind(petService);
 const getBreed = petService.getBreed.bind(petService);
 
-const PetForm: FC<PetFormProps> = ({ pet, onSuccess }) => {
+const PetForm: FC<PetFormProps> = ({ pet }) => {
     const initialPetImage = pet?.image ?? null;
     const queryClient = useQueryClient();
 
@@ -69,7 +68,12 @@ const PetForm: FC<PetFormProps> = ({ pet, onSuccess }) => {
     }
 
     function successCallback(pet: Pet) {
-        if (onSuccess) onSuccess(pet);
+        if (pet) {
+            api.success({ description: 'Отредактировано успешно' });
+        } else {
+            form.resetFields();
+            setPetImage(null);
+        }
     }
 
     const { mutate: createPetMutate, isPending: isCreatePending } = useMutation({
@@ -306,10 +310,15 @@ const PetForm: FC<PetFormProps> = ({ pet, onSuccess }) => {
                     <Card contentStyles={{ padding: 0, aspectRatio: '1 / 0.5' }}>
                         <Space
                             styles={{
-                                root: { position: 'absolute', right: '0.5rem', top: '0.5rem' },
+                                root: {
+                                    position: 'absolute',
+                                    zIndex: 1,
+                                    right: '0.5rem',
+                                    top: '0.5rem',
+                                },
                             }}
                         >
-                            {initialPetImage === petImage && (
+                            {initialPetImage !== petImage && (
                                 <Button
                                     color="cyan"
                                     variant="filled"
