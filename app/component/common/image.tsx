@@ -32,11 +32,11 @@ const Image: FC<ImageProps> = ({ src, alt, cover, center = true, ...props }) => 
         return () => {
             document.removeEventListener('scroll', imageViewHandlerBind);
         };
-    }, [imgRef, imageLoaded]);
+    }, [imgRef, imageLoaded, src]);
 
     useLayoutEffect(() => {
         imageViewHandler(imgRef.current);
-    }, [imgRef.current]);
+    }, [imgRef.current, src]);
 
     return (
         <img
