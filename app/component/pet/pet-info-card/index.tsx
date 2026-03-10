@@ -184,7 +184,7 @@ const CardHeader: FC<{ pet: Pet; actions?: MenuProps['items'] }> = ({ pet, actio
         <Background
             className={classes.header}
             color={gray[2]}
-            style={{ aspectRatio: '1/0.5', display: 'grid' }}
+            style={{ height: '100%', display: 'grid' }}
         >
             <Image
                 src={pet.image ?? placeholder}

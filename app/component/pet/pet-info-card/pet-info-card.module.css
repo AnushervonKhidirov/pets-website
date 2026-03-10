@@ -7,7 +7,7 @@
 .header {
     position: relative;
     display: grid;
-    aspect-ratio: 1 / 5;
+    aspect-ratio: 1 / 0.5;
     grid-template-areas: 'content';
     overflow: hidden;
 
