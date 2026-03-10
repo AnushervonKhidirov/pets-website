@@ -13,19 +13,17 @@ class ResetPasswordService {
         if (isHttpException(response.data)) throw new HttpException(response.data);
     }
 
-    async checkUrl(pageId: string) {
+    async checkPageId(pageId: string) {
         const response = await apiClient.post(join(this.endpoint, 'check-url'), {
             pageId,
         });
 
         if (isHttpException(response.data)) throw new HttpException(response.data);
+        return { success: true };
     }
 
     async reset(resetData: { pageId: string; password: string }) {
-        const response = await apiClient.post(join(this.endpoint, 'reset'), {
-            resetData,
-        });
-
+        const response = await apiClient.post(join(this.endpoint, 'reset'), resetData);
         if (isHttpException(response.data)) throw new HttpException(response.data);
     }
 }

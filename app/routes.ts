@@ -11,7 +11,7 @@ export default [
         route(Route.PetInfo + '/:petId', 'routes/public/pet-info.page.tsx'),
     ]),
 
-    route(Route.ResetPassword + '/:passwordId', 'routes/public/reset-password.page.tsx'),
+    route(Route.ResetPassword + '/:pageId', 'routes/public/reset-password.page.tsx'),
 
     layout('routes/un-auth/layout.tsx', [
         route(Route.SignIn, 'routes/un-auth/sign-in.page.tsx'),
