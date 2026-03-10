@@ -1,4 +1,4 @@
-import type { Route as TRoute } from './+types/index';
+import type { Route as TRoute } from './+types/pet-setting.page';
 
 import { useParams } from 'react-router';
 import { useQuery } from '@tanstack/react-query';
@@ -33,7 +33,6 @@ const MyPetSettingPage = () => {
         isSuccess && (
             <Container section style={{ minHeight: '100%' }}>
                 <Title level={3}>Редактирование питомца</Title>
-
                 <PetForm pet={data} />
             </Container>
         )

@@ -9,8 +9,9 @@ export enum Route {
     ProfileSetting = '/profile/setting',
 
     MyPet = '/profile/pet',
-    MyPetSetting = '/profile/pet/setting',
     MyPets = '/profile/pets',
+    MyPetSetting = '/profile/pet/setting',
+    CreatePet = '/profile/pet/create',
 
     OAuthGoogle = '/auth/google',
 

@@ -14,9 +14,10 @@ export default [
     layout('routes/private/layout.tsx', [
         route(Route.Profile, 'routes/private/profile/index.tsx'),
         route(Route.ProfileSetting, 'routes/private/profile-setting/index.tsx'),
-        route(Route.MyPets, 'routes/private/my-pets/index.tsx'),
+        route(Route.MyPets, 'routes/private/my-pets.page.tsx'),
         route(Route.MyPet + '/:petId', 'routes/private/my-pet.page.tsx'),
-        route(Route.MyPetSetting + '/:petId', 'routes/private/pet-setting/index.tsx'),
+        route(Route.MyPetSetting + '/:petId', 'routes/private/pet-setting.page.tsx'),
+        route(Route.CreatePet, 'routes/private/pet-create.page.tsx'),
     ]),
 
     layout('routes/un-auth/layout.tsx', [

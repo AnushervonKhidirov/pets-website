@@ -111,7 +111,7 @@ const ProfilePage = () => {
                 items={items}
                 column={{ sm: 2, md: 3 }}
                 extra={
-                    <Link to={Route.ProfileSetting} target="_blank">
+                    <Link to={Route.ProfileSetting}>
                         <Button color="cyan" variant="solid">
                             <SettingOutlined style={{ fontSize: '1.25em' }} />
                         </Button>

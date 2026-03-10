@@ -14,6 +14,7 @@ import { SearchIcon } from '~icons';
 
 import { Route } from '~constant/route';
 import { light } from '~/config/ant.config';
+import { join } from '~helper/path.helper';
 
 export function meta() {
     return [{ title: 'Потерянные питомцы' }];
@@ -122,11 +123,7 @@ const PetList: FC<{
                                     flexWrap: 'wrap',
                                 }}
                             >
-                                <Link
-                                    to={`${Route.PetInfo}/${pet.id}`}
-                                    target="_blank"
-                                    style={{ flexGrow: 1 }}
-                                >
+                                <Link to={join(Route.PetInfo, pet.id)} style={{ flexGrow: 1 }}>
                                     <Button color="default" variant="solid" block>
                                         Подробнее
                                     </Button>
