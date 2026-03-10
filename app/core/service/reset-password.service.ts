@@ -2,7 +2,7 @@ import { join } from '~helper/path.helper';
 import { apiClient } from '~api/api-client';
 import { HttpException, isHttpException } from '~helper/error-handler';
 
-class UserService {
+class ResetPasswordService {
     private readonly endpoint = 'reset-password';
 
     async sendUrl({ email }: { email: string }) {
@@ -30,4 +30,4 @@ class UserService {
     }
 }
 
-export default new UserService();
+export default new ResetPasswordService();
