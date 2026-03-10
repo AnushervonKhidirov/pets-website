@@ -3,6 +3,8 @@ import { Button, Typography } from 'antd';
 import { Container, Card } from '~component/common';
 import { SignInForm } from '~component/auth/auth-form';
 import { GoogleOAuthButton } from '~component/auth/oauth-button';
+import ForgetPasswordBtn from '~component/profile/forget-password-btn';
+
 import { Route } from '~constant/route';
 
 export function meta() {
@@ -29,12 +31,16 @@ export const SignInPage = () => {
                 <GoogleOAuthButton style={{ marginTop: '1em' }} block />
 
                 <div style={{ marginTop: '0.5rem', textAlign: 'right' }}>
-                    Нет аккаунта?{' '}
-                    <Link to={Route.SignUp}>
-                        <Button style={{ paddingInline: 0 }} variant="link" color="orange">
-                            Зарегистрироваться
-                        </Button>
-                    </Link>
+                    <div>
+                        Нет аккаунта?{' '}
+                        <Link to={Route.SignUp}>
+                            <Button style={{ paddingInline: 0 }} variant="link" color="orange">
+                                Зарегистрироваться
+                            </Button>
+                        </Link>
+                    </div>
+
+                    <ForgetPasswordBtn styles={{ root: { paddingInline: 0 } }} />
                 </div>
             </Card>
         </Container>
