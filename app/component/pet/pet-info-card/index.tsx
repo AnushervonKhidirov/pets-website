@@ -64,19 +64,19 @@ const PetInfoCard: FC<PetInfoCardProps> = ({
         {
             key: pet.id + 'birthday',
             label: 'Возраст',
-            children: pet.birthday?.isValid() ? pet.birthday.toNow(true) : null,
+            children: pet.birthday?.isValid() ? pet.birthday.toNow(true) : '—',
         },
         {
             key: pet.id + 'sex',
             label: 'Пол',
-            children: pet.sex ? sex[pet.sex].ru : null,
+            children: pet.sex ? sex[pet.sex].ru : '—',
         },
         {
             key: pet.id + 'microchipId',
             label: 'Чип',
-            children: pet.microchipId ?? null,
+            children: pet.microchipId ?? '—',
         },
-    ].filter(item => item.children);
+    ];
 
     return (
         <Card
@@ -178,7 +178,6 @@ const CardHeader: FC<{ pet: Pet; actions?: MenuProps['items'] }> = ({ pet, actio
         menu: { items: actions },
         placement: 'bottomRight',
         trigger: ['click'],
-        styles: { item: { padding: 0 } },
     };
 
     return (
