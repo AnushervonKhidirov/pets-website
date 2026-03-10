@@ -92,7 +92,6 @@ const ProfilePage = () => {
     const { mutate } = useMutation({
         mutationKey: ['log_out'],
         mutationFn: signOut,
-        onMutate: () => {},
         onSettled: () => {
             tokenService.removeToken();
             setUser(null);

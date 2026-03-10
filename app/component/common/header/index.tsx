@@ -157,7 +157,6 @@ const DrawerFooter: FC<{
     const { mutate } = useMutation({
         mutationKey: ['log_out'],
         mutationFn: signOut,
-        onMutate: () => {},
         onSettled: () => {
             tokenService.removeToken();
             setData(null);

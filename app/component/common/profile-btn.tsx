@@ -54,7 +54,6 @@ const ProfileButton: FC<{ user: User; className?: string }> = ({ user, className
     const { mutate } = useMutation({
         mutationKey: ['log_out'],
         mutationFn: signOut,
-        onMutate: () => {},
         onSettled: () => {
             tokenService.removeToken();
             setUser(null);
