@@ -20,6 +20,9 @@ export const useUserInfo = () => {
             staleTime: user ? 1000 * 60 * 30 : undefined,
             enabled: !!tokens,
         }),
-        setData: (data: User | null) => queryClient.setQueryData(queryKey, data),
+        setData: (data: User | null) => {
+            if (data === null) queryClient.invalidateQueries({ queryKey });
+            queryClient.setQueryData(queryKey, data);
+        },
     };
 };
