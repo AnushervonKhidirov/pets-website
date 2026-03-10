@@ -87,16 +87,10 @@
     }
 }
 
-.image {
-    object-fit: cover;
-    object-position: center;
-
-    &.placeholder {
-        object-fit: contain;
-        padding: 1rem;
-        opacity: 0.4;
-        filter: drop-shadow(0.1em 0.2em 0.3em #000);
-    }
+.image .placeholder {
+    padding: 1rem;
+    opacity: 0.4;
+    filter: drop-shadow(0.1em 0.2em 0.3em #000);
 }
 
 /* more button */

@@ -189,6 +189,8 @@ const CardHeader: FC<{ pet: Pet; actions?: MenuProps['items'] }> = ({ pet, actio
             <Image
                 src={pet.image ?? placeholder}
                 alt={pet.name}
+                center
+                cover={!!placeholder}
                 className={classNames(classes.image, { [classes.placeholder]: !pet.image })}
             />
 

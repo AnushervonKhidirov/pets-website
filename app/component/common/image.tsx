@@ -4,9 +4,11 @@ import { useState, useEffect, useLayoutEffect, useRef } from 'react';
 
 type ImageProps = Omit<HTMLProps<HTMLImageElement>, 'src'> & {
     src?: string | URL;
+    cover?: boolean;
+    center?: boolean;
 };
 
-const Image: FC<ImageProps> = ({ src, alt, ...props }) => {
+const Image: FC<ImageProps> = ({ src, alt, cover, center = true, ...props }) => {
     const imgRef = useRef<HTMLImageElement>(null);
     const source = src instanceof URL ? src.href : src;
     const [imageLoaded, setImageLoaded] = useState(false);
@@ -36,7 +38,21 @@ const Image: FC<ImageProps> = ({ src, alt, ...props }) => {
         imageViewHandler(imgRef.current);
     }, [imgRef.current]);
 
-    return <img ref={imgRef} data-src={source} alt={alt} {...props} />;
+    return (
+        <img
+            ref={imgRef}
+            data-src={source}
+            alt={alt}
+            {...props}
+            style={{
+                width: '100%',
+                height: '100%',
+                objectFit: cover ? 'cover' : 'contain',
+                objectPosition: center ? 'center' : undefined,
+                ...props.style,
+            }}
+        />
+    );
 };
 
 export default Image;
