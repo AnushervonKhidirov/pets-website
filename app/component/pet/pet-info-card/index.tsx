@@ -190,7 +190,7 @@ const CardHeader: FC<{ pet: Pet; actions?: MenuProps['items'] }> = ({ pet, actio
                 src={pet.image ?? placeholder}
                 alt={pet.name}
                 center
-                cover={!!placeholder}
+                cover={!!pet.image}
                 className={classNames(classes.image, { [classes.placeholder]: !pet.image })}
             />
 
