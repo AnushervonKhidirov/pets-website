@@ -16,9 +16,9 @@ import {
     notification,
     Space,
 } from 'antd';
-import { Card, Image } from '~component/common';
+import { Card, Image, Scanner } from '~component/common';
 import ImgCrop from 'antd-img-crop';
-import { DeleteOutlined, UndoOutlined } from '@ant-design/icons';
+import { BarcodeOutlined, DeleteOutlined, UndoOutlined } from '@ant-design/icons';
 
 import { Sex } from '~type/pet.type';
 import { sex } from '~constant/pet';
@@ -50,6 +50,7 @@ const PetForm: FC<PetFormProps> = ({ pet }) => {
     const [form] = Form.useForm();
     const [api, context] = notification.useNotification();
     const [petImage, setPetImage] = useState(initialPetImage);
+    const [microchipValue, setMicrochipValue] = useState<string>('');
 
     const [breedsFiltered, setBreedsFiltered] = useState<Breed[]>([]);
 
@@ -256,7 +257,25 @@ const PetForm: FC<PetFormProps> = ({ pet }) => {
                                 label="Номер чипа"
                                 initialValue={pet?.microchipId ?? null}
                             >
-                                <Input />
+                                <div style={{ display: 'flex' }}>
+                                    <Input
+                                        value={microchipValue}
+                                        onChange={e => setMicrochipValue(e.target.value)}
+                                    />
+                                    <Scanner
+                                        onMobileOnly
+                                        onScan={code => {
+                                            form.setFieldValue('microchipId', code);
+                                            setMicrochipValue(code);
+                                        }}
+                                        buttonProps={{
+                                            type: 'text',
+                                            icon: (
+                                                <BarcodeOutlined style={{ fontSize: '1.5rem' }} />
+                                            ),
+                                        }}
+                                    />
+                                </div>
                             </Form.Item>
 
                             <Form.Item
