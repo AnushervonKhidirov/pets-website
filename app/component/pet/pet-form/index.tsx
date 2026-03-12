@@ -70,10 +70,13 @@ const PetForm: FC<PetFormProps> = ({ pet }) => {
     function successCallback(newPet: Pet) {
         if (pet) {
             api.success({ description: 'Данные успешно изменены' });
-        } else {
-            form.resetFields();
-            setPetImage(null);
-        }
+        } else resetForm();
+    }
+
+    function resetForm() {
+        form.resetFields();
+        setPetImage(null);
+        setMicrochipValue('');
     }
 
     const { mutate: createPetMutate, isPending: isCreatePending } = useMutation({
@@ -373,14 +376,7 @@ const PetForm: FC<PetFormProps> = ({ pet }) => {
 
                     <Space styles={{ root: { width: '100%', justifyContent: 'end' } }}>
                         {pet && (
-                            <Button
-                                color="cyan"
-                                variant="filled"
-                                onClick={() => {
-                                    form.resetFields();
-                                    setPetImage(initialPetImage);
-                                }}
-                            >
+                            <Button color="cyan" variant="filled" onClick={resetForm}>
                                 Откатить изменения
                             </Button>
                         )}
