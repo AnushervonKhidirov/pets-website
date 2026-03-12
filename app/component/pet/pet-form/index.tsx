@@ -50,7 +50,7 @@ const PetForm: FC<PetFormProps> = ({ pet }) => {
     const [form] = Form.useForm();
     const [api, context] = notification.useNotification();
     const [petImage, setPetImage] = useState(initialPetImage);
-    const [microchipValue, setMicrochipValue] = useState<string>('');
+    const [microchipValue, setMicrochipValue] = useState<string>(pet?.microchipId ?? '');
 
     const [breedsFiltered, setBreedsFiltered] = useState<Breed[]>([]);
 
