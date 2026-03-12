@@ -1,7 +1,7 @@
 import type { FC } from 'react';
 import type { ButtonProps } from 'antd/lib';
 
-import { useLayoutEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { createPortal } from 'react-dom';
 import { Scanner as YudielScanner, type IDetectedBarcode } from '@yudiel/react-qr-scanner';
 
@@ -47,7 +47,7 @@ const Scanner: FC<ScannerProps & ScannerAdditionalProps> = ({
         document.body.style.overflow = 'auto';
     }
 
-    useLayoutEffect(() => {
+    useEffect(() => {
         if (hint) {
             setTimeout(() => {
                 setHintOpen(true);
@@ -58,6 +58,12 @@ const Scanner: FC<ScannerProps & ScannerAdditionalProps> = ({
             }, 3000);
         }
     }, [hint]);
+
+    useEffect(() => {
+        return () => {
+            closeScanner();
+        };
+    }, []);
 
     return (
         (isMobile || isTablet) &&
