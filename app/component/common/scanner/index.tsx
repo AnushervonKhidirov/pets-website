@@ -12,8 +12,6 @@ import Container from '../container';
 import { isMobile, isTablet } from 'mobile-device-detect';
 import classes from './scanner.module.css';
 
-const { Title, Paragraph } = Typography;
-
 type ScannerProps = {
     onScan?: (code: string) => void;
     onError?: (error: unknown) => void;
@@ -25,6 +23,9 @@ type ScannerAdditionalProps = {
     hint?: boolean;
     hintText?: string;
 };
+
+const { Title, Paragraph } = Typography;
+const closeScannerAction = 'close-scanner';
 
 const Scanner: FC<ScannerProps & ScannerAdditionalProps> = ({
     onScan,
@@ -40,12 +41,16 @@ const Scanner: FC<ScannerProps & ScannerAdditionalProps> = ({
     function openScanner() {
         setOpen(true);
         document.body.style.overflow = 'hidden';
+        history.pushState({ action: closeScannerAction }, '');
     }
 
-    function closeScanner() {
+    function closeScanner(back: boolean = false) {
         setOpen(false);
         document.body.style.overflow = 'auto';
+        if (open && back && history.state.action === closeScannerAction) history.back();
     }
+
+    const closeOnBack = closeScanner.bind(null, true);
 
     useEffect(() => {
         if (hint) {
@@ -62,6 +67,14 @@ const Scanner: FC<ScannerProps & ScannerAdditionalProps> = ({
     useEffect(() => {
         return () => {
             closeScanner();
+        };
+    }, []);
+
+    useEffect(() => {
+        globalThis.addEventListener('popstate', closeOnBack);
+
+        return () => {
+            globalThis.removeEventListener('popstate', closeOnBack);
         };
     }, []);
 
