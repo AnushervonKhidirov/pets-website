@@ -75,7 +75,7 @@ const PetForm: FC<PetFormProps> = ({ pet }) => {
 
     function resetForm() {
         form.resetFields();
-        setPetImage(null);
+        setPetImage(initialPetImage);
         setMicrochipValue('');
     }
 
