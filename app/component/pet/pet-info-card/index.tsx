@@ -187,11 +187,12 @@ const CardHeader: FC<{ pet: Pet; actions?: MenuProps['items'] }> = ({ pet, actio
             style={{ height: '100%', display: 'grid' }}
         >
             <Image
-                src={pet.image ?? placeholder}
+                src={pet.image}
                 alt={pet.name}
-                center
+                placeholder={placeholder}
+                placeholderClassName={classes.pet_placeholder}
                 cover={!!pet.image}
-                className={classNames(classes.image, { [classes.placeholder]: !pet.image })}
+                center
             />
 
             <div className={classes.header_overlay}>

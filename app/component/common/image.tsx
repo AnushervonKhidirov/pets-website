@@ -2,15 +2,28 @@ import type { FC, HTMLProps } from 'react';
 
 import { useState, useEffect, useLayoutEffect, useRef } from 'react';
 
-type ImageProps = Omit<HTMLProps<HTMLImageElement>, 'src'> & {
-    src?: string | URL;
+import classNames from 'classnames';
+
+type ImageProps = Omit<HTMLProps<HTMLImageElement>, 'src' | 'placeholder'> & {
+    src?: string | URL | null;
+    placeholder?: string | URL | null;
+    placeholderClassName?: string;
     cover?: boolean;
     center?: boolean;
 };
 
-const Image: FC<ImageProps> = ({ src, alt, cover, center = true, ...props }) => {
+const Image: FC<ImageProps> = ({
+    src,
+    placeholder,
+    placeholderClassName,
+    alt,
+    cover,
+    center = true,
+    ...props
+}) => {
     const imgRef = useRef<HTMLImageElement>(null);
     const source = src instanceof URL ? src.href : src;
+    const placeholderSource = placeholder instanceof URL ? placeholder.href : placeholder;
     const [imageLoaded, setImageLoaded] = useState(false);
 
     function imageViewHandler(img: HTMLImageElement | null) {
@@ -41,8 +54,11 @@ const Image: FC<ImageProps> = ({ src, alt, cover, center = true, ...props }) => 
     return (
         <img
             ref={imgRef}
-            data-src={source}
+            data-src={source ?? placeholderSource}
             alt={alt}
+            className={classNames(props.className, {
+                [placeholderClassName ?? 'image-placeholder']: !source,
+            })}
             {...props}
             style={{
                 width: '100%',

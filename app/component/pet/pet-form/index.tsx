@@ -28,7 +28,6 @@ import dayjs from 'dayjs';
 import classes from './pet-form.module.css';
 
 import placeholder from 'src/images/pet-placeholder.png';
-import classNames from 'classnames';
 
 type PetFormProps = {
     pet?: Pet | null;
@@ -344,12 +343,12 @@ const PetForm: FC<PetFormProps> = ({ pet }) => {
                         </Space>
 
                         <Image
-                            src={petImage ?? placeholder}
-                            cover={!!petImage}
+                            src={petImage}
                             alt="Pet"
-                            className={classNames(classes.image, {
-                                [classes.placeholder]: !petImage,
-                            })}
+                            placeholder={placeholder}
+                            placeholderClassName={classes.pet_placeholder}
+                            cover={!!petImage}
+                            center
                         />
                     </Card>
 
