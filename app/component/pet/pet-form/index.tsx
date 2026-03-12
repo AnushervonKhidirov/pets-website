@@ -67,9 +67,9 @@ const PetForm: FC<PetFormProps> = ({ pet }) => {
         }
     }
 
-    function successCallback(pet: Pet) {
+    function successCallback(newPet: Pet) {
         if (pet) {
-            api.success({ description: 'Отредактировано успешно' });
+            api.success({ description: 'Данные успешно изменены' });
         } else {
             form.resetFields();
             setPetImage(null);
