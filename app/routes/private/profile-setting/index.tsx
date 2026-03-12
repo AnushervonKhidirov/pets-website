@@ -45,7 +45,10 @@ const Profile = () => {
     const { mutate, isPending } = useMutation({
         mutationKey: ['update_user_info'],
         mutationFn: updateUserInfo,
-        onSuccess: setUser,
+        onSuccess: user => {
+            api.success({ description: 'Данные успешно изменены' });
+            setUser(user);
+        },
         onError: err => {
             api.error({ description: err.message });
         },
