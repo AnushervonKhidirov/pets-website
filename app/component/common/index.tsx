@@ -7,6 +7,7 @@ import Logo from './logo';
 import UserAvatar from './avatar';
 import GoogleMap from './google-map';
 import QRCode from './qr-code';
+import Scanner from './scanner';
 import Loader from './loader';
 import ErrorInfo from './error-info';
 import Empty from './empty';
@@ -23,6 +24,7 @@ export {
     UserAvatar,
     GoogleMap,
     QRCode,
+    Scanner,
     ErrorInfo,
     Empty,
     Loader,

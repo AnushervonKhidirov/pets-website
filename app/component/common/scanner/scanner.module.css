@@ -1,0 +1,43 @@
+.container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: 99;
+}
+
+.container_inner {
+    display: grid;
+    justify-content: center;
+    gap: 3rem;
+}
+
+.headline {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 2rem;
+}
+
+.scan_container > div > div:not(.square) {
+    display: none !important;
+}
+
+.square {
+    position: absolute;
+    inset: 0;
+    display: block;
+
+    &::after {
+        content: '';
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 70%;
+        aspect-ratio: 1 / 0.35;
+        border: 1px dashed #fff;
+        transform: translate(-50%, -50%);
+    }
+}
