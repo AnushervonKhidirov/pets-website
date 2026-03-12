@@ -260,7 +260,7 @@ const PetForm: FC<PetFormProps> = ({ pet }) => {
                                 label="Номер чипа"
                                 initialValue={pet?.microchipId ?? null}
                             >
-                                <div style={{ display: 'flex' }}>
+                                <div style={{ display: 'flex', gap: '0.5rem' }}>
                                     <Input
                                         value={microchipValue}
                                         onChange={e => setMicrochipValue(e.target.value)}
@@ -272,10 +272,16 @@ const PetForm: FC<PetFormProps> = ({ pet }) => {
                                             setMicrochipValue(code);
                                         }}
                                         buttonProps={{
-                                            type: 'text',
-                                            icon: (
-                                                <BarcodeOutlined style={{ fontSize: '1.5rem' }} />
-                                            ),
+                                            color: 'default',
+                                            variant: 'filled',
+                                            styles: {
+                                                content: { fontSize: '0.65rem' },
+                                                root: { padding: '1em' },
+                                                icon: { fontSize: '1rem' },
+                                            },
+                                            children: 'Сканировать',
+                                            iconPlacement: 'end',
+                                            icon: <BarcodeOutlined />,
                                         }}
                                     />
                                 </div>
